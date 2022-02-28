@@ -1,0 +1,51 @@
+### General ###
+
+.vscode
+
+### FrontEnd ###
+
+# compiled output
+frontEnd/dist
+frontEnd/tmp
+frontEnd/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+
+# dependencies
+frontEnd/node_modules
+
+# profiling files
+frontEnd/chrome-profiler-events*.json
+
+
+# IDE - VSCode
+frontEnd/.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+frontEnd.history/*
+
+# misc
+frontEnd/.angular/cache
+frontEnd/.sass-cache
+frontEnd/connect.lock
+frontEnd//coverage
+frontEnd/libpeerconnection.log
+frontEnd/npm-debug.log
+frontEnd/yarn-error.log
+frontEnd/testem.log
+frontEnd/typings
+
+
+frontEnd/.gitignore
+
+# System Files
+frontEnd/.DS_Store
+frontEnd/Thumbs.db
+
+
+
+### Backend ####
+
+backEnd/node_modules/

@@ -1,0 +1,44 @@
+<div class="container">
+  <header class="jumbotron">
+    <!-- <p>{{ content }}</p> -->
+  </header>
+
+  <ul class="list-group">
+    <!-- {{userList}} -->
+    Organizer
+    <li
+      class="list-group-item"
+      *ngFor="let organizer of organizerList">
+      <!-- {{ user.id }} -->
+      {{ organizer.username }}
+      {{ organizer.email }}
+      {{ organizer.roles }}
+      <!-- {{ user.roles }} -->
+      <!-- {{ user['roles'][0]['name'] || 0 }} -->
+       <!-- <div *ngFor="let roles of userList['user']">
+        {{roles['name']}}
+      </div> -->
+    </li>
+  </ul>
+
+  <ul class="list-group">
+    <!-- {{userList}} -->
+    User
+    <li
+      class="list-group-item"
+      *ngFor="let user of userList">
+      <!-- {{ user.id }} -->
+      {{ user.username }}
+      {{ user.email }}
+      {{ user.roles }}
+      <!-- {{ user.roles }} -->
+      <!-- {{ user['roles'][0]['name'] || 0 }} -->
+       <!-- <div *ngFor="let roles of userList['user']">
+        {{roles['name']}}
+      </div> -->
+    </li>
+  </ul>
+
+
+
+</div>
