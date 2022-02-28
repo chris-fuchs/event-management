@@ -53,6 +53,7 @@ exports.signup = (req, res) => {
     }
   });
 };
+
 exports.signin = (req, res) => {
   User.findOne({
     username: req.body.username
