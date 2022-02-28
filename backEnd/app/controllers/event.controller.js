@@ -1,8 +1,10 @@
-const db = require("../models");
-const Event = db.events;
+// const db = require("../models");
+// const Event = db.events;
 
+const Event = require("../models/event.model.js");
+
+/*
 var multer  = require('multer');
-
 
 // Picture Storage
 var storage = multer.diskStorage({
@@ -30,14 +32,19 @@ var upload = multer({storage: storage});
 // Create and Save a new Event
 exports.create = (req, res) => {
   
-};
+}; */
 
 // Retrieve all Events from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
 
+  // populate Events with Username of Creator ID and remove id from response
+
+  
+ 
   Event.find(condition)
+    .populate('creator', 'username')
     .then(data => {
       res.send(data);
     })

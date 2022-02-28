@@ -33,9 +33,9 @@ app.use(express.static(path.join("public"))); */
 
 
 // simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
-});
+// app.get("/", (req, res) => {
+//   res.json({ message: "Welcome to bezkoder application." });
+// });
 
 require("./app/routes/event.routes")(app);
 require('./app/routes/auth.routes')(app);

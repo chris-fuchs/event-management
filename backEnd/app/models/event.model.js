@@ -10,7 +10,9 @@ const Event = mongoose.model(
     },
     imageURL: String,
     published: Boolean
-  })
+  },
+  { timestamps: true }
+  )
 );
 module.exports = Event;
 

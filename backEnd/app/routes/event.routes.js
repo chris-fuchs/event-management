@@ -3,9 +3,10 @@ module.exports = function(app) {
   const events = require("../controllers/event.controller.js");
 
   var router = require("express").Router();
-  var express = require("express");
+  // var express = require("express");
   const db = require("../models");
-  const Event = db.events;
+  //const Event = db.events;
+  const Event = require("../models/event.model.js");
   const Users = db.user;
   var multer  = require('multer');
 
@@ -55,36 +56,53 @@ router.post("/",  [authJwt.verifyToken, authJwt.isOrganizer], upload.single('fil
     tempImageURL = 'http://localhost:8080/images/' + req.file.filename
   }
 
-  // Create Evebt
+  console.log(req.body.creator);
+  // const user 
+  
+  // Users.findById(req.body.creator)
+  // .then(user => {
+  //   if(!user) {
+  //     res.status(400).send({ message: "No user found" });
+  //     return;
+  //   }
+
+  // console.log("user: " + user.username)
+
+  // Create Event
   const event = new Event({
     title: req.body.title,
     description: req.body.description,
     imageURL: tempImageURL,
     published: req.body.published ? req.body.published : false,
+    creator: req.body.creator
     //creator: Users.findById(req.body.creator)
   });
-  Users.findById(req.body.creator, function(err, user) {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
-    }
-    if (!user) {
-      return res.status(404).send({ message: "User Not found." });
-    }
-    console.log("creator user: ",user)
-    event.creator = user;
-    console.log("event creator: ",event.creator)
-  }
-  )
+
+  // Users.findById(req.body.creator, function(err, user) {
+  //   if (err) {
+  //     res.status(500).send({ message: err });
+  //     return;
+  //   }
+  //   if (!user) {
+  //     return res.status(404).send({ message: "User Not found." });
+  //   }
+  //   console.log("creator user: ",user)
+  //   event.creator = user;
+  //   console.log("event creator: ",event.creator)
+  // })
 
   console.log("Event: ",event)
 
   // Save Event in the database
   event.save()
 
+
+
+  //event.save()
+
     //.select('creator','-password')
     //.populate('roles', 'name')
-    .exec()
+    //.exec()
     .then(data => {
       //res.send(data);
       res.status(200).send({
