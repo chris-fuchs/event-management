@@ -24,6 +24,11 @@ import { BoardModeratorComponent } from './components/board-moderator/board-mode
 import { BoardOrganizerComponent } from './components/board-organizer/board-organizer.component';
 import { BoardUserComponent } from './components/board-user/board-user.component'
 import { authInterceptorProviders } from './helper/auth.interceptor';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -50,7 +55,12 @@ import { authInterceptorProviders } from './helper/auth.interceptor';
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

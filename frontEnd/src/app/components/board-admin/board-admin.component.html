@@ -51,73 +51,264 @@
 
 
 
+<mat-accordion  class="example-headers-align" multi>
 
-Moderator
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">E-Mail</th>
-      <th scope="col">Roles</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let mod of moderatorList">
-      <td>{{ mod.username }}</td>
-      <td>{{ mod.email }}</td>
-      <td>{{ mod.roles }}</td>
-      <td>
-        <button class="btn btn-primary" (click)="demoteModToUser(mod.id)">Demote to User</button>
-        <button class="btn btn-primary" (click)="deleteUser(mod.id)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <!-- <mat-expansion-panel (opened)="panelOpenStateMod = true"
+  (closed)="panelOpenStateMod = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Moderator
+    </mat-panel-title>
+    <mat-panel-description>
+      Currently I am {{panelOpenStateMod ? 'open' : 'closed'}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
 
-Organizer
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">E-Mail</th>
-      <th scope="col">Roles</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let org of organizerList">
-      <td>{{ org.username }}</td>
-      <td>{{ org.email }}</td>
-      <td>{{ org.roles }}</td>
-      <td>
-        <button class="btn btn-primary" (click)="demoteOrgToUser(org.id)">Demote to User</button>
-        <button class="btn btn-primary" (click)="deleteUser(org.id)">Delete</button>
-      </td>
-    </tr>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">E-Mail</th>
+          <th scope="col">Roles</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mod of moderatorList">
+          <td>{{ mod.username }}</td>
+          <td>{{ mod.email }}</td>
+          <td>{{ mod.roles }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="demoteModToUser(mod.id)">Demote to User</button>
+            <button class="btn btn-primary" (click)="deleteUser(mod.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-expansion-panel>
 
-</table>
+  <mat-expansion-panel (opened)="panelOpenStateOrg = true"
+                        (closed)="panelOpenStateOrg = false">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            Organizer
+                          </mat-panel-title>
+                          <mat-panel-description>
+                            Currently I am {{panelOpenStateOrg ? 'open' : 'closed'}}
+                          </mat-panel-description>
+                        </mat-expansion-panel-header>
 
-User
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">E-Mail</th>
-      <th scope="col">Roles</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of userList">
-      <td>{{ user.username }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.roles }}</td>
-      <td>
-        <button class="btn btn-primary" (click)="promoteUserToModerator(user.id)">Promote to Moderator</button>
-        <button class="btn btn-primary" (click)="promoteUserToOrganizer(user.id)">Promote to Organizer</button>
-        <button class="btn btn-primary" (click)="deleteUser(user.id)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">E-Mail</th>
+          <th scope="col">Roles</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let org of organizerList">
+          <td>{{ org.username }}</td>
+          <td>{{ org.email }}</td>
+          <td>{{ org.roles }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="demoteOrgToUser(org.id)">Demote to User</button>
+            <button class="btn btn-primary" (click)="deleteUser(org.id)">Delete</button>
+          </td>
+        </tr>
+
+    </table>
+
+  </mat-expansion-panel> -->
+
+  <!-- <mat-expansion-panel
+  (opened)="panelOpenStateUsr = true"
+  (closed)="panelOpenStateUsr = false"
+  > -->
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Moderator
+      </mat-panel-title>
+      <mat-panel-description>
+        <!-- Currently I am {{panelOpenStateUsr ? 'open' : 'closed'}} -->
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyModFilter($event)" placeholder="Ex. Mia" #input>
+    </mat-form-field>
+
+      <table mat-table [dataSource]="DataSourceMod" class="mat-elevation-z8">
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        <ng-container matColumnDef="username">
+          <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell mat-header-cell *matHeaderCellDef> E-Mail </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="roles">
+          <mat-header-cell mat-header-cell *matHeaderCellDef> Roles </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.roles}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell  *matHeaderCellDef > Actions </mat-header-cell>
+          <mat-cell *matCellDef="let user" >
+            <button (click)="demoteModToUser(user.id)">Demote to User</button>
+            <button (click)="deleteUser(user.id)">Delete</button>
+          </mat-cell>
+        </ng-container>
+      </table>
+      <mat-paginator
+          #paginatorMod="matPaginator"
+          [pageSizeOptions]="[1,2,5,10,20]"
+          showFirstLastButtons
+          aria-label="Select page">
+      </mat-paginator>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Organizer
+      </mat-panel-title>
+      <mat-panel-description>
+        <!-- Currently I am {{panelOpenStateUsr ? 'open' : 'closed'}} -->
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyOrgFilter($event)" placeholder="Ex. Mia" #input>
+    </mat-form-field>
+
+      <table mat-table [dataSource]="DataSourceOrg" class="mat-elevation-z8">
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        <ng-container matColumnDef="username">
+          <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell mat-header-cell *matHeaderCellDef> E-Mail </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="roles">
+          <mat-header-cell mat-header-cell *matHeaderCellDef> Roles </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.roles}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell  *matHeaderCellDef > Actions </mat-header-cell>
+          <mat-cell *matCellDef="let user" >
+            <button (click)="demoteOrgToUser(user.id)">Demote to User</button>
+            <button (click)="deleteUser(user.id)">Delete</button>
+          </mat-cell>
+        </ng-container>
+      </table>
+      <mat-paginator
+          #paginatorOrg="matPaginator"
+          [pageSizeOptions]="[1,2,5,10,20]"
+          showFirstLastButtons
+          aria-label="Select page">
+      </mat-paginator>
+  <!-- </div> -->
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        User
+      </mat-panel-title>
+      <mat-panel-description>
+        <!-- Currently I am {{panelOpenStateUsr ? 'open' : 'closed'}} -->
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyUserFilter($event)" placeholder="Ex. Mia" #input>
+    </mat-form-field>
+
+      <table mat-table [dataSource]="DataSourceUsr" class="mat-elevation-z8">
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        <ng-container matColumnDef="username">
+          <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell mat-header-cell *matHeaderCellDef> E-Mail </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="roles">
+          <mat-header-cell mat-header-cell *matHeaderCellDef> Roles </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.roles}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell  *matHeaderCellDef > Actions </mat-header-cell>
+          <mat-cell *matCellDef="let user" >
+            <button (click)="promoteUserToModerator(user.id)">Promote to Moderator</button>
+            <button (click)="promoteUserToOrganizer(user.id)">Promote to Organizer</button>
+            <button (click)="deleteUser(user.id)">Delete</button>
+          </mat-cell>
+        </ng-container>
+      </table>
+      <mat-paginator
+          #paginatorUsr="matPaginator"
+          [pageSizeOptions]="[1,2,5,10,20]"
+          showFirstLastButtons
+          aria-label="Select page">
+      </mat-paginator>
+  <!-- </div> -->
+  </mat-expansion-panel>
+
+</mat-accordion>
+
+
+
+
+
+
+  <!-- <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">E-Mail</th>
+          <th scope="col">Roles</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of userList">
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.roles }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="promoteUserToModerator(user.id)">Promote to Moderator</button>
+            <button class="btn btn-primary" (click)="promoteUserToOrganizer(user.id)">Promote to Organizer</button>
+            <button class="btn btn-primary" (click)="deleteUser(user.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table> -->

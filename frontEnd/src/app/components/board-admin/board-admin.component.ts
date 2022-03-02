@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {PageEvent} from '@angular/material/paginator';
+import { DataSource } from '@angular/cdk/collections';
+import { MatTableDataSource } from '@angular/material/table';
+import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-board-admin',
   templateUrl: './board-admin.component.html',
@@ -12,8 +19,57 @@ export class BoardAdminComponent implements OnInit {
   userList?: User[];
   moderatorList?: User[];
   organizerList?: User[];
+  panelOpenStateMod = false;
+  panelOpenStateOrg = false;
+  panelOpenStateUsr = false;
+  lengthUsr?: number;
+  pageSizeOptionsUsr: number[] = [1, 5, 10, 25, 100];
+  pageEventUsr?: PageEvent;
+  DataSourceUsr!: MatTableDataSource<User>;
+  DataSourceOrg!: MatTableDataSource<User>;
+  DataSourceMod!: MatTableDataSource<User>;
+  // displayedColumns: string[] = ['username', 'email', 'roles', 'action'];
+  displayedColumns: string[] = ['username', 'email', 'roles', 'actions'];
 
+  @ViewChild("paginatorUsr")
+  paginatorUsr!: MatPaginator;
 
+  @ViewChild("paginatorOrg")
+  paginatorOrg!: MatPaginator;
+
+  @ViewChild("paginatorMod")
+  paginatorMod!: MatPaginator;
+
+  ngAfterViewInit() {
+    //this.DataSourceUsr.paginator = this.paginator;
+  }
+
+  applyUserFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.DataSourceUsr.filter = filterValue.trim().toLowerCase();
+
+    if (this.DataSourceUsr.paginator) {
+      this.DataSourceUsr.paginator.firstPage();
+    }
+  }
+
+  applyOrgFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.DataSourceOrg.filter = filterValue.trim().toLowerCase();
+
+    if (this.DataSourceOrg.paginator) {
+      this.DataSourceOrg.paginator.firstPage();
+    }
+  }
+
+  applyModFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.DataSourceMod.filter = filterValue.trim().toLowerCase();
+
+    if (this.DataSourceMod.paginator) {
+      this.DataSourceMod.paginator.firstPage();
+    }
+  }
 
   constructor(private userService: UserService) { }
   ngOnInit(): void {
@@ -21,10 +77,22 @@ export class BoardAdminComponent implements OnInit {
       next: data => {
         this.completeUserList = data.users;
         this.userList = data.users.filter((user: { roles: string | string[]; }) => user.roles.includes('user'));
+        this.lengthUsr = this.userList?.length;
         this.moderatorList = data.users.filter((user: { roles: string | string[]; }) => user.roles.includes('moderator'));
         this.organizerList = data.users.filter((user: { roles: string | string[]; }) => user.roles.includes('organizer'));
-        console.log(data)
+        console.log("userList: ", this.userList);
         console.log("-----")
+        console.log("moderatorList: ", this.moderatorList);
+        console.log("-----")
+        console.log("organizerList: ", this.organizerList);
+        console.log("-----")
+        this.DataSourceUsr = new MatTableDataSource(this.userList);
+        this.DataSourceUsr.paginator = this.paginatorUsr;
+        this.DataSourceOrg = new MatTableDataSource(this.organizerList);
+        this.DataSourceOrg.paginator = this.paginatorOrg;
+        this.DataSourceMod = new MatTableDataSource(this.moderatorList);
+        this.DataSourceMod.paginator = this.paginatorMod;
+
       },
       error: err => {
         //this.completeUserList = JSON.parse(err.error).message;
