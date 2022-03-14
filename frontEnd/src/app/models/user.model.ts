@@ -5,4 +5,5 @@ export class User {
   roles?: String[];
   username?: String;
   email?: String;
+  favEvents?: Event[];
 }

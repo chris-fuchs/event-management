@@ -43,4 +43,8 @@ export class UserService {
   getAdminBoard(): Observable<any> {
     return this.http.get<User[]>(API_URL + 'admin');
   }
+
+  favoriteEvent(id: any) {
+    return this.http.put(API_URL + 'favoriteEvent/' + id, { responseType: 'text' });
+  }
 }

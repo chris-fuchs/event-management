@@ -259,3 +259,83 @@ exports.demoteOrgToUser = (req, res) => {
       }
       )
     }
+
+exports.addFavEvent = (req, res) => {
+  console.log("addFavEvent triggered")
+  userID = req.userId
+  eventID = req.params.id
+  console.log("addFavEvent: ",userID,eventID);
+  Users.findById(userID, function (error, user) {
+        if (error) {
+          res.status(500).json({
+            error: err.message
+          });
+        } else {
+          // check if event is already in favorites
+        //if (!user.favEvents.includes(eventID)) {
+          if (user.favEvents.indexOf(eventID) == -1) {
+            user.favEvents.push(eventID);
+            user.save(function(error) {
+              if (error) {
+                res.status(500).json({
+                  error: err.message
+                });
+              } else {
+                res.status(200).json({
+                  message: "Event added to favorites"
+                });
+              }
+            }
+          ) } else {
+            res.status(200).json({
+              message: "Event already in favorites"
+            });
+          }
+        }
+      }
+      )
+    }
+
+
+// exports.addFavEvent = (req, res) => {
+//   // get User from Webtoken
+//   userID = req.userId
+//   console.log("addFavEvent: ",userID);
+//   // get Event from req.body
+//   eventID = req.body.eventID
+//   console.log("addFavEvent: ",eventID);
+//   // get User from DB
+//   Users.findById(userID)
+//   .populate('favEvents')
+//   .exec()
+//     .then(user => {
+//       // check if event is already in favorites
+//       for (var i = 0; i < user.favEvents.length; i++) {
+//         if (user.favEvents[i]._id == eventID) {
+//           console.log("Event already in favorites");
+//           return res.status(200).json({
+//             message: "Event already in favorites"
+//           });
+//         }
+//       }
+//       // add event to favorites
+//       user.favEvents.push(eventID);
+//       user.save(function(error) {
+//         if (error) {
+//           res.status(500).json({
+//             error: err.message
+//           });
+//         } else {
+//           res.status(200).json({
+//             message: "Event added to favorites"
+//           });
+//         }
+//       } 
+//     ) }
+//     )
+//     .catch(err => {
+//       res.status(500).json({
+//         error: err.message
+//       });
+//     });
+// }

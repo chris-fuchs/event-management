@@ -55,4 +55,10 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.deleteUser
   );
+
+  app.put(
+    "/api/test/favoriteEvent/:id",
+    [authJwt.verifyToken, authJwt.isUser],
+    controller.addFavEvent
+  );
 }
