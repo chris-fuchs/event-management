@@ -52,4 +52,16 @@ export class CardviewComponent implements OnInit {
         error: (e) => console.error(e)
       });
   }
+
+  checkFavStatus(eventid: any) {
+    console.log("user: ",this.currentUser);
+    console.log("favEvents: ", this.currentUser.favEvents)
+    if(this.currentUser.favEvents?.includes(eventid)) {
+      console.log("eventid: ",eventid, " is in favEvents");
+      return true;
+    } else {
+      console.log("eventid: ",eventid, " is NOT in favEvents");
+      return false;
+    }
+  }
 }
