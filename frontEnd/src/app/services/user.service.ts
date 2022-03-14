@@ -35,7 +35,7 @@ export class UserService {
     return this.http.get(API_URL + 'user', { responseType: 'text' });
   }
   getOrganizerBoard(): Observable<any> {
-    return this.http.get(API_URL + 'organizer');
+    return this.http.get(API_URL + 'org');
   }
   getModeratorBoard(): Observable<any> {
     return this.http.get(API_URL + 'mod');

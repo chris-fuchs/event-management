@@ -19,12 +19,14 @@ module.exports = function(app) {
     "/api/test/admin",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
-  );/*
+  );
+
   app.get(
-    "api/test/organizer",
+    "/api/test/org",
     [authJwt.verifyToken, authJwt.isOrganizer]  ,
     controller.organizerBoard
-  );*/
+  );
+
   app.put(
     "/api/test/user2org/:id",
     [authJwt.verifyToken, authJwt.isOrganizer || authJwt.isAdmin],

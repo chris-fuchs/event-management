@@ -45,7 +45,7 @@ export class EventDetailsComponent implements OnInit {
       published: status
     };
     this.message = '';
-    this.eventService.update(this.currentEvent.id, data)
+    this.eventService.update(this.currentEvent._id, data)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -57,7 +57,7 @@ export class EventDetailsComponent implements OnInit {
   }
   updateEvent(): void {
     this.message = '';
-    this.eventService.update(this.currentEvent.id, this.currentEvent)
+    this.eventService.update(this.currentEvent._id, this.currentEvent)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -67,7 +67,7 @@ export class EventDetailsComponent implements OnInit {
       });
   }
   deleteEvent(): void {
-    this.eventService.delete(this.currentEvent.id)
+    this.eventService.delete(this.currentEvent._id)
       .subscribe({
         next: (res) => {
           console.log(res);

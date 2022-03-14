@@ -36,6 +36,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Events from the database.
 exports.findAll = (req, res) => {
+  
   const title = req.query.title;
   var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
 
@@ -75,9 +76,16 @@ exports.findOne = (req, res) => {
 
 // Update a Event by the id in the request
 exports.update = (req, res) => {
+  
   if (!req.body) {
     return res.status(400).send({
       message: "Data to update can not be empty!"
+    });
+  }
+
+  if(authJwt.isOrganizer && authJwt.currentUser.id !== req.body.creator) {
+    return res.status(401).send({
+      message: "Not Authorized"
     });
   }
 
@@ -88,7 +96,11 @@ exports.update = (req, res) => {
       if (!data) {
         res.status(404).send({
           message: `Cannot update Event with id=${id}. Maybe Event was not found!`
-        });
+        }); }
+        else if(authJwt.isOrganizer && authJwt.currentUser.id !== data.creator) {
+          res.status(401).send({
+            message: "Not Authorized"
+          });
       } else res.send({ message: "Event was updated successfully." });
     })
     .catch(err => {
@@ -102,12 +114,19 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
+
+
   Event.findByIdAndRemove(id)
     .then(data => {
       if (!data) {
         res.status(404).send({
           message: `Cannot delete Event with id=${id}. Maybe Event was not found!`
         });
+      }
+      else if(authJwt.isOrganizer && authJwt.currentUser.id !== data.creator) {
+          res.status(401).send({
+            message: "Not Authorized"
+          });
       } else {
         res.send({
           message: "Event was deleted successfully!"

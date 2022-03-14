@@ -1,7 +1,10 @@
 const { response } = require("express");
+const { authJwt } = require("../middleware");
+var mongoose = require('mongoose');
 const db = require("../models");
 const Users = db.user;
 const Roles = db.role;
+const Events = require("../models/event.model")
 
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -11,6 +14,7 @@ exports.userBoard = (req, res) => {
 };
 exports.adminBoard = (req, res) => {
   //res.status(200).send("Admin Content.");
+  console.log("adminboard: ",req.userId)
   const name = req.query.name;
   const condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
   let users = Users.find(condition)
@@ -76,6 +80,31 @@ exports.moderatorBoard = (req, res) => {
           });
       });
     }
+
+
+
+exports.organizerBoard = (req, res) => {
+  // get All events where authJwt.currentUser.id equals event.creator and send them back
+  // let bla = req.userId.toString()
+  // let temp = mongoose.Types.ObjectId(req.userId)
+  // console.log("organizerBoard: ",req.userId)
+  // mongoose query, pass variable instead of string
+  Events.find( { creator: mongoose.Types.ObjectId(req.userId) })
+  .exec()
+    .then(data => {
+      console.log("data: ",data)
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving events."
+      });
+    });
+}
+  
+
+
 exports.deleteUser = (req, res) => {
   const id = req.params.id;
   console.log("deleteUser: ",id);

@@ -12,24 +12,40 @@
 
       </mat-card-header>
       <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+          test
       <img mat-card-image src= {{event.imageURL}} alt="Photo of a Shiba Inu">
 
       <mat-card-content>
 
         <p>
           {{ event.description }}
+          ID: {{ event._id }}
         </p>
+
+
       </mat-card-content>
       <mat-card-actions>
         <!-- <button mat-button>LIKE</button> -->
         <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
           <mat-icon>favorite</mat-icon>
         </button>
+        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+          <mat-icon>favorite_border</mat-icon>
+        </button>
 
 
         <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
           <mat-icon>share</mat-icon>
         </button>
+
+        <!-- {{ event.creator?.username }}
+        {{ currentUser?.username }} -->
+
+
+        <button mat-icon-button color="primary" (click)="deleteEvent(event._id)" aria-label="Example icon button with a home icon" *ngIf="currentUser?.username === event.creator?.username || currentUser?.roles?.includes('ROLE_ADMIN') || currentUser?.roles?.includes('ROLE_MODERATOR')">
+          <mat-icon>edit</mat-icon>
+        </button>
+
 
       </mat-card-actions>
     </mat-card>

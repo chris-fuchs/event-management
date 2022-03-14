@@ -127,10 +127,10 @@ router.post("/",  [authJwt.verifyToken, authJwt.isOrganizer], upload.single('fil
   router.get("/:id", events.findOne);
 
   // Update a Event with id
-  router.put("/:id", events.update);
+  router.put("/:id", [authJwt.verifyToken, authJwt.isOrganizer || authJwt.isAdmin], events.update);
 
   // Delete a Event with id
-  router.delete("/:id", events.delete);
+  router.delete("/:id",[authJwt.verifyToken, authJwt.isOrganizer || authJwt.isAdmin], events.delete);
 
   // Delete all Events
   router.delete("/",[authJwt.verifyToken, authJwt.isAdmin], events.deleteAll);
