@@ -51,7 +51,7 @@
 
 
 
-<mat-accordion  class="example-headers-align" multi>
+<mat-accordion  class="example-headers-align" multi *ngIf="isAdmin">
 
   <!-- <mat-expansion-panel (opened)="panelOpenStateMod = true"
   (closed)="panelOpenStateMod = false">
@@ -172,7 +172,7 @@
       </table>
       <mat-paginator
           #paginatorMod="matPaginator"
-          [pageSizeOptions]="[1,2,5,10,20]"
+          [pageSizeOptions]="[5,10,20]"
           showFirstLastButtons
           aria-label="Select page">
       </mat-paginator>
@@ -223,7 +223,7 @@
       </table>
       <mat-paginator
           #paginatorOrg="matPaginator"
-          [pageSizeOptions]="[1,2,5,10,20]"
+          [pageSizeOptions]="[5,10,20]"
           showFirstLastButtons
           aria-label="Select page">
       </mat-paginator>
@@ -276,7 +276,7 @@
       </table>
       <mat-paginator
           #paginatorUsr="matPaginator"
-          [pageSizeOptions]="[1,2,5,10,20]"
+          [pageSizeOptions]="[5,10,20]"
           showFirstLastButtons
           aria-label="Select page">
       </mat-paginator>
@@ -285,6 +285,9 @@
 
 </mat-accordion>
 
+<div *ngIf="isAdmin === false">
+  Admin role required
+</div>
 
 
 

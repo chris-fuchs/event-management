@@ -7,6 +7,7 @@ import {PageEvent} from '@angular/material/paginator';
 import { DataSource } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-board-admin',
@@ -22,6 +23,7 @@ export class BoardAdminComponent implements OnInit {
   panelOpenStateMod = false;
   panelOpenStateOrg = false;
   panelOpenStateUsr = false;
+  isAdmin = false;
   lengthUsr?: number;
   pageSizeOptionsUsr: number[] = [1, 5, 10, 25, 100];
   pageEventUsr?: PageEvent;
@@ -71,8 +73,13 @@ export class BoardAdminComponent implements OnInit {
     }
   }
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private tokenStorageService: TokenStorageService) { }
   ngOnInit(): void {
+    const user = this.tokenStorageService.getUser();
+    const roles = user.roles;
+    if(roles) {
+      this.isAdmin = roles.includes('ROLE_ADMIN');
+    }
     this.userService.getAdminBoard().subscribe({
       next: data => {
         this.completeUserList = data.users;
@@ -99,12 +106,36 @@ export class BoardAdminComponent implements OnInit {
       }
     });
   }
+
+  refresh() {
+    this.userService.getAdminBoard().subscribe({
+      next: data => {
+        this.completeUserList = data.users;
+        this.userList = data.users.filter((user: { roles: string | string[]; }) => user.roles.includes('user'));
+        this.lengthUsr = this.userList?.length;
+        this.moderatorList = data.users.filter((user: { roles: string | string[]; }) => user.roles.includes('moderator'));
+        this.organizerList = data.users.filter((user: { roles: string | string[]; }) => user.roles.includes('organizer'));
+
+        this.DataSourceUsr = new MatTableDataSource(this.userList);
+        this.DataSourceUsr.paginator = this.paginatorUsr;
+        this.DataSourceOrg = new MatTableDataSource(this.organizerList);
+        this.DataSourceOrg.paginator = this.paginatorOrg;
+        this.DataSourceMod = new MatTableDataSource(this.moderatorList);
+        this.DataSourceMod.paginator = this.paginatorMod;
+      },
+      error: err => {
+        //this.completeUserList = JSON.parse(err.error).message;
+      }
+    });
+  }
+
   promoteUserToModerator(id:any) {
     console.log("board-admin.components.ts: promote: ", id);
     this.userService.promoteUserToModerator(id).subscribe({
       next: data => {
         console.log(data)
         console.log("-----")
+        this.refresh()
       },
       error: err => {
         //this.completeUserList = JSON.parse(err.error).message;
@@ -117,6 +148,7 @@ export class BoardAdminComponent implements OnInit {
       next: data => {
         console.log(data)
         console.log("-----")
+        this.refresh()
       },
       error: err => {
         //this.completeUserList = JSON.parse(err.error).message;
@@ -128,6 +160,7 @@ export class BoardAdminComponent implements OnInit {
       next: data => {
         console.log(data)
         console.log("-----")
+        this.refresh()
       },
       error: err => {
         //this.completeUserList = JSON.parse(err.error).message;
@@ -141,6 +174,7 @@ export class BoardAdminComponent implements OnInit {
       next: data => {
         console.log(data)
         console.log("-----")
+        this.refresh()
       },
       error: err => {
         //this.completeUserList = JSON.parse(err.error).message;
@@ -154,11 +188,13 @@ export class BoardAdminComponent implements OnInit {
       next: data => {
         console.log(data)
         console.log("-----")
+        this.refresh()
       },
       error: err => {
         //this.completeUserList = JSON.parse(err.error).message;
       }
     });
+
   }
 
 }
