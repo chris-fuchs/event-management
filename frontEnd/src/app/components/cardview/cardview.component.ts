@@ -16,13 +16,26 @@ export class CardviewComponent implements OnInit {
   currentIndex = -1;
   title = '';
   currentUser!: User;
+  favEvents?: any;
+
   constructor(private eventService: EventService, private tokenstorageService: TokenStorageService, private userService: UserService) { }
   ngOnInit(): void {
-    this.retrieveEvents();
     this.currentUser = this.tokenstorageService.getUser()
+    this.retrieveEventsAndFavList();
     console.log("this.currentUser: ",this.currentUser);
   }
-  retrieveEvents(): void {
+  retrieveEventsAndFavList(): void {
+    //.favEvents = this.userService.getFavouriteEventList(this.currentUser.id);
+    this.userService.getFavouriteEventList(this.currentUser.id).subscribe({
+      next: (data) => {
+        // console.log("favEvents: ",data);
+        this.favEvents = data;
+      },
+      error: (e) => console.error(e)
+    });
+
+    console.log("!!!currentUser: ",this.currentUser.id);
+    console.log("!!!favEvents: ", this.favEvents);
     this.eventService.getAll()
       .subscribe({
         next: (data) => {
@@ -38,7 +51,7 @@ export class CardviewComponent implements OnInit {
       .subscribe({
         next: (data) => {
           console.log(data);
-          this.retrieveEvents();
+          this.retrieveEventsAndFavList();
         },
         error: (e) => console.error(e)
       });

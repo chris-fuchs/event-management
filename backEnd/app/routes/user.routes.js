@@ -61,4 +61,10 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isUser],
     controller.addFavEvent
   );
+
+  app.get(
+    "api/test/favEventList/:id",
+    [authJwt.verifyToken, authJwt.isUser],
+    controller.getFavEventList
+  )
 }

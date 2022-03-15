@@ -339,3 +339,24 @@ exports.addFavEvent = (req, res) => {
 //       });
 //     });
 // }
+
+exports.getFavEventList = (req, res) => {
+  console.log("getFavEventList triggered")
+  userID = req.userId
+  console.log("getFavEventList: ",userID);
+  // find and set event list
+  Users.findById(userID, function (error, user) {
+        if (error) {
+          res.status(500).json({
+            error: err.message
+          });
+        } else {
+          // set event list
+          eventList = user.favEvents;
+          console.log("getFavEventList: ",eventList);
+          res.status(200).json({
+            message: "Event list",
+            eventList: eventList
+          });
+        }
+      })};

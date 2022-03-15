@@ -44,6 +44,10 @@ export class UserService {
     return this.http.get<User[]>(API_URL + 'admin');
   }
 
+  getFavouriteEventList(id: any) {
+    return this.http.get(API_URL + 'favEventList/' + id);
+  }
+
   favoriteEvent(id: any) {
     return this.http.put(API_URL + 'favoriteEvent/' + id, { responseType: 'text' });
   }
