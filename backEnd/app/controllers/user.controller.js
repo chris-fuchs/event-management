@@ -296,6 +296,43 @@ exports.addFavEvent = (req, res) => {
       )
     }
 
+    exports.removeFavEvent = (req, res) => {
+      console.log("removeFavEvent triggered")
+      userID = req.userId
+      eventID = req.params.id
+      console.log("removeFavEvent: ",userID,eventID);
+      Users.findById(userID, function (error, user) {
+            if (error) {
+              res.status(500).json({
+                error: err.message
+              });
+            } else {
+              // check if event is already in favorites
+          //if (!user.favEvents.includes(eventID)) {
+            if (user.favEvents.indexOf(eventID) != -1) {
+              user.favEvents.pull(eventID);
+              user.save(function(error) {
+                if (error) {
+                  res.status(500).json({
+                    error: err.message
+                  });
+                } else {
+                  res.status(200).json({
+                    message: "Event removed from favorites"
+                  });
+                }
+              }
+            ) } else {
+              res.status(200).json({
+                message: "Event not in favorites"
+              });
+            }
+          }
+        }
+        )
+      }
+      
+
 
 // exports.addFavEvent = (req, res) => {
 //   // get User from Webtoken
@@ -354,9 +391,10 @@ exports.getFavEventList = (req, res) => {
           // set event list
           eventList = user.favEvents;
           console.log("getFavEventList: ",eventList);
-          res.status(200).json({
-            message: "Event list",
-            eventList: eventList
-          });
+          // res.status(200).json({
+            //message: "Event list",
+            // eventList: eventList
+          // });
+          res.status(200).send(eventList)
         }
       })};

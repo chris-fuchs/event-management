@@ -57,14 +57,20 @@ module.exports = function(app) {
   );
 
   app.put(
-    "/api/test/favoriteEvent/:id",
+    "/api/test/addFavEvent/:id",
     [authJwt.verifyToken, authJwt.isUser],
     controller.addFavEvent
   );
 
+  app.put(
+    "/api/test/removeFavEvent/:id",
+    [authJwt.verifyToken, authJwt.isUser],
+    controller.removeFavEvent
+  );
+
   app.get(
-    "api/test/favEventList/:id",
+    "/api/test/favEventList/:id",
     [authJwt.verifyToken, authJwt.isUser],
     controller.getFavEventList
-  )
+  );
 }

@@ -45,10 +45,14 @@ export class UserService {
   }
 
   getFavouriteEventList(id: any) {
-    return this.http.get(API_URL + 'favEventList/' + id);
+    return this.http.get<String[]>(API_URL + 'favEventList/' + id);
   }
 
-  favoriteEvent(id: any) {
-    return this.http.put(API_URL + 'favoriteEvent/' + id, { responseType: 'text' });
+  addFavEvent(id: any) {
+    return this.http.put(API_URL + 'addFavEvent/' + id, { responseType: 'text' });
+  }
+
+  removeFavEvent(id: any) {
+    return this.http.put(API_URL + 'removeFavEvent/' + id, { responseType: 'text' });
   }
 }
