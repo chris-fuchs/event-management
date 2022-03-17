@@ -9,6 +9,9 @@
   margin: 10px;
 }
 
+.fav {
+  color: red;
+}
 img {
   max-height: fit-content;
 }
@@ -36,11 +39,13 @@ button {
   align-items: stretch;
   align-content: space-around;
   row-gap: 10px;;
+  background-color: black;
 }
 
 .list-group-item {
   padding: 0;
   border: 0;
+  background-color: black;
   /* flex-grow: 1;
   flex-shrink: 3; */
 }
