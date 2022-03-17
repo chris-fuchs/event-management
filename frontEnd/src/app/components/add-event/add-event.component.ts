@@ -7,7 +7,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 @Component({
   selector: 'app-add-event',
   templateUrl: './add-event.component.html',
-  styleUrls: ['./add-event.component.css']
+  styleUrls: ['./add-event.component.scss']
 })
 export class AddEventComponent implements OnInit {
 

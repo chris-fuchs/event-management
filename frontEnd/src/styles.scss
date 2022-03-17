@@ -5,3 +5,14 @@
 
 html, body { height: 100%; background-color: black; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: black; }
+
+
+.light-theme {
+  @include angular-material-theme($light-theme);
+  @include custom-components-theme($light-theme);
+}
+
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+  @include custom-components-theme($dark-theme);
+}

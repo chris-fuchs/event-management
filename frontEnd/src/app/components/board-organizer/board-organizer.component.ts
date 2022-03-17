@@ -9,7 +9,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 @Component({
   selector: 'app-board-organizer',
   templateUrl: './board-organizer.component.html',
-  styleUrls: ['./board-organizer.component.css']
+  styleUrls: ['./board-organizer.component.scss']
 })
 export class BoardOrganizerComponent implements OnInit {
   content?: string;

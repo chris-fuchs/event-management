@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-cardview',
   templateUrl: './cardview.component.html',
-  styleUrls: ['./cardview.component.css']
+  styleUrls: ['./cardview.component.scss']
 })
 export class CardviewComponent implements OnInit {
   events?: Event[];

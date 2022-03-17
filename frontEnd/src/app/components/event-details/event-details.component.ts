@@ -5,7 +5,7 @@ import { Event } from 'src/app/models/event.model';
 @Component({
   selector: 'app-event-details',
   templateUrl: './event-details.component.html',
-  styleUrls: ['./event-details.component.css']
+  styleUrls: ['./event-details.component.scss']
 })
 export class EventDetailsComponent implements OnInit {
   @Input() viewMode = false;
