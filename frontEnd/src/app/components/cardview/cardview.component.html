@@ -25,14 +25,26 @@
 
       </mat-card-content>
       <mat-card-actions>
-        <!-- <button mat-button>LIKE</button> -->
-        <button mat-icon-button color="primary" *ngIf="!checkFavStatus(event._id)" aria-label="Example icon button with a home icon">
+        <!-- <button id="fav-icon" mat-icon-button color="primary" *ngIf="checkFavStatus(event._id)" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
           <mat-icon>favorite</mat-icon>
         </button>
-        <button mat-icon-button color="primary" *ngIf="checkFavStatus(event._id)" (click)="favouriteEvent(event._id)" aria-label="Example icon button with a home icon">
+        <button id="unfav-icon" mat-icon-button color="primary" *ngIf="checkFavStatus(event._id)  === false" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
+          <mat-icon>favorite_border</mat-icon>
+        </button> -->
+
+        <!-- <button id="fav-icon" mat-icon-button color="primary" *ngIf="event._id == favEvents" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button id="unfav-icon" mat-icon-button color="primary" *ngIf="!(event._id == favEvents)" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
+          <mat-icon>favorite_border</mat-icon>
+        </button> -->
+
+        <button id="fav-icon" class="fav" mat-icon-button color="primary" *ngIf="favEvents?.includes(event._id)" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button id="unfav-icon" class="fav" mat-icon-button color="primary" *ngIf="!(favEvents?.includes(event._id))" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
           <mat-icon>favorite_border</mat-icon>
         </button>
-
 
         <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
           <mat-icon>share</mat-icon>

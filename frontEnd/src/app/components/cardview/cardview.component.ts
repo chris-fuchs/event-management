@@ -16,16 +16,28 @@ export class CardviewComponent implements OnInit {
   currentIndex = -1;
   title = '';
   currentUser!: User;
-  favEvents?: any;
+  favEvents?: String[];
 
   constructor(private eventService: EventService, private tokenstorageService: TokenStorageService, private userService: UserService) { }
   ngOnInit(): void {
     this.currentUser = this.tokenstorageService.getUser()
-    this.retrieveEventsAndFavList();
-    console.log("this.currentUser: ",this.currentUser);
+    this.getAllEvents();
+    this.getFavEventsList();
+    // console.log("this.currentUser: ",this.currentUser);
   }
-  retrieveEventsAndFavList(): void {
-    //.favEvents = this.userService.getFavouriteEventList(this.currentUser.id);
+
+  getAllEvents(): void {
+    this.eventService.getAll()
+    .subscribe({
+      next: (data) => {
+        this.events = data;
+        // console.log(data);
+      },
+      error: (e) => console.error(e)
+    });
+  }
+
+  getFavEventsList(): void {
     this.userService.getFavouriteEventList(this.currentUser.id).subscribe({
       next: (data) => {
         // console.log("favEvents: ",data);
@@ -33,47 +45,52 @@ export class CardviewComponent implements OnInit {
       },
       error: (e) => console.error(e)
     });
-
-    console.log("!!!currentUser: ",this.currentUser.id);
-    console.log("!!!favEvents: ", this.favEvents);
-    this.eventService.getAll()
-      .subscribe({
-        next: (data) => {
-          this.events = data;
-          console.log(data);
-        },
-        error: (e) => console.error(e)
-      });
   }
+
 
   deleteEvent(eventid: any) {
     this.eventService.delete(eventid)
       .subscribe({
         next: (data) => {
-          console.log(data);
-          this.retrieveEventsAndFavList();
+          // console.log(data);
+          this.getFavEventsList()
         },
         error: (e) => console.error(e)
       });
   }
-  favouriteEvent(eventid: any) {
-    this.userService.favoriteEvent(eventid)
+  addFavEvent(eventid: any) {
+    this.userService.addFavEvent(eventid)
       .subscribe({
         next: (data) => {
-          console.log(data);
+          // console.log(data);
+          this.getFavEventsList()
         },
         error: (e) => console.error(e)
       });
+      // this.ngOnInit();
   }
 
+  removeFavEvent(eventid: any) {
+    this.userService.removeFavEvent(eventid)
+      .subscribe({
+        next: (data) => {
+          // console.log(data);
+          this.getFavEventsList()
+        },
+        error: (e) => console.error(e)
+      });
+      // this.ngOnInit();
+  }
+
+
   checkFavStatus(eventid: any) {
-    console.log("user: ",this.currentUser);
-    console.log("favEvents: ", this.currentUser.favEvents)
-    if(this.currentUser.favEvents?.includes(eventid)) {
-      console.log("eventid: ",eventid, " is in favEvents");
+    // console.log("user: ",this.currentUser);
+    // console.log("favEvents: ", this.currentUser.favEvents)
+    if(this.favEvents?.includes(eventid)) {
+      // console.log("eventid: ",eventid, " is in favEvents");
       return true;
     } else {
-      console.log("eventid: ",eventid, " is NOT in favEvents");
+      // console.log("eventid: ",eventid, " is NOT in favEvents");
       return false;
     }
   }
