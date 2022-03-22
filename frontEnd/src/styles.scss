@@ -1,18 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
-
-/* @import '~@angular/material/theming'; */
-/* @include mat-core(); */
-
-html, body { height: 100%; background-color: black; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: black; }
 
 
-.light-theme {
-  @include angular-material-theme($light-theme);
-  @include custom-components-theme($light-theme);
-}
+@use '@angular/material' as mat;
+@include mat.core();
 
-.dark-theme {
-  @include angular-material-theme($dark-theme);
-  @include custom-components-theme($dark-theme);
-}
+// html, body { height: 100%; background-color: black; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: black; }
+
+
+$light-primary: mat.define-palette(mat.$indigo-palette);
+$light-accent: mat.define-palette(mat.$pink-palette);
+$light-theme: mat.define-light-theme((
+ color: (
+   primary: $light-primary,
+   accent: $light-accent,
+ )
+));
+
+// Define a dark theme
+$dark-primary: mat.define-palette(mat.$pink-palette);
+$dark-accent: mat.define-palette(mat.$blue-gray-palette);
+$dark-theme: mat.define-dark-theme((
+ color: (
+   primary: $dark-primary,
+   accent: $dark-accent,
+ )
+));
+
+// @media (prefers-color-scheme: dark) {
+//   .navbar {
+//       background: black;
+//   }
+// }
+
+// @media (prefers-color-scheme: light) {
+//   .navbar {
+//       background: beige;
+//   }
+// }
+
+// .color-scheme-dark {
+//     @include angular-material-theme($theme-dark);
+// }
+
+// .color-scheme-light {
+//     @include angular-material-theme($theme-light);
+// }
+
+@include mat.all-component-themes($dark-theme);

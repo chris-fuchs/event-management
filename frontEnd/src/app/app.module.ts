@@ -29,6 +29,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { MatInputModule } from '@angular/material/input';
     MatPaginatorModule,
     MatTableModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonToggleModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

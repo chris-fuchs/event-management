@@ -1,7 +1,93 @@
-.container {
-  background-color: black;
+@import '~@angular/material/theming';
+@import './src/styles.scss';
+// @import './frontEnd/src/styles.scss';
+
+
+// .container {
+//   background-color: black;
+// }
+
+// #id {
+//   background-color: black;
+// }
+
+// make button toggle group smaller
+// .buttonToggle {
+//   line-height: 2px !important;
+//   // background-color: aqua;
+//   border: 40px;
+//   border-radius: 10px;
+//   border-color: white;
+// }
+
+:host .mat-button-toggle-group{
+  // width: 50%;
+  border-radius: 15px !important;
+  // border: 1px solid darkgray !important;
+  background-color: mat-color($dark-accent, 300) !important;
+  outline-color: mat-color($dark-accent, lighter);
+  border-color: mat-color($dark-primary, '100-contrast');
+
+  .mat-button-toggle {
+    line-height: 30px !important;
+    padding: 0 4px !important;
+  }
+
 }
 
-#id {
-  background-color: black;
+:host .mat-button-toggle.mat-button-toggle-checked{
+  background-color: mat-color($dark-primary, '50-contrast');
+  border-color: mat-color($dark-primary, '50-contrast');
+}
+
+:host .mat-button-toggle-group.mat-button-unchecked{
+  background-color: mat-color($dark-primary, '10-contrast');
+  border-color: mat-color($dark-primary, '10-contrast');
+}
+
+:host .mat-button-toggle-label-content {
+  line-height: 30px !important;
+  padding: 0 4px !important;
+}
+
+.mat-button-toggle-label-content {
+  line-height: 30px !important;
+  padding: 0 4px !important;
+}
+
+
+.mat-button-toggle-label-content {
+  width: 50%;
+  line-height: 24px !important;
+}
+
+// :host .mat-button-toggle {
+//   width: 3.5vw;
+//   margin: 0;
+//   padding: 0;
+// }
+
+.navbar {
+  color: mat-color($dark-primary, text);
+  background-color: mat-color($dark-accent);
+
+
+  a {
+    //color: mat-color($dark-primary, text);
+    // color: green;
+  }
+}
+
+.nav-item {
+  color: mat-color($dark-primary, text);
+
+  a {
+     color: mat-color($dark-primary, text);
+    // color: yellow;
+  }
+}
+
+#content {
+  width: 100%;
+  border-radius: 0%;
 }

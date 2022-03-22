@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 })
 export class AppComponent {
   title = 'frontEnd';
+  @HostBinding('class') public cssClass: string | undefined;
   private roles: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
@@ -16,8 +18,11 @@ export class AppComponent {
   showOrganizerBoard = false;
   showUserBoard = false;
   username?: string;
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService) { }
   ngOnInit(): void {
+    this.themeService.theme.subscribe((theme: string) => {
+      this.cssClass = theme;
+    });
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();

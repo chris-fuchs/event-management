@@ -1,5 +1,8 @@
 <div id="app">
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
+  <!-- <nav class="navbar navbar-expand navbar-dark bg-dark"> -->
+  <!-- <nav class="navbar navbar-expand navbar-dark"> -->
+  <nav class="navbar navbar-expand">
+
     <a href="#" class="navbar-brand">greatSite</a>
     <ul class="navbar-nav mr-auto" routerLinkActive="active">
       <!-- <li class="nav-item">
@@ -28,6 +31,21 @@
         <a class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
       </li> -->
     </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <mat-button-toggle-group appearance="legacy" class="buttonToggle" #group="matButtonToggleGroup">
+          <mat-button-toggle  value="left" aria-label="Light Mode">
+            <mat-icon>wb_sunny</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle  value="center" aria-label="System Default">
+            <mat-icon>brightness_auto</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle value="right" aria-label="Dark Mode">
+            <mat-icon>nightlight</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </li>
+    </ul>
     <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
       <li class="nav-item">
         <a class="nav-link" routerLink="register">Sign Up</a>
@@ -45,7 +63,8 @@
       </li>
     </ul>
   </nav>
-  <div class="container">
+  <!-- <div class="container"> -->
+  <div id="content">
     <router-outlet></router-outlet>
   </div>
 </div>
