@@ -67,14 +67,20 @@
 //   padding: 0;
 // }
 
-.navbar {
-  color: mat-color($dark-primary, text);
+.mat-toolbar {
+  color: mat-color($dark-primary, '50-contrast');
   background-color: mat-color($dark-accent);
+  height: 70%;
 
 
   a {
-    //color: mat-color($dark-primary, text);
-    // color: green;
+    color: whitesmoke;
+    //color: mat-color($dark-primary, lighter);
+    font-size: smaller;
+    //color: green;
+  }
+  .example-spacer {
+    flex: 1 1 auto;
   }
 }
 
@@ -92,30 +98,9 @@
   border-radius: 0%;
 }
 
-mat-sidenav {
-  background-color: mat-color($dark-accent);
-  width: 15em;
+.profilePic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  // border: 1px solid darkgray;
 }
-
-main {
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
-html, body {
-  min-height: 100vh;
-  height: auto;
-  background-color: mat-color($dark-primary, '50-contrast');
-}
-
-.app-layout, mat-sidenav, mat-sidenav-content {
-  min-height: calc(100vh - 0px);
-  height:auto;
-}
-
-:host mat-nav-list {
-  height: 100%;
-}
-
-
-

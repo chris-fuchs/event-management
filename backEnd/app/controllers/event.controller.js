@@ -45,7 +45,8 @@ exports.findAll = (req, res) => {
   
  
   Event.find(condition)
-    .populate('creator', 'username')
+    .populate('creator', ['profilePicURL','username'])
+    // .populate('creator', 'username')
     .then(data => {
       res.send(data);
     })

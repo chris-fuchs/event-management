@@ -1,14 +1,17 @@
 .example-card {
-  width: 400px;
+  width: 350px;
   height: 100%;
   /* max-height: 500px; */
   background-color: rgb(189, 189, 173);
   padding: 20px;
   border-radius: 15px;
   border: 0px;
-  margin: 10px;
+  // margin: 10px; creates a second vertical scrollbar ?!
 }
 
+.fav {
+  color: red;
+}
 img {
   max-height: fit-content;
 }
@@ -36,11 +39,62 @@ button {
   align-items: stretch;
   align-content: space-around;
   row-gap: 10px;;
+  // background-color: black;
+  border-radius: 0%;
 }
 
 .list-group-item {
   padding: 0;
   border: 0;
+  background-color: transparent;
   /* flex-grow: 1;
   flex-shrink: 3; */
 }
+
+// .example-card {
+//   width: 400px;
+//   height: 100%;
+//   /* max-height: 500px; */
+//   background-color: rgb(189, 189, 173);
+//   padding: 20px;
+//   border-radius: 15px;
+//   border: 0px;
+//   margin: 10px;
+// }
+
+// img {
+//   max-height: fit-content;
+// }
+
+// .example-header-image {
+//   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+//   background-size: cover;
+// }
+
+// mat-card-title {
+//   font-weight: bolder;
+// }
+
+// button {
+//   border: 15px;
+//   margin-right: 5px ;
+// }
+
+// .list-group {
+//   display: flex;
+//   width: 100%;
+//   justify-content:space-evenly;
+//   flex-wrap: wrap;
+//   flex-direction: row;
+//   align-items: stretch;
+//   align-content: space-around;
+//   row-gap: 10px;;
+// }
+
+// .list-group-item {
+//   padding: 0;
+//   border: 0;
+//   background-color: transparent;
+//   /* flex-grow: 1;
+//   flex-shrink: 3; */
+// }

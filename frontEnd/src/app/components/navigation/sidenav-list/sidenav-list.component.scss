@@ -1,24 +1,5 @@
 @import '~@angular/material/theming';
 @import './src/styles.scss';
-// @import './frontEnd/src/styles.scss';
-
-
-// .container {
-//   background-color: black;
-// }
-
-// #id {
-//   background-color: black;
-// }
-
-// make button toggle group smaller
-// .buttonToggle {
-//   line-height: 2px !important;
-//   // background-color: aqua;
-//   border: 40px;
-//   border-radius: 10px;
-//   border-color: white;
-// }
 
 :host .mat-button-toggle-group{
   // width: 50%;
@@ -27,6 +8,7 @@
   background-color: mat-color($dark-accent, 300) !important;
   outline-color: mat-color($dark-accent, lighter);
   border-color: mat-color($dark-primary, '100-contrast');
+  margin-left: 0.5em;
 
   .mat-button-toggle {
     line-height: 30px !important;
@@ -61,61 +43,27 @@
   line-height: 24px !important;
 }
 
-// :host .mat-button-toggle {
-//   width: 3.5vw;
-//   margin: 0;
-//   padding: 0;
-// }
-
-.navbar {
-  color: mat-color($dark-primary, text);
+.mat-nav-list {
+  color: mat-color($dark-primary, '50-contrast');
   background-color: mat-color($dark-accent);
+  height: 70%;
 
 
   a {
-    //color: mat-color($dark-primary, text);
-    // color: green;
+    color: whitesmoke;
+    //color: mat-color($dark-primary, lighter);
+    font-size: smaller;
+    //color: green;
+  }
+  .example-spacer {
+    flex: 1 1 auto;
   }
 }
 
-.nav-item {
-  color: mat-color($dark-primary, text);
-
-  a {
-     color: mat-color($dark-primary, text);
-    // color: yellow;
-  }
-}
-
-#content {
-  width: 100%;
-  border-radius: 0%;
-}
-
-mat-sidenav {
-  background-color: mat-color($dark-accent);
-  width: 15em;
-}
-
-main {
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
-html, body {
+mag-sidenav-container {
   min-height: 100vh;
-  height: auto;
-  background-color: mat-color($dark-primary, '50-contrast');
-}
-
-.app-layout, mat-sidenav, mat-sidenav-content {
-  min-height: calc(100vh - 0px);
-  height:auto;
 }
 
 :host mat-nav-list {
   height: 100%;
 }
-
-
-

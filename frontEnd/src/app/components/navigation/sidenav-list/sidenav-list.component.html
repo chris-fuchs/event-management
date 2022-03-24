@@ -1,0 +1,76 @@
+
+<mat-nav-list>
+
+
+
+
+  <div mat-list-item  *ngIf="showAdminBoard" (click)="onSidenavClose()">
+    <a class="nav-link" routerLink="admin">Admin Board</a>
+  </div>
+
+  <div mat-list-item *ngIf="showModeratorBoard" (click)="onSidenavClose()">
+    <a class="nav-link" routerLink="mod">Moderator Board</a>
+  </div>
+
+  <div mat-list-item *ngIf="showOrganizerBoard" (click)="onSidenavClose()">
+    <a class="nav-link" routerLink="org">Organizer Board</a>
+  </div>
+
+  <div mat-list-item *ngIf="showUserBoard" (click)="onSidenavClose()">
+    <a class="nav-link" routerLink="user">User Board</a>
+  </div>
+
+  <div mat-list-item (click)="onSidenavClose()">
+    <a routerLink="events" class="nav-link">list</a>
+  </div>
+
+  <div mat-list-item (click)="onSidenavClose()">
+    <a routerLink="eventcards" class="nav-link">show events</a>
+  </div>
+
+  <div mat-list-item *ngIf="showAddEvent" (click)="onSidenavClose()">
+    <a routerLink="add" class="nav-link">add event</a>
+  </div>
+
+  <div mat-list-item>
+    <mat-button-toggle-group appearance="legacy" class="buttonToggle" #group="matButtonToggleGroup">
+      <mat-button-toggle  value="left" aria-label="Light Mode">
+        <mat-icon>wb_sunny</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle  value="center" aria-label="System Default">
+        <mat-icon>brightness_auto</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="right" aria-label="Dark Mode">
+        <mat-icon>nightlight</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <!-- <div mat-list-item *ngIf="!isLoggedIn" (click)="onSidenavClose()">
+    <a class="nav-link" routerLink="register">Sign Up</a>
+  </div>
+
+  <div mat-list-item *ngIf="!isLoggedIn" (click)="onSidenavClose()">
+    <a class="nav-link" routerLink="login">Login</a>
+  </div>
+
+  <div mat-list-item *ngIf="isLoggedIn" (click)="onSidenavClose()">
+    <a class="nav-link" routerLink="profile">{{ username }}</a>
+  </div>
+
+  <div mat-list-item *ngIf="isLoggedIn" (click)="onSidenavClose()">
+    <a class="nav-link" (click)="logout()">LogOut</a>
+  </div> -->
+
+  <!-- <a mat-list-item routerLink="/home" (click)="onSidenavClose()">
+      <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
+  </a>
+  <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
+      <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">Owner Actions</span>
+  </a>
+  <a mat-list-item routerLink="#" (click)="onSidenavClose()">
+      <mat-icon>account_balance</mat-icon><span class="nav-caption">Account Actions</span>
+  </a> -->
+
+
+</mat-nav-list>

@@ -398,3 +398,25 @@ exports.getFavEventList = (req, res) => {
           res.status(200).send(eventList)
         }
       })};
+
+      exports.getProfilePicture = (req, res) => {
+        console.log("getProfilePicture triggered")
+        userID = req.userId
+        console.log("getProfilePicture: ",userID);
+        // find and set event list
+        Users.findById(userID, function (error, user) {
+              if (error) {
+                res.status(500).json({
+                  error: err.message
+                });
+              } else {
+                // set event list
+                profilePicURL = user.profilePicURL;
+                console.log("getProfilePicture: ",profilePicURL);
+                // res.status(200).json({
+                  //message: "Event list",
+                  // eventList: eventList
+                // });
+                res.status(200).send(profilePicURL)
+              }
+            })}

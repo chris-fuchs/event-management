@@ -19,6 +19,10 @@
       {{ role }}
     </li>
   </ul>
+    <form (submit)="updateProfile()">
+      <input type="file" (change)="onFileChange($event)" />
+      <button type="submit">Upload</button>
+    </form>
 </div>
 <ng-template #loggedOut>
   Please login.

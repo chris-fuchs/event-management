@@ -55,4 +55,12 @@ export class UserService {
   removeFavEvent(id: any) {
     return this.http.put(API_URL + 'removeFavEvent/' + id, { responseType: 'text' });
   }
+
+  updateUser(id: any, data: any): Observable<any> {
+    return this.http.put(`${API_URL}user/update/${id}`, data);
+  }
+
+  getProfilePicture(id: any) {
+    return this.http.get(API_URL + 'profilePicture/' + id, { responseType: 'text' });
+  }
 }

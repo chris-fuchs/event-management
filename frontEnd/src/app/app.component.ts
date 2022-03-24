@@ -1,4 +1,7 @@
-import { Component, HostBinding } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Component, HostBinding, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
+import { MatToolbar } from '@angular/material/toolbar';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { ThemeService } from './services/theme.service';
 
@@ -10,6 +13,9 @@ import { ThemeService } from './services/theme.service';
 export class AppComponent {
   title = 'frontEnd';
   @HostBinding('class') public cssClass: string | undefined;
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
+  // Top Toolbar
+  @ViewChild(MatToolbar) public topnav!: MatToolbar;
   private roles: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
@@ -18,8 +24,9 @@ export class AppComponent {
   showOrganizerBoard = false;
   showUserBoard = false;
   username?: string;
-  constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService) { }
+  constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService, private observer: BreakpointObserver) { }
   ngOnInit(): void {
+
     this.themeService.theme.subscribe((theme: string) => {
       this.cssClass = theme;
     });
@@ -36,6 +43,28 @@ export class AppComponent {
       this.username = user.username;
     }
   }
+
+  ngAfterViewInit() {
+    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+      if (res.matches) {
+        // this.sidenav.mode = 'over';
+        // this.sidenav.close();
+        var topnav = Array.from(document.getElementsByClassName("top-nav-only") as HTMLCollectionOf<HTMLElement>)
+        topnav.forEach(element => {
+          element.style.display = "none";
+        });
+      } else {
+        // this.topnav.
+        var topnav = Array.from(document.getElementsByClassName("top-nav-only") as HTMLCollectionOf<HTMLElement>)
+        topnav.forEach(element => {
+          element.style.display = "block";
+        });
+        // this.sidenav.mode = 'side';
+        // this.sidenav.open();
+      }
+    });
+  }
+
   logout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();

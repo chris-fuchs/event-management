@@ -30,6 +30,14 @@ import {MatTableModule} from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { HeaderComponent } from './components/navigation/header/header.component';
+import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+// import { MaterialModule } from './material.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {LayoutModule} from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -45,7 +53,9 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     BoardAdminComponent,
     BoardModeratorComponent,
     BoardOrganizerComponent,
-    BoardUserComponent
+    BoardUserComponent,
+    HeaderComponent,
+    SidenavListComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +72,12 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatListModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    LayoutModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

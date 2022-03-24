@@ -1,0 +1,124 @@
+<mat-toolbar>
+
+
+<div>
+  <button mat-icon-button (click)="onToggleSidenav()">
+  <mat-icon>menu</mat-icon>
+</button>
+</div>
+
+<div>
+  <a href="#" class="navbar-brand">greatSite</a>
+</div>
+
+<div class="top-nav-only" *ngIf="showAdminBoard">
+  <a class="nav-link" routerLink="admin">Admin Board</a>
+</div>
+
+<div class="top-nav-only" *ngIf="showModeratorBoard">
+  <a class="nav-link" routerLink="mod">Moderator Board</a>
+</div>
+
+<div class="top-nav-only" *ngIf="showOrganizerBoard">
+  <a class="nav-link" routerLink="org">Organizer Board</a>
+</div>
+
+<div class="top-nav-only" *ngIf="showUserBoard">
+  <a class="nav-link" routerLink="user">User Board</a>
+</div>
+
+<div class="top-nav-only">
+  <a routerLink="events" class="nav-link">list</a>
+</div>
+
+<div class="top-nav-only">
+  <a routerLink="eventcards" class="nav-link">show events</a>
+</div>
+
+<div class="top-nav-only" *ngIf="showAddEvent">
+  <a routerLink="add" class="nav-link">add event</a>
+</div>
+
+<span class="example-spacer"></span>
+
+<div class="top-nav-only">
+  <mat-button-toggle-group appearance="legacy" class="buttonToggle" #group="matButtonToggleGroup">
+    <mat-button-toggle  value="left" aria-label="Light Mode">
+      <mat-icon>wb_sunny</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle  value="center" aria-label="System Default">
+      <mat-icon>brightness_auto</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="right" aria-label="Dark Mode">
+      <mat-icon>nightlight</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<span class="example-spacer"></span>
+
+<!-- <div class="top-nav-only" *ngIf="!isLoggedIn"> -->
+<div *ngIf="!isLoggedIn">
+  <a class="nav-link" routerLink="register">Sign Up</a>
+</div>
+
+<!-- <div class="top-nav-only" *ngIf="!isLoggedIn"> -->
+<div *ngIf="!isLoggedIn">
+  <a class="nav-link" routerLink="login">Login</a>
+</div>
+
+<!-- <div class="top-nav-only" *ngIf="isLoggedIn"> -->
+<!-- <div *ngIf="isLoggedIn">
+  <a class="nav-link" routerLink="profile">{{ username }}</a>
+</div> -->
+
+<div *ngIf="isLoggedIn">
+
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+  <img class="profilePic" src="{{ profilePicURL }}" alt="userImage">
+</button>
+
+<mat-menu #menu="matMenu">
+  <div mat-menu-item disabled="true">
+    {{username}}
+  </div>
+  <button mat-menu-item routerLink="profile">
+    <mat-icon>perm_identity</mat-icon>
+    <span>Profile</span>
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    <span>LogOut</span>
+    <!-- <span>
+      <a class="nav-link" (click)="logout()">LogOut</a>
+    </span> -->
+  </button>
+</mat-menu>
+
+
+  <!-- <a class="nav-link" routerLink="profile">{{ username }}</a> -->
+</div>
+
+
+
+
+    <!-- <mat-toolbar color="primary">
+  <div fxHide.gt-xs>
+      <button mat-icon-button (click)="onToggleSidenav()">
+          <mat-icon>menu</mat-icon>
+      </button>
+  </div>
+  <div>
+      <a routerLink="/home">Owner-Account</a>
+  </div>
+  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+      <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+          <li>
+              <a routerLink="/owner">Owner Actions</a>
+          </li>
+          <li>
+              <a routerLink="/account">Account Actions</a>
+          </li>
+      </ul>
+  </div>
+</mat-toolbar> -->

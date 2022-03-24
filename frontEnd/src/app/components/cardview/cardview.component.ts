@@ -17,12 +17,17 @@ export class CardviewComponent implements OnInit {
   title = '';
   currentUser!: User;
   favEvents?: String[];
+  isLoggedIn = false;
 
   constructor(private eventService: EventService, private tokenstorageService: TokenStorageService, private userService: UserService) { }
   ngOnInit(): void {
     this.currentUser = this.tokenstorageService.getUser()
+    this.isLoggedIn = !!this.tokenstorageService.getToken();
     this.getAllEvents();
-    this.getFavEventsList();
+    if(this.isLoggedIn) {
+      this.getFavEventsList();
+
+    }
     // console.log("this.currentUser: ",this.currentUser);
   }
 
