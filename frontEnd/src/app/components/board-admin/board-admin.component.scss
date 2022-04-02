@@ -2,6 +2,14 @@
   margin-left: 8px;
 } */
 
+// :host mat-expansion-panel-body {
+//   overflow-x: scroll !important;
+// }
+
+:host mat-expansion-panel {
+  overflow-x: auto !important;
+}
+
 
 table {
   width: 100%;

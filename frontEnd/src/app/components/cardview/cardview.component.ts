@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Event } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { EventService } from 'src/app/services/event.service';
@@ -11,13 +12,27 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./cardview.component.scss']
 })
 export class CardviewComponent implements OnInit {
+
   events?: Event[];
+  allEvents?: Event[];
   currentEvent: Event = {};
   currentIndex = -1;
   title = '';
   currentUser!: User;
   favEvents?: String[];
   isLoggedIn = false;
+  keywords = new Set(['free', 'kid-friendly', 'disabled-friendly']);
+  formControl = new FormControl(['angular']);
+
+  // foods: any = [
+  //   {value: 'all', viewValue: 'All'},
+  //   {value: 'pizza-1', viewValue: 'Pizza'},
+  //   {value: 'tacos-2dddddd', viewValue: 'Tacoddddddds'},
+  // ];
+  categories?: any;
+  foods: any = ["pizza","bla","tacos"];
+
+
 
   constructor(private eventService: EventService, private tokenstorageService: TokenStorageService, private userService: UserService) { }
   ngOnInit(): void {
@@ -26,8 +41,12 @@ export class CardviewComponent implements OnInit {
     this.getAllEvents();
     if(this.isLoggedIn) {
       this.getFavEventsList();
-
     }
+    this.eventService.getCategories().subscribe(data => {
+      console.log("categories: ",data);
+      this.categories = data
+      this.categories = ["all"].concat(this.categories);
+    });
     // console.log("this.currentUser: ",this.currentUser);
   }
 
@@ -35,8 +54,9 @@ export class CardviewComponent implements OnInit {
     this.eventService.getAll()
     .subscribe({
       next: (data) => {
-        this.events = data;
-        // console.log(data);
+        this.allEvents = data;
+        this.events = this.allEvents;
+        console.log(data);
       },
       error: (e) => console.error(e)
     });
@@ -97,6 +117,29 @@ export class CardviewComponent implements OnInit {
     } else {
       // console.log("eventid: ",eventid, " is NOT in favEvents");
       return false;
+    }
+  }
+
+  showSharing(eventIndex: any) {
+    console.log(eventIndex)
+    var x = document.getElementById(eventIndex);
+    if(x) {
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+  }
+
+  changeCategory(value: any){
+    console.log(value);
+    if(this.allEvents) {
+      this.events = this.allEvents.filter(event => {
+      if(event.category?.includes(value)) {
+        return event;
+      }
+    })
     }
   }
 }

@@ -20,7 +20,7 @@ export class EventService {
     return this.http.post(baseUrl, data);
   }
   update(id: any, data: any): Observable<any> {
-    return this.http.put(`${baseUrl}/${id}`, data);
+    return this.http.patch(`${baseUrl}/${id}`, data);
   }
   delete(id: any): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
@@ -30,5 +30,9 @@ export class EventService {
   }
   findByTitle(title: any): Observable<Event[]> {
     return this.http.get<Event[]>(`${baseUrl}?title=${title}`);
+  }
+
+  getCategories(): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/info/categories`);
   }
 }

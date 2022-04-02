@@ -1,51 +1,78 @@
 
 
-@use '@angular/material' as mat;
-@include mat.core();
+// @use '@angular/material' as mat;
+// @include mat.core();
 
 // html, body { height: 100%; background-color: black; }
 // body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: black; }
 
 
-$light-primary: mat.define-palette(mat.$indigo-palette);
-$light-accent: mat.define-palette(mat.$pink-palette);
-$light-theme: mat.define-light-theme((
- color: (
-   primary: $light-primary,
-   accent: $light-accent,
- )
-));
+// $light-primary: mat.define-palette(mat.$indigo-palette);
+// $light-accent: mat.define-palette(mat.$pink-palette);
+// $light-theme: mat.define-light-theme((
+//  color: (
+//    primary: $light-primary,
+//    accent: $light-accent,
+//  )
+// ));
 
-// Define a dark theme
-$dark-primary: mat.define-palette(mat.$pink-palette);
-$dark-accent: mat.define-palette(mat.$blue-gray-palette);
-$dark-theme: mat.define-dark-theme((
- color: (
-   primary: $dark-primary,
-   accent: $dark-accent,
- )
-));
+// // Define a dark theme
+// $dark-primary: mat.define-palette(mat.$pink-palette);
+// $dark-accent: mat.define-palette(mat.$blue-gray-palette);
+// $dark-theme: mat.define-dark-theme((
+//  color: (
+//    primary: $dark-primary,
+//    accent: $dark-accent,
+//  )
+// ));
 
-// @media (prefers-color-scheme: dark) {
-//   .navbar {
-//       background: black;
-//   }
-// }
+// // @media (prefers-color-scheme: dark) {
+// //   .navbar {
+// //       background: black;
+// //   }
+// // }
 
-// @media (prefers-color-scheme: light) {
-//   .navbar {
-//       background: beige;
-//   }
-// }
+// // @media (prefers-color-scheme: light) {
+// //   .navbar {
+// //       background: beige;
+// //   }
+// // }
 
-// .color-scheme-dark {
-//     @include angular-material-theme($theme-dark);
-// }
+// // .color-scheme-dark {
+// //     @include angular-material-theme($theme-dark);
+// // }
 
-// .color-scheme-light {
-//     @include angular-material-theme($theme-light);
-// }
+// // .color-scheme-light {
+// //     @include angular-material-theme($theme-light);
+// // }
 
-@include mat.all-component-themes($dark-theme);
+// @include mat.all-component-themes($dark-theme);
 
 
+// @use "@angular/material" as mat;
+
+// @use "./styles/themes/light";
+
+// @include mat.core();
+
+// // @include mat.core-theme(light.$my-app-light-theme);
+// // @include mat.button-theme(light.$my-app-light-theme);
+// @include mat.all-component-themes(light.$my-app-light-theme);
+@use "@angular/material" as mat;
+
+@use "./styles/themes/light";
+// @use "./styles/components";
+// @use "./styles/typography/config" as typography;
+
+// @include mat.core(typography.$my-app-typography);
+
+@include mat.core-theme(light.$my-app-light-theme);
+// @include mat.button-theme(light.$my-app-light-theme);
+// @include components.theme(
+//   light.$my-app-light-theme,
+  // typography.$my-app-typography,
+  // light.$my-app-light-variants
+// );
+mat-expansion-panel-content {
+  overflow-x: scroll !important;
+}

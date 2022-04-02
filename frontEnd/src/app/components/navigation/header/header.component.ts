@@ -46,7 +46,8 @@ export class HeaderComponent implements OnInit {
   }
   logout(): void {
     this.tokenStorageService.signOut();
-    window.location.reload();
+    //window.location.reload();
+    window.location.href = '/';
   }
 
   public onToggleSidenav = () => {

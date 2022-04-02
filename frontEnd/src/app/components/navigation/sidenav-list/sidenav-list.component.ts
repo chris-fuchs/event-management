@@ -1,4 +1,6 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, EventEmitter, HostBinding, OnInit, Output } from '@angular/core';
+import { StyleManagerService } from 'src/app/services/style-manager.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
@@ -11,6 +13,7 @@ export class SidenavListComponent implements OnInit {
   @Output() sidenavClose = new EventEmitter();
   @HostBinding('class') public cssClass: string | undefined;
   private roles: string[] = [];
+  isDark = false;
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
@@ -18,7 +21,7 @@ export class SidenavListComponent implements OnInit {
   showOrganizerBoard = false;
   showUserBoard = false;
   username?: string;
-  constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService) { }
+  constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService, private overlayContainer: OverlayContainer, private styleManager: StyleManagerService) { }
   ngOnInit(): void {
     this.themeService.theme.subscribe((theme: string) => {
       this.cssClass = theme;
@@ -43,6 +46,22 @@ export class SidenavListComponent implements OnInit {
 
   public onSidenavClose = () => {
     this.sidenavClose.emit();
+  }
+
+  toggleTheme(): void {
+    this.isDark = !this.isDark;
+    if (this.isDark) {
+      this.overlayContainer.getContainerElement().classList.add('dark-theme');
+    } else {
+      this.overlayContainer
+        .getContainerElement()
+        .classList.remove('dark-theme');
+    }
+  }
+
+  toggleDarkTheme() {
+    this.styleManager.toggleDarkTheme();
+    this.isDark = !this.isDark;
   }
 
 }

@@ -9,6 +9,10 @@ const Event = mongoose.model(
       ref: "User"
     },
     imageURL: String,
+    category: {
+      type: String,
+      enum: ["sport", "music", "movie", "party", "other"]
+    },
     published: Boolean
   },
   { timestamps: true }

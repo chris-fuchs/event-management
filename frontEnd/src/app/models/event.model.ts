@@ -6,5 +6,6 @@ export class Event {
   creator?: User; // or userid as string?
   description?: string;
   imageURL? : string;
+  category?: string;
   published?: boolean;
 }

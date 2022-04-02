@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
 
 
 <div>
@@ -8,7 +8,7 @@
 </div>
 
 <div>
-  <a href="#" class="navbar-brand">greatSite</a>
+  <a href="#" class="navbar-brand">EventSite</a>
 </div>
 
 <div class="top-nav-only" *ngIf="showAdminBoard">
@@ -23,13 +23,13 @@
   <a class="nav-link" routerLink="org">Organizer Board</a>
 </div>
 
-<div class="top-nav-only" *ngIf="showUserBoard">
+<!-- <div class="top-nav-only" *ngIf="showUserBoard">
   <a class="nav-link" routerLink="user">User Board</a>
-</div>
+</div> -->
 
-<div class="top-nav-only">
+<!-- <div class="top-nav-only">
   <a routerLink="events" class="nav-link">list</a>
-</div>
+</div> -->
 
 <div class="top-nav-only">
   <a routerLink="eventcards" class="nav-link">show events</a>
@@ -41,7 +41,14 @@
 
 <span class="example-spacer"></span>
 
-<div class="top-nav-only">
+<!-- <button mat-icon-button (click)="toggleDarkTheme()" matTooltip="Toggle dark theme"> -->
+  <button mat-icon-button matTooltip="Toggle dark theme">
+  <mat-icon>
+    brightness_6
+  </mat-icon>
+</button>
+
+<!-- <div class="top-nav-only">
   <mat-button-toggle-group appearance="legacy" class="buttonToggle" #group="matButtonToggleGroup">
     <mat-button-toggle  value="left" aria-label="Light Mode">
       <mat-icon>wb_sunny</mat-icon>
@@ -53,7 +60,7 @@
       <mat-icon>nightlight</mat-icon>
     </mat-button-toggle>
   </mat-button-toggle-group>
-</div>
+</div> -->
 
 <span class="example-spacer"></span>
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from 'src/app/models/event.model';
 import { EventService } from 'src/app/services/event.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
@@ -12,18 +12,26 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 export class AddEventComponent implements OnInit {
 
   currentUser?: any
-  //form!: FormGroup;
-  form = new FormGroup( {
-    title: new FormControl(''),
-    description: new FormControl(''),
-    content: new FormControl('')
+
+  // form = new FormGroup( {
+  //   title: new FormControl(''),
+  //   description: new FormControl(''),
+  //   content: new FormControl('')
+  // })
+
+  form = this.fb.group({
+    title: ['', Validators.required],
+    description: ['', Validators.required],
+    content: [''],
+    category: ['', Validators.required]
   })
 
   submitted = false;
   isLoggedIn = false;
   showAddEvent = false;
+  categories?: any
 
-  constructor(private eventService: EventService, private tokenStorageService: TokenStorageService) { }
+  constructor(private fb: FormBuilder, private eventService: EventService, private tokenStorageService: TokenStorageService) { }
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
@@ -31,6 +39,15 @@ export class AddEventComponent implements OnInit {
       const roles = this.currentUser.roles;
       this.showAddEvent = roles.includes('ROLE_ORGANIZER');
     }
+
+    this.eventService.getCategories().subscribe(data => {
+      console.log("categories: ",data);
+      this.categories = data
+    });
+
+
+
+
     //console.log("ngOnInit fired..")
     /*this.form = new FormGroup({
       'title': new FormControl(null, {validators:[Validators.required, Validators.minLength(3)]}),
@@ -60,12 +77,18 @@ export class AddEventComponent implements OnInit {
     formData.append('file', this.form.get('content')?.value)
     console.log("currentUserID: ",this.currentUser.id)
     formData.append('creator', this.currentUser.id)
+    formData.append('category', this.form.get('category')?.value)
 
+
+    console.log('category', this.form.get('category')?.value)
     this.eventService.create(formData)
       .subscribe({
         next: (res) => {
           console.log(res);
           this.submitted = true;
+          let url = `/events/${res._id}`;
+          console.log("url: ",url);
+          window.location.href = url;
         },
         error: (e) => console.error(e)
       });

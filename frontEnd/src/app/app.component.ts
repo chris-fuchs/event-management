@@ -3,6 +3,7 @@ import { Component, HostBinding, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatToolbar } from '@angular/material/toolbar';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { StyleManagerService } from './services/style-manager.service';
 import { ThemeService } from './services/theme.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class AppComponent {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
   // Top Toolbar
   @ViewChild(MatToolbar) public topnav!: MatToolbar;
-  private roles: string[] = [];
+  private roles: string[] = []
+  isDark = this.styleManager.isDark;
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
@@ -24,7 +26,7 @@ export class AppComponent {
   showOrganizerBoard = false;
   showUserBoard = false;
   username?: string;
-  constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService, private observer: BreakpointObserver) { }
+  constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService, private observer: BreakpointObserver, private styleManager: StyleManagerService) { }
   ngOnInit(): void {
 
     this.themeService.theme.subscribe((theme: string) => {
@@ -68,5 +70,10 @@ export class AppComponent {
   logout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();
+  }
+
+  toggleDarkTheme() {
+    this.styleManager.toggleDarkTheme();
+    this.isDark = !this.isDark;
   }
 }

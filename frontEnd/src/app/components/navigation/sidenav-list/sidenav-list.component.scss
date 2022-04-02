@@ -5,26 +5,33 @@
   // width: 50%;
   border-radius: 15px !important;
   // border: 1px solid darkgray !important;
-  background-color: mat-color($dark-accent, 300) !important;
-  outline-color: mat-color($dark-accent, lighter);
-  border-color: mat-color($dark-primary, '100-contrast');
-  margin-left: 0.5em;
+  // background-color: mat-color($dark-accent, 300) !important;
+  // outline-color: mat-color($dark-accent, lighter);
+  // border-color: mat-color($dark-primary, '100-contrast');
+  background-color: "accent, 300" !important;
+  outline-color:  "accent, lighter";
+  border-color: "primary, 100-contrast";
+  margin-left: 1.3em;
 
   .mat-button-toggle {
     line-height: 30px !important;
-    padding: 0 4px !important;
+    padding: 0 0px !important;
   }
 
 }
 
 :host .mat-button-toggle.mat-button-toggle-checked{
-  background-color: mat-color($dark-primary, '50-contrast');
-  border-color: mat-color($dark-primary, '50-contrast');
+  // background-color: mat-color($dark-primary, '50-contrast');
+  // border-color: mat-color($dark-primary, '50-contrast');
+  background-color: "primary, 50-contrast";
+  border-color: "primary, 50-contrast";
 }
 
 :host .mat-button-toggle-group.mat-button-unchecked{
-  background-color: mat-color($dark-primary, '10-contrast');
-  border-color: mat-color($dark-primary, '10-contrast');
+  // background-color: mat-color($dark-primary, '10-contrast');
+  // border-color: mat-color($dark-primary, '10-contrast');
+  background-color: "primary, 10-contrast";
+  border-color: "primary, 10-contrast";
 }
 
 :host .mat-button-toggle-label-content {
@@ -37,6 +44,23 @@
   padding: 0 4px !important;
 }
 
+mat-icon-button .icon-button .mat-button-wrapper .mat-icon #toggleButton {
+  padding: 0 4px !important;
+}
+
+mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
+  padding: 0 8px !important;
+}
+// .mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
+//   padding: 0 6px !important;
+// }
+// :host mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
+//   padding: 0 6px !important;
+// }
+// :host .mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
+//   padding: 0 6px !important;
+// }
+
 
 .mat-button-toggle-label-content {
   width: 50%;
@@ -44,13 +68,15 @@
 }
 
 .mat-nav-list {
-  color: mat-color($dark-primary, '50-contrast');
-  background-color: mat-color($dark-accent);
+  // color: mat-color($dark-primary, '50-contrast');
+  // background-color: mat-color($dark-accent);
+  color: "primary, 50-contrast";
+  // background-color: "accent";
   height: 70%;
 
 
   a {
-    color: whitesmoke;
+    // color: whitesmoke;
     //color: mat-color($dark-primary, lighter);
     font-size: smaller;
     //color: green;

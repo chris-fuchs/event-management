@@ -1,6 +1,6 @@
 // const db = require("../models");
 // const Event = db.events;
-
+const { authJwt } = require("../middleware");
 const Event = require("../models/event.model.js");
 
 /*
@@ -63,6 +63,7 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
 
   Event.findById(id)
+    .populate('creator', ['profilePicURL','username'])
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found Event with id " + id });
@@ -114,32 +115,69 @@ exports.update = (req, res) => {
 // Delete a Event with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-
-
-
-  Event.findByIdAndRemove(id)
+  console.log("req.userId", req.userId)
+  // console.log("delete id: ",id)
+  // console.log("authJwt.getCurrentUserID", authJwt.getCurrentUserID())
+  // console.log("authJwt", authJwt)
+  // console.log("authJwt.currentUser",authJwt.currentUser)
+  Event.findById(id)
     .then(data => {
       if (!data) {
         res.status(404).send({
           message: `Cannot delete Event with id=${id}. Maybe Event was not found!`
         });
       }
-      else if(authJwt.isOrganizer && authJwt.currentUser.id !== data.creator) {
+      else if(!authJwt.isOrganizer && req.userId !== data.creator) {
           res.status(401).send({
             message: "Not Authorized"
           });
       } else {
-        res.send({
-          message: "Event was deleted successfully!"
+      Event.findByIdAndRemove(id)
+        .then(data => {
+          res.send({
+            message: "Event was deleted successfully!"
+          }
+        );
+        })
+        .catch(err => {
+          res.status(500).send({
+            message: "Could not delete Event with id=" + id
+          });
         });
-      }
-    })
+      }})
     .catch(err => {
+      console.log("error", err)
       res.status(500).send({
         message: "Could not delete Event with id=" + id
       });
     });
-};
+  }
+
+//   Event.findByIdAndRemove(id)
+//     .then(data => {
+//       console.log("delete creator", data.creator.toString())
+//       if (!data) {
+//         res.status(404).send({
+//           message: `Cannot delete Event with id=${id}. Maybe Event was not found!`
+//         });
+//       }
+//       else if(!authJwt.isOrganizer && req.userId !== data.creator) {
+//           res.status(401).send({
+//             message: "Not Authorized"
+//           });
+//       } else {
+//         res.send({
+//           message: "Event was deleted successfully!"
+//         });
+//       }
+//     })
+//     .catch(err => {
+//       console.log("error", err)
+//       res.status(500).send({
+//         message: "Could not delete Event with id=" + id
+//       });
+//     });
+// };
 
 // Delete all Events from the database.
 exports.deleteAll = (req, res) => {
@@ -169,4 +207,9 @@ exports.findAllPublished = (req, res) => {
           err.message || "Some error occurred while retrieving events."
       });
     });
+};
+
+
+exports.getCategories = (req, res) => {
+  res.status(200).send(Event.schema.path('category').enumValues);
 };

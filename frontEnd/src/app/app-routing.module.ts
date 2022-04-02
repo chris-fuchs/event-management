@@ -17,7 +17,8 @@ import { BoardAdminComponent } from './components/board-admin/board-admin.compon
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'events', component: EventsListComponent },
+  // { path: 'events', component: EventsListComponent },
+  { path: 'events', component: CardviewComponent },
   { path: 'events/:id', component: EventDetailsComponent },
   { path: 'eventcards', component: CardviewComponent},
   { path: 'add', component: AddEventComponent },

@@ -2,13 +2,16 @@ import { Component, Input, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from 'src/app/models/event.model';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { User } from 'src/app/models/user.model';
 @Component({
   selector: 'app-event-details',
   templateUrl: './event-details.component.html',
   styleUrls: ['./event-details.component.scss']
 })
 export class EventDetailsComponent implements OnInit {
-  @Input() viewMode = false;
+  currentUser!: User;
+  @Input() viewMode = true;
   @Input() currentEvent: Event = {
     title: '',
     description: '',
@@ -20,12 +23,22 @@ export class EventDetailsComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private tokenStorageService: TokenStorageService) { }
   ngOnInit(): void {
     if (!this.viewMode) {
       this.message = '';
+      console.log("hello")
+      console.log(["id"])
+      this.getEvent(this.route.snapshot.params["id"]);
+    } else {
+      this.message = '';
+      console.log("hello")
+      console.log(["id"])
       this.getEvent(this.route.snapshot.params["id"]);
     }
+    this.currentUser = this.tokenStorageService.getUser()
+    console.log("this.currentUser: ",this.currentUser.id);
   }
   getEvent(id: string): void {
     this.eventService.get(id)
@@ -33,6 +46,7 @@ export class EventDetailsComponent implements OnInit {
         next: (data) => {
           this.currentEvent = data;
           console.log(data);
+          console.log("creator id", this.currentEvent.creator)
         },
         error: (e) => console.error(e)
       });
@@ -42,6 +56,7 @@ export class EventDetailsComponent implements OnInit {
       title: this.currentEvent.title,
       description: this.currentEvent.description,
       imageURL: this.currentEvent.imageURL,
+      category: this.currentEvent.category,
       published: status
     };
     this.message = '';
@@ -75,5 +90,10 @@ export class EventDetailsComponent implements OnInit {
         },
         error: (e) => console.error(e)
       });
+  }
+
+  changeToEditMode(): void {
+    this.viewMode = false;
+    // window.location.reload();
   }
 }

@@ -1,5 +1,5 @@
-
-<mat-nav-list>
+<div [class.dark-theme]="isDark">
+<mat-nav-list color="primary">
 
 
 
@@ -16,13 +16,13 @@
     <a class="nav-link" routerLink="org">Organizer Board</a>
   </div>
 
-  <div mat-list-item *ngIf="showUserBoard" (click)="onSidenavClose()">
+  <!-- <div mat-list-item *ngIf="showUserBoard" (click)="onSidenavClose()">
     <a class="nav-link" routerLink="user">User Board</a>
-  </div>
+  </div> -->
 
-  <div mat-list-item (click)="onSidenavClose()">
+  <!-- <div mat-list-item (click)="onSidenavClose()">
     <a routerLink="events" class="nav-link">list</a>
-  </div>
+  </div> -->
 
   <div mat-list-item (click)="onSidenavClose()">
     <a routerLink="eventcards" class="nav-link">show events</a>
@@ -32,7 +32,14 @@
     <a routerLink="add" class="nav-link">add event</a>
   </div>
 
-  <div mat-list-item>
+
+    <button id="toggleButton" mat-icon-button (click)="toggleDarkTheme()" matTooltip="Toggle dark theme">
+      <mat-icon>
+        brightness_6
+      </mat-icon>
+    </button>
+
+  <!-- <div mat-list-item>
     <mat-button-toggle-group appearance="legacy" class="buttonToggle" #group="matButtonToggleGroup">
       <mat-button-toggle  value="left" aria-label="Light Mode">
         <mat-icon>wb_sunny</mat-icon>
@@ -44,7 +51,7 @@
         <mat-icon>nightlight</mat-icon>
       </mat-button-toggle>
     </mat-button-toggle-group>
-  </div>
+  </div>-->
 
   <!-- <div mat-list-item *ngIf="!isLoggedIn" (click)="onSidenavClose()">
     <a class="nav-link" routerLink="register">Sign Up</a>
@@ -74,3 +81,5 @@
 
 
 </mat-nav-list>
+
+</div>

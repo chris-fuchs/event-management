@@ -1,3 +1,41 @@
+<ul class="list-group event-selection-ul">
+  <li class="list-group-item event-selection-li">
+    <mat-form-field class="example-form-field" appearance="fill">
+      <mat-label>Search</mat-label>
+      <input matInput type="text" >
+      <button  matSuffix mat-icon-button aria-label="">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </li>
+<li class="list-group-item  event-selection-li">
+  <mat-label>Categories</mat-label>
+    <mat-select (selectionChange)="changeCategory($event.value)" value="all">
+      <mat-option *ngFor="let category of categories" [value]="category">
+        {{category}}
+      </mat-option>
+    </mat-select>
+</li>
+<li class="list-group-item event-selection-li">
+<mat-form-field class="example-chip-list" appearance="fill">
+  <mat-label>Tags</mat-label>
+
+
+
+  <mat-chip-list #chipList aria-label="Video keywords" multiple [formControl]="formControl">
+    <mat-chip
+        *ngFor="let keyword of keywords"
+        [selected]="keyword"
+        [value]="keyword"
+        >
+      {{keyword}}
+    </mat-chip>
+  </mat-chip-list>
+</mat-form-field>
+</li>
+</ul>
+
+
 <ul class="list-group">
   <li
   class="list-group-item"
@@ -7,14 +45,14 @@
       <mat-card-header>
         <!-- <div mat-card-avatar class="example-header-image" background-image= {{ event.creator?.profilePicURL }}></div> -->
         <div mat-card-avatar class="example-header-image" [style.background-image]= "'url( '+event.creator?.profilePicURL +' )'"></div>
-        <mat-card-title>{{ event.title }}</mat-card-title>
+        <mat-card-title><a class="titlelink" href="events/{{ event._id }}"> {{ event.title }}</a></mat-card-title>
         <!-- <mat-card-subtitle>Event Organizer</mat-card-subtitle> -->
         <mat-card-subtitle> {{ event.creator?.username }}</mat-card-subtitle>
 
 
       </mat-card-header>
       <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-          test
+          <!-- test -->
       <img mat-card-image src= {{event.imageURL}} alt="Photo of a Shiba Inu">
 
       <mat-card-content>
@@ -52,17 +90,30 @@
           </button>
         </span>
 
-        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+        <button mat-icon-button color="primary" (click)="showSharing(i)" aria-label="Example icon button with a home icon">
           <mat-icon>share</mat-icon>
         </button>
+<!-- circles-dark modern-dark -->
+        <div id= "{{i}}" class="sharebuttons" style="display: none;">
+        <share-buttons theme="material-light"
+          [include]="['copy', 'facebook', 'email', 'messenger', 'linkedin', 'reddit', 'pinterest',  'twitter','whatsapp','telegram']"
+          [showIcon]="true"
+          [showText]="false"
+          url="http://localhost:4200/events/{{event._id}}"
+          description="Angular Share Buttons"
+          twitterAccount="rodrigokamada"
+          class="pt-5">
+        </share-buttons>
+      </div>
+
 
         <!-- {{ event.creator?.username }}
         {{ currentUser?.username }} -->
 
 
-        <button mat-icon-button color="primary" (click)="deleteEvent(event._id)" aria-label="Example icon button with a home icon" *ngIf="currentUser?.username === event.creator?.username || currentUser?.roles?.includes('ROLE_ADMIN') || currentUser?.roles?.includes('ROLE_MODERATOR')">
+        <!-- <button mat-icon-button color="primary" (click)="deleteEvent(event._id)" aria-label="Example icon button with a home icon" *ngIf="currentUser?.username === event.creator?.username || currentUser?.roles?.includes('ROLE_ADMIN') || currentUser?.roles?.includes('ROLE_MODERATOR')">
           <mat-icon>edit</mat-icon>
-        </button>
+        </button> -->
 
 
       </mat-card-actions>

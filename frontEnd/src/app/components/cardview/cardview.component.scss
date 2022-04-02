@@ -38,7 +38,7 @@ button {
   flex-direction: row;
   align-items: stretch;
   align-content: space-around;
-  row-gap: 10px;;
+  row-gap: 10px;
   // background-color: black;
   border-radius: 0%;
 }
@@ -59,9 +59,62 @@ button {
 
 .mat-card-header {
   flex-shrink: 0;
+
+  a {
+    color: inherit !important;
+  }
 }
 
 .mat-card-content{
   flex-grow: 1;
   overflow: auto;
+}
+
+
+.sharebuttons {
+  display: "none" !important;
+}
+
+sharebuttons {
+  display: "none" !important;
+}
+
+.pt-5 {
+  padding-top: 0px !important;
+}
+
+a.titlelink:link, a.titlelink:visited, a.titlelink:hover, a.titlelink:active {
+  color: inherit !important;
+}
+
+.event-selection-ul {
+  width: 95%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #bdbdad;
+  padding-top: 15px;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  margin-top: 1%;
+  margin-bottom: 2%;
+  border-radius: 15px;
+  border: 0px;
+
+
+  display: flex;
+  justify-content:space-evenly;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  align-content: space-around;
+  row-gap: 10px;
+}
+.event-selection-li {
+  float: left;
+  display:flex;
+  flex-direction: column;
+  flex-grow: 2;
+  padding: 1%;
 }

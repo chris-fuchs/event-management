@@ -38,6 +38,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 // import { MaterialModule } from './material.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {LayoutModule} from '@angular/cdk/layout';
+import { SingleEventViewComponent } from './components/single-event-view/single-event-view.component';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatSelectModule} from '@angular/material/select';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+
 
 @NgModule({
   declarations: [
@@ -55,7 +62,8 @@ import {LayoutModule} from '@angular/cdk/layout';
     BoardOrganizerComponent,
     BoardUserComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    SingleEventViewComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +85,12 @@ import {LayoutModule} from '@angular/cdk/layout';
     MatMenuModule,
     MatToolbarModule,
     MatSidenavModule,
-    LayoutModule
+    LayoutModule,
+    ShareButtonsModule,
+    ShareIconsModule,
+    MatChipsModule,
+    MatSelectModule,
+    NgxMatFileInputModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

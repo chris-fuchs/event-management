@@ -55,6 +55,8 @@ router.post("/",  [authJwt.verifyToken, authJwt.isOrganizer], upload.single('fil
   if(req.file) {
     tempImageURL = 'http://localhost:8080/images/' + req.file.filename
   }
+  
+  // hggggftrrrrrrrrrr <-- 
 
   console.log(req.body.creator);
   // const user 
@@ -74,7 +76,8 @@ router.post("/",  [authJwt.verifyToken, authJwt.isOrganizer], upload.single('fil
     description: req.body.description,
     imageURL: tempImageURL,
     published: req.body.published ? req.body.published : false,
-    creator: req.body.creator
+    creator: req.body.creator,
+    category: req.body.category
     //creator: Users.findById(req.body.creator)
   });
 
@@ -105,11 +108,19 @@ router.post("/",  [authJwt.verifyToken, authJwt.isOrganizer], upload.single('fil
     //.exec()
     .then(data => {
       //res.send(data);
-      res.status(200).send({
-        message: "Event created successfully",
-      });
+
+      // res.status(200).send({
+      //   message: "Event created successfully",
+      // });
+      // let url = 'events/' + data._id.toString();
+      // console.log("data: ",data)
+      // console.log("id: ",data._id.toString())
+      // res.redirect("200", url);
+      res.status(200).send(data);
+
     })
     .catch(err => {
+      console.log("err: ",err)
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the Event."
@@ -127,13 +138,15 @@ router.post("/",  [authJwt.verifyToken, authJwt.isOrganizer], upload.single('fil
   router.get("/:id", events.findOne);
 
   // Update a Event with id
-  router.put("/:id", [authJwt.verifyToken, authJwt.isOrganizer || authJwt.isAdmin], events.update);
+  router.patch("/:id", [authJwt.verifyToken, authJwt.isOrganizer || authJwt.isAdmin], events.update);
 
   // Delete a Event with id
   router.delete("/:id",[authJwt.verifyToken, authJwt.isOrganizer || authJwt.isAdmin], events.delete);
 
   // Delete all Events
   router.delete("/",[authJwt.verifyToken, authJwt.isAdmin], events.deleteAll);
+
+  router.get("/info/categories", events.getCategories)
 
   app.use('/api/events', router);
 
