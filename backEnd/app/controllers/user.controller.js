@@ -12,17 +12,81 @@ exports.allAccess = (req, res) => {
 exports.userBoard = (req, res) => {
   res.status(200).send("User Content.");
 };
+
+// org: 620e603c8c7e915ae7034ca6
+// usr: 620e603c8c7e915ae7034ca5
+// mod: 620e603c8c7e915ae7034ca7
+
 exports.adminBoard = (req, res) => {
+  // console.log("req.permission ", req.permission)
+  // console.log("reqid: ", req.params.id)
+  // console.log("req.userId: ", req.userId)
+  // console.log("adminBoard triggered with userID: ",req.userId)
+  // let a = authJwt.isAdmin
+
+  // console.log("isAdmin: ",authJwt.isAdmin == true)
+  // console.log("isMod: ",authJwt.isMod == true)
+  // console.log("isModerator: ",authJwt.isModerator == true)
+
+  // if(req.user.roles === 'true'){
+  //   console.log("is admin yes!")
+  // }
+
+  // if(req.user.isMod === 'true'){
+  //   console.log("is mod yes!")
+  // }
+
+  // if(req.user.isModerator === 'true'){
+  //   console.log("is moderator yes!")
+  // }
+
+
+  // if(authJwt.isAdmin) {
+  //   console.log("adminBoard is admin")
+  // } else {
+  //   console.log("adminBoard is not admin")
+  // }
+
+  // if(authJwt.isModerator) {
+  //   console.log("adminBoard is mod")
+  // } else {
+  //   console.log("adminBoard is not mod")
+  // }
+
+  // if(authJwt.isOrganizer) {
+  //   console.log("adminBoard is org")
+  // } else {
+  //   console.log("adminBoard is not org")
+  // }
+
+  // if(authJwt.isUser) {
+  //   console.log("adminBoard is usr")
+  // } else {
+  //   console.log("adminBoard is not usr")
+  // }
+
+  
   //res.status(200).send("Admin Content.");
-  console.log("adminboard: ",req.userId)
-  const name = req.query.name;
-  const condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
-  let users = Users.find(condition)
+  let roleCondition
+  if(req.permission === "admin") {
+
+    // !!!! one of the below not all
+    roleCondition = { roles: { $in: ['620e603c8c7e915ae7034ca5','620e603c8c7e915ae7034ca6', '620e603c8c7e915ae7034ca7'] } };
+    console.log("adminBoard: is admin!");
+  } else {
+    // roleCondition = { roles: { $nin: ['organizer', 'user'] } };
+    roleCondition = { roles: { $in: ['620e603c8c7e915ae7034ca6', '620e603c8c7e915ae7034ca5'] } };
+    console.log("adminBoard: is not admin!");
+  }
+
+  Users.find(roleCondition)
       .select('-password')
-      .populate('roles', 'name')
+      .populate('roles', 'name')    
+      // .find(roleCondition)
       .exec()
       .then(docs => {
-          const response = {
+          if(docs.length >= 0) {
+            const responseUser = {
               count: docs.length,
               users: docs.map(doc => {
                   return {
@@ -32,18 +96,57 @@ exports.adminBoard = (req, res) => {
                     roles: doc.roles.map(role => role.name)
                   }
               })
-          }
-          res.status(200).json(response);
-          //res.send(response);
-      })
-      .catch(err => {
-
-
-          res.status(500).json({
-              error: err
-          });
+            }
+            //console.log("adminBoard: ",responseUser);
+             res.status(200).json(responseUser);
+        }
+        
+  })
+  .catch(err => {
+      console.log("adminBoard: ",err);
+      res.status(500).json({
+          error: err
       });
-};
+  });
+
+  } 
+
+//   console.log("adminboard: ",req.userId)
+//   const name = req.query.name;
+//   const condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
+//   let users = Users.find(condition)
+//       .select('-password')
+//       .populate('roles', 'name')
+//       .exec()
+
+
+//   // users.find(roles.name?.exists("admin"))
+
+
+//       .then(docs => {
+//           // only send back if role.name equals USER or ORGANIZER
+          
+//           const response = {
+//               count: docs.length,
+//               users: docs.map(doc => {
+//                   return {
+//                     id: doc._id,
+//                     username: doc.username,
+//                     email: doc.email,
+//                     roles: doc.roles.map(role => role.name)
+//                   }
+//               })
+//           }
+//           res.status(200).json(response);
+//       })
+//       .catch(err => {
+
+
+//           res.status(500).json({
+//               error: err
+//           });
+//       });
+// };
     //const condition = name ? { name: { $regex: new RegExp(name), $options: "i" }, roles: { $nin: ['admin', 'moderator'] } } : { roles: { $nin: ['admin', 'moderator'] } };
 
 exports.moderatorBoard = (req, res) => {
@@ -202,7 +305,6 @@ exports.promoteUserToModerator = (req, res) => {
       
 exports.demoteModToUser = (req, res) => {
   const id = req.params.id;
-  // remove role model reference with name 'user' and ad role model reference with name 'moderator'´with mapping
   Users.findById(id, function (error, user) {
         if (error) {
           res.status(500).json({
@@ -210,7 +312,7 @@ exports.demoteModToUser = (req, res) => {
           });
         } else {
           // remove user role
-          user.roles.pull({ _id: '620e603c8c7e915ae7034ca7' });
+          user.roles.pull({ _id: '620e603c8c7e915ae7034ca7' }); //TODO: getRoleID by searching for name
           // add moderator role
           user.roles.push({ _id: '620e603c8c7e915ae7034ca5' });
 

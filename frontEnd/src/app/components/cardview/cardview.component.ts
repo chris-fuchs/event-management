@@ -134,12 +134,12 @@ export class CardviewComponent implements OnInit {
 
   changeCategory(value: any){
     console.log(value);
-    if(this.allEvents) {
-      this.events = this.allEvents.filter(event => {
-      if(event.category?.includes(value)) {
-        return event;
-      }
-    })
-    }
+    // if(this.allEvents) {
+    //   this.events = this.allEvents.filter(event => {
+    //   if(event.category?.includes(value)) {
+    //     return event;
+    //   }
+    // })
+    // }
   }
 }

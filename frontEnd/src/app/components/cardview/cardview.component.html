@@ -9,12 +9,14 @@
     </mat-form-field>
   </li>
 <li class="list-group-item  event-selection-li">
+  <mat-form-field>
   <mat-label>Categories</mat-label>
     <mat-select (selectionChange)="changeCategory($event.value)" value="all">
       <mat-option *ngFor="let category of categories" [value]="category">
         {{category}}
       </mat-option>
     </mat-select>
+    </mat-form-field>
 </li>
 <li class="list-group-item event-selection-li">
 <mat-form-field class="example-chip-list" appearance="fill">

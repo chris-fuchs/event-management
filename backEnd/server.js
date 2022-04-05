@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");  
+var bcrypt = require("bcryptjs");
 
 const app = express();
 
@@ -46,7 +47,9 @@ const PORT = process.env.PORT || 8080;
 
 const db = require("./app/models");
 const { mongoose } = require("./app/models");
+const { organizerBoard } = require("./app/controllers/user.controller");
 const Role = db.role;
+const User = db.user;
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
@@ -70,6 +73,11 @@ db.mongoose
 // )
 
   function initial() {
+    userRoleID = "";
+    orgRoleID = "";
+    modRoleID = "";
+    adminRoleID = "";
+    
     Role.estimatedDocumentCount((err, count) => {
       if (!err && count === 0) {
         new Role({
@@ -79,7 +87,12 @@ db.mongoose
             console.log("error", err);
           }
           console.log("added 'user' to roles collection");
+          // set uerRoleID from just saved role
+        }).then(role => {
+          userRoleID = role._id;
+          console.log("userRoleID set to: " + userRoleID);
         });
+
         new Role({
           name: "organizer"
         }).save(err => {
@@ -87,7 +100,12 @@ db.mongoose
             console.log("error", err);
           }
           console.log("added 'organizer' to roles collection");
+        }).then(role => {
+          orgRoleID = role._id;
+          console.log("orgRoleID set to: ", orgRoleID);
         });
+
+
         new Role({
           name: "moderator"
         }).save(err => {
@@ -95,7 +113,11 @@ db.mongoose
             console.log("error", err);
           }
           console.log("added 'moderator' to roles collection");
+        }).then(role => {
+          modRoleID = role._id;
+          console.log("modRoleID set to: ", modRoleID);
         });
+
         new Role({
           name: "admin"
         }).save(err => {
@@ -103,9 +125,86 @@ db.mongoose
             console.log("error", err);
           }
           console.log("added 'admin' to roles collection");
+        }).then(role => {
+          adminRoleID = role._id;
+          console.log("adminRoleID set to: ", adminRoleID);
         });
       }
     });
+
+    console.log("userRoleID precheck: " + userRoleID);
+    if(userRoleID === "") {
+      Role.find({name: "user"}, (err, role) => {
+        if(!err && !role.length) {
+          console.log("role: ", role);
+          userRoleID = role._id.toString();
+          console.log("userRoleID set to: " + userRoleID);
+        } else {
+          console.log("userRoleID not set");
+        }
+      });
+    }
+
+    if(orgRoleID === "") {
+      Role.findOne({name: "organizer"}, (err, role) => {
+        if(!err) {
+          orgRoleID = role._id;
+        }
+      });
+    }
+
+    if(modRoleID === "") {
+      Role.findOne({name: "moderator"}, (err, role) => {
+        if(!err) {
+          modRoleID = role._id;
+        }
+      });
+    }
+
+    if(adminRoleID === "") {
+      Role.findOne({name: "admin"}, (err, role) => {
+        if(!err) {
+          adminRoleID = role._id;
+        }
+      });
+    }
+
+    console.log("userRoleID after setting: " + userRoleID);
+    // console.log("orgRoleID: " + orgRoleID);
+    // console.log("modRoleID: " + modRoleID);
+    // console.log("adminRoleID: " + adminRoleID);
+
+
+    User.exists({ username: "admin" }, (err, exists) => {
+      console.log()
+      if (!err && !exists) {
+        const password = bcrypt.hashSync("adminadmin", 8)
+        console.log(password)
+        new User({
+          username: "admin5",
+          email: "admin@admin.com",
+          password: password,
+         roles: [ userRoleID, orgRoleID, modRoleID, adminRoleID ]
+        }).save(err => {
+          if (err) {
+            console.log("error", err);
+          }
+          console.log("added 'admin' to users collection");
+        });
+      } else {
+        console.log("admin user already exists");
+      }
+    })
+    //   db.user.create(
+//     {
+//         username: "admin",
+//         email: "admin@admin.com",
+//         password: "admin",
+//         roles: [ "admin" ]
+//     }
+// )
+
+
   }
 
 

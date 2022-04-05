@@ -24,6 +24,8 @@ export class BoardAdminComponent implements OnInit {
   panelOpenStateOrg = false;
   panelOpenStateUsr = false;
   isAdmin = false;
+  isMod = false;
+
   lengthUsr?: number;
   pageSizeOptionsUsr: number[] = [1, 5, 10, 25, 100];
   pageEventUsr?: PageEvent;
@@ -65,12 +67,12 @@ export class BoardAdminComponent implements OnInit {
   }
 
   applyModFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.DataSourceMod.filter = filterValue.trim().toLowerCase();
+    // const filterValue = (event.target as HTMLInputElement).value;
+    // this.DataSourceMod.filter = filterValue.trim().toLowerCase();
 
-    if (this.DataSourceMod.paginator) {
-      this.DataSourceMod.paginator.firstPage();
-    }
+    // if (this.DataSourceMod.paginator) {
+    //   this.DataSourceMod.paginator.firstPage();
+    // }
   }
 
   constructor(private userService: UserService, private tokenStorageService: TokenStorageService) { }
@@ -79,9 +81,11 @@ export class BoardAdminComponent implements OnInit {
     const roles = user.roles;
     if(roles) {
       this.isAdmin = roles.includes('ROLE_ADMIN');
+      this.isMod = roles.includes('ROLE_MODERATOR');
     }
     this.userService.getAdminBoard().subscribe({
       next: data => {
+        console.log(data)
         this.completeUserList = data.users;
         this.userList = data.users.filter((user: { roles: string | string[]; }) => user.roles.includes('user'));
         this.lengthUsr = this.userList?.length;

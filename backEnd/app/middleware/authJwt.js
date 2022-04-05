@@ -33,6 +33,7 @@ isAdmin = (req, res, next) => {
         }
         for (let i = 0; i < roles.length; i++) {
           if (roles[i].name === "admin") {
+            req.permission = "admin";
             next();
             return;
           }
@@ -59,7 +60,8 @@ isModerator = (req, res, next) => {
           return;
         }
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "moderator") {
+          if (roles[i].name === "moderator" || roles[i].name === "mod" ) {
+            req.permission = "moderator";
             next();
             return;
           }
@@ -88,6 +90,7 @@ isOrganizer = (req, res, next) => {
           }
           for (let i = 0; i < roles.length; i++) {
             if (roles[i].name === "organizer") {
+              req.permission = "organizer";
               next();
               return;
             }
@@ -117,6 +120,7 @@ isUser = (req, res, next) => {
         }
         for (let i = 0; i < roles.length; i++) {
           if (roles[i].name === "user") {
+            req.permission = "user";
             next();
             return;
           }
