@@ -9,12 +9,16 @@
   $foreground: map.get($config, foreground);
   $background: map.get($config, background);
 
-  .mat-drawer {
+  mat-drawer {
     // let's take mat-toolbar's default theme
     // background-color: mat.get-color-from-palette($background, app-bar);
     // color: mat.get-color-from-palette($foreground, text);
-    background-color: mat.get-color-from-palette($val);
-color: mat.get-color-from-palette($val, default-contrast);
+//     background-color: mat.get-color-from-palette($val);
+// color: mat.get-color-from-palette($val, default-contrast);
+
+  background-color: mat.get-color-from-palette($primary) !important;
+  color: mat.get-color-from-palette($primary, default-contrast);
+
 
 
     // now, mat-toolbar's colored themes

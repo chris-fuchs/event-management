@@ -2,16 +2,16 @@
   width: 350px;
   height: 100%;
   /* max-height: 500px; */
-  background-color: rgb(189, 189, 173);
+  background-color: rgb(189, 189, 173) !important;
   padding: 20px;
   border-radius: 15px;
   border: 0px;
   // margin: 10px; creates a second vertical scrollbar ?!
 }
 
-.fav {
-  color: red;
-}
+// .fav {
+//   color: red;
+// }
 img {
   max-height: fit-content;
 }

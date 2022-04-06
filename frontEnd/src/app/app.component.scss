@@ -1,6 +1,49 @@
+
+// @import './frontEnd/src/styles.scss';
+
+
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin theme($theme) {
+  $primary: map.get($theme, primary);
+  $accent: map.get($theme, accent);
+  $warn: map.get($theme, warn);
+  $background: map.get($theme, background);
+  $foreground: map.get($theme, foreground);
+
+  mat-drawer {
+    background-color: mat.get-color-from-palette($primary) !important;
+    color: mat.get-color-from-palette($primary, default-contrast);
+  }
+
+
+  mat-sidenav-container {
+    color: mat.get-color-from-palette($primary, default-contrast);
+
+    mat-drawer {
+      background-color: mat.get-color-from-palette($primary) !important;
+      color: mat.get-color-from-palette($primary, default-contrast);
+    }
+
+    mat-toolbar {
+      background-color: mat.get-color-from-palette($primary);
+    }
+
+    mat-toolbar.mat-primary {
+      background-color: mat.get-color-from-palette($primary);
+    }
+
+    mat-drawer-container {
+      background-color: mat.get-color-from-palette($background, default);
+    }
+  }
+}
+
 @import '~@angular/material/theming';
 @import './src/styles.scss';
-// @import './frontEnd/src/styles.scss';
+
+
 
 
 // .container {
@@ -27,13 +70,13 @@
   // background-color: mat-color($dark-accent, 300) !important;
   // background-color: mat-color(accent, 300) !important;
   // background-color: mat-color(accent) !important;
-  background-color: "accent, 300";
+  // background-color: "accent, 300";
 
 
   // outline-color: mat-color($dark-accent, lighter);
-  outline-color: "accent, lighter";
+  // outline-color: "accent, lighter";
   // border-color: mat-color($dark-primary, '100-contrast');
-  border-color: "primary, 100-contrast";
+  // border-color: "primary, 100-contrast";
 
 
   .mat-button-toggle {
@@ -46,20 +89,20 @@
 :host .mat-button-toggle.mat-button-toggle-checked{
   // background-color: mat-color($dark-primary, '50-contrast');
   // border-color: mat-color($dark-primary, '50-contrast');
-  background-color: "primary, 50-contrast";
-  border-color: "primary, 50-contrast";
+  // background-color: "primary, 50-contrast";
+  // border-color: "primary, 50-contrast";
 }
 
 :host .mat-button-toggle-group.mat-button-unchecked{
   // background-color: mat-color($dark-primary, '10-contrast');
   // border-color: mat-color($dark-primary, '10-contrast');
-  background-color: "primary, 10-contrast";
-  border-color: "primary, 10-contrast";
+  // background-color: "primary, 10-contrast";
+  // border-color: "primary, 10-contrast";
 }
 
 :host mat-button-toggle-checked {
   // background-color: mat-color($dark-primary, '10-contrast');
-  background-color: "primary, 10-contrast";
+  // background-color: "primary, 10-contrast";
 
 }
 
@@ -90,13 +133,13 @@
 .navbar {
   // color: mat-color($dark-primary, text);
   // background-color: mat-color($dark-accent);
-  color: "primary, text";
+  // color: "primary, text";
   // background-color: "accent";
 
 
   a {
     //color: mat-color($dark-primary, text);
-    color: "primary, text";
+    // color: "primary, text";
 
     // color: green;
   }
@@ -104,13 +147,13 @@
 
 .nav-item {
   // color: mat-color($dark-primary, text);
-  color: "primary, text";
+  // color: "primary, text";
 
   a {
     //  color: mat-color($dark-primary, text);
     //  color: mat-color(primary, text);
-    color: "primary, text";
-    color: "primary, text";
+    // color: "primary, text";
+    // color: "primary, text";
 
     // color: yellow;
   }

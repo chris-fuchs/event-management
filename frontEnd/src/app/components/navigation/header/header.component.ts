@@ -1,4 +1,5 @@
 import { Component, EventEmitter, HostBinding, OnInit, Output } from '@angular/core';
+import { StyleManagerService } from 'src/app/services/style-manager.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
@@ -11,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
   @HostBinding('class') public cssClass: string | undefined;
+  isDark = false;
   private roles: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
@@ -20,7 +22,7 @@ export class HeaderComponent implements OnInit {
   showUserBoard = false;
   username?: string;
   profilePicURL?: string;
-  constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService, private userService: UserService) { }
+  constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService, private userService: UserService, private styleManager: StyleManagerService) { }
   ngOnInit(): void {
     this.themeService.theme.subscribe((theme: string) => {
       this.cssClass = theme;
@@ -52,6 +54,11 @@ export class HeaderComponent implements OnInit {
 
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();
+  }
+
+  toggleDarkTheme() {
+    this.styleManager.toggleDarkTheme();
+    this.isDark = !this.isDark;
   }
 
 }

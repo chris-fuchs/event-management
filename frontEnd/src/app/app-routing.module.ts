@@ -12,7 +12,6 @@ import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BoardUserComponent } from './components/board-user/board-user.component';
 import { BoardOrganizerComponent } from './components/board-organizer/board-organizer.component';
-import { BoardModeratorComponent } from './components/board-moderator/board-moderator.component';
 import { BoardAdminComponent } from './components/board-admin/board-admin.component';
 
 const routes: Routes = [
@@ -28,7 +27,6 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'user', component: BoardUserComponent },
   { path: 'org', component: BoardOrganizerComponent },
-  { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
 ];
 

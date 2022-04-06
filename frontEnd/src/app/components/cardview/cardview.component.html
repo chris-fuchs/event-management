@@ -84,10 +84,10 @@
           <mat-icon>favorite_border</mat-icon>
         </button> -->
         <span *ngIf="isLoggedIn">
-          <button id="fav-icon" class="fav" mat-icon-button color="primary" *ngIf="favEvents?.includes(event._id)" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
+          <button id="fav-icon" class="fav" mat-icon-button color="warn" *ngIf="favEvents?.includes(event._id)" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
             <mat-icon>favorite</mat-icon>
           </button>
-          <button id="unfav-icon" class="fav" mat-icon-button color="primary" *ngIf="!(favEvents?.includes(event._id))" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
+          <button id="unfav-icon" class="fav" mat-icon-button color="warn" *ngIf="!(favEvents?.includes(event._id))" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
             <mat-icon>favorite_border</mat-icon>
           </button>
         </span>

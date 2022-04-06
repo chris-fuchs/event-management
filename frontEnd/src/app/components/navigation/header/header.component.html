@@ -1,6 +1,5 @@
 <mat-toolbar color="primary">
 
-
 <div>
   <button mat-icon-button (click)="onToggleSidenav()">
   <mat-icon>menu</mat-icon>
@@ -15,9 +14,6 @@
   <a class="nav-link" routerLink="admin">Admin Board</a>
 </div>
 
-<div class="top-nav-only" *ngIf="showModeratorBoard">
-  <a class="nav-link" routerLink="mod">Moderator Board</a>
-</div>
 
 <div class="top-nav-only" *ngIf="showOrganizerBoard">
   <a class="nav-link" routerLink="org">Organizer Board</a>
@@ -42,11 +38,19 @@
 <span class="example-spacer"></span>
 
 <!-- <button mat-icon-button (click)="toggleDarkTheme()" matTooltip="Toggle dark theme"> -->
-  <button mat-icon-button matTooltip="Toggle dark theme">
+  <!-- <button mat-icon-button matTooltip="Toggle dark theme">
   <mat-icon>
     brightness_6
   </mat-icon>
-</button>
+</button> -->
+
+<div mat-list-item id="toogleButtonDiv">
+  <button id="toggleButton" mat-icon-button (click)="toggleDarkTheme()" matTooltip="Toggle dark theme">
+    <mat-icon>
+      brightness_6
+    </mat-icon>
+  </button>
+</div>
 
 <!-- <div class="top-nav-only">
   <mat-button-toggle-group appearance="legacy" class="buttonToggle" #group="matButtonToggleGroup">
