@@ -13,6 +13,7 @@ const Event = mongoose.model(
       type: String,
       enum: ["sport", "music", "movie", "party", "other"]
     },
+    tags: [String],
     published: Boolean
   },
   { timestamps: true }

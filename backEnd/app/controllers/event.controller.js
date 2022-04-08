@@ -78,39 +78,60 @@ exports.findOne = (req, res) => {
 
 // Update a Event by the id in the request
 exports.update = (req, res) => {
-  
+  // console.log("req.body.creator._id: ", req.body.creator._id)
+  // console.log(req.userId)
+  //console.log("authJwt.currentUser: ", authJwt) // TODO: how to reliably get current userid?
+  // get current user id from jwt
+  // console.log("authJwt.getCurrentUserID", authJwt.getCurrentUserID())
+  // console.log("authJwt", authJwt)
+  // console.log(authJwt.isAdmin)
+
+
   if (!req.body) {
     return res.status(400).send({
       message: "Data to update can not be empty!"
     });
   }
+  
 
-  if(authJwt.isOrganizer && authJwt.currentUser.id !== req.body.creator) {
+
+  if(!(authJwt.isAdmin || (authJwt.isOrganizer && req.userId == req.body.creator._id))) {
     return res.status(401).send({
       message: "Not Authorized"
     });
+  } else {
+    console.log("user is authorized")
   }
 
   const id = req.params.id;
+  console.log("req.body: ", req.body)
 
-  Event.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  // Event.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+
+  // TODO: partial update if field is in req.body
+  //console.log(req)
+  Event.findByIdAndUpdate(id, req.body)
     .then(data => {
       if (!data) {
         res.status(404).send({
           message: `Cannot update Event with id=${id}. Maybe Event was not found!`
-        }); }
-        else if(authJwt.isOrganizer && authJwt.currentUser.id !== data.creator) {
-          res.status(401).send({
-            message: "Not Authorized"
-          });
-      } else res.send({ message: "Event was updated successfully." });
+        }); 
+      }
+        // else if(authJwt.isOrganizer && authJwt.currentUser.id !== data.creator) {
+        //   res.status(401).send({
+        //     message: "Not Authorized"
+        //   });
+      else {
+       res.send({ message: "Event was updated successfully."})
+      }
     })
+
     .catch(err => {
       res.status(500).send({
         message: "Error updating Event with id=" + id
       });
     });
-};
+  };
 
 // Delete a Event with the specified id in the request
 exports.delete = (req, res) => {

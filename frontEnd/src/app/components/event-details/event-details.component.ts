@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from 'src/app/models/event.model';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { User } from 'src/app/models/user.model';
+import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-event-details',
   templateUrl: './event-details.component.html',
@@ -19,8 +20,22 @@ export class EventDetailsComponent implements OnInit {
     published: false
   };
 
+  // form = this.fb.group({
+  //   title: ["{{ currentEvent.title }}"],
+  //   description: ["{{ currentEvent.description}}"],
+  //   category: ["{{ currentEvent.category}}"]
+  // })
+
+    form = this.fb.group({
+    title: [""],
+    description: [""],
+    category: [""]
+  })
+
+
   message = '';
   constructor(
+    private fb: FormBuilder,
     private eventService: EventService,
     private route: ActivatedRoute,
     private router: Router,
@@ -38,8 +53,19 @@ export class EventDetailsComponent implements OnInit {
       this.getEvent(this.route.snapshot.params["id"]);
     }
     this.currentUser = this.tokenStorageService.getUser()
+    // let title = (<HTMLInputElement>document.getElementById('title'));
+    // console.log("doc: ", document.getElementById('title'))
+    // console.log("title: ",title)
+    // title.value = "test";
+
+
     console.log("this.currentUser: ",this.currentUser.id);
   }
+
+  ngAfterViewInit() {
+    console.log("select: ",document.getElementById("category"));
+  }
+
   getEvent(id: string): void {
     this.eventService.get(id)
       .subscribe({
@@ -72,7 +98,43 @@ export class EventDetailsComponent implements OnInit {
   }
   updateEvent(): void {
     this.message = '';
-    this.eventService.update(this.currentEvent._id, this.currentEvent)
+    let titleTemp: string;
+    let titleField = this.form.get('title')?.value
+
+    type dataField = {
+      title: string,
+      description: string,
+      category: string
+    }
+
+    const dataObject = {} as dataField;
+
+    if(titleField != "") {
+      titleTemp = titleField;
+      dataObject.title = titleTemp
+    }
+
+    let descriptionTemp: string;
+    let descriptionField = this.form.get('description')?.value
+    if(descriptionField != "") {
+      descriptionTemp = descriptionField;
+      dataObject.description = descriptionTemp;
+    }
+
+    let categoryTemp: string;
+    let categoryField = this.form.get('category')?.value
+    if(categoryField != "") {
+      categoryTemp = categoryField;
+      dataObject.category = categoryTemp;
+    }
+
+    // let dataComplete = { titleTemp, descriptionTemp, categoryTemp };
+    // console.log("dataComplete: ",dataComplete);
+
+    console.log("dataObject: ",dataObject);
+    console.log("thisform: ",this.form.get('title')?.value)
+
+    this.eventService.update(this.currentEvent._id, dataObject)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -94,6 +156,11 @@ export class EventDetailsComponent implements OnInit {
 
   changeToEditMode(): void {
     this.viewMode = false;
+    console.log("select: ",document.getElementById("category"));
+
+    // title.value = (<String>this.currentEvent.title?.toString);
     // window.location.reload();
   }
+
+
 }

@@ -1,17 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ControlValueAccessor, FormControl } from '@angular/forms';
+import { MatChip, MatChipList } from '@angular/material/chips';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
 import { Event } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { EventService } from 'src/app/services/event.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
+import { map } from 'rxjs/operators';
+// import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @Component({
   selector: 'app-cardview',
   templateUrl: './cardview.component.html',
   styleUrls: ['./cardview.component.scss']
 })
-export class CardviewComponent implements OnInit {
+export class CardviewComponent implements OnInit, AfterViewInit, ControlValueAccessor {
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  obs!: Observable<any>;
+  dataSource!: MatTableDataSource<Event>
+
+  @ViewChild(MatChipList)
+  chipList!: MatChipList;
+
+  @Input() options: string[] = [];
+
+  value: string[] = [];
+
+  onChange!: (value: string[]) => void;
+  onTouch: any;
+
+  disabled = false;
+
 
   events?: Event[];
   allEvents?: Event[];
@@ -32,9 +55,41 @@ export class CardviewComponent implements OnInit {
   categories?: any;
   foods: any = ["pizza","bla","tacos"];
 
+  applyNameFilter(event: any) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
 
-  constructor(private eventService: EventService, private tokenstorageService: TokenStorageService, private userService: UserService) { }
+  constructor(private changeDetectorRef: ChangeDetectorRef, private eventService: EventService, private tokenstorageService: TokenStorageService, private userService: UserService) { }
+
+  writeValue(value: string[]): void {
+    // When form value set when chips list initialized
+    if (this.chipList && value) {
+      this.selectChips(value);
+    } else if (value) {
+      // When chips not initialized
+      this.value = value;
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouch = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+
   ngOnInit(): void {
     this.currentUser = this.tokenstorageService.getUser()
     this.isLoggedIn = !!this.tokenstorageService.getToken();
@@ -50,6 +105,49 @@ export class CardviewComponent implements OnInit {
     // console.log("this.currentUser: ",this.currentUser);
   }
 
+
+  ngAfterViewInit() {
+    this.selectChips(this.value);
+
+    this.chipList.chipSelectionChanges
+      .pipe(
+        // untilDestroyed(this),
+        map((event) => event.source)
+      )
+      .subscribe((chip) => {
+        if (chip.selected) {
+          this.value = [...this.value, chip.value];
+        } else {
+          this.value = this.value.filter((o) => o !== chip.value);
+        }
+        console.log(this.value)
+
+        this.propagateChange(this.value);
+      });
+  }
+
+
+  propagateChange(value: string[]) {
+    if (this.onChange) {
+      this.onChange(value);
+    }
+    this.filterTags(value)
+  }
+
+  selectChips(value: string[]) {
+    this.chipList.chips.forEach((chip) => chip.deselect());
+
+    const chipsToSelect = this.chipList.chips.filter((c) =>
+      value.includes(c.value)
+    );
+
+    chipsToSelect.forEach((chip) => chip.select());
+  }
+
+  toggleSelection(chip: MatChip) {
+    if (!this.disabled) chip.toggleSelected();
+  }
+
   getAllEvents(): void {
     this.eventService.getAll()
     .subscribe({
@@ -57,6 +155,11 @@ export class CardviewComponent implements OnInit {
         this.allEvents = data;
         this.events = this.allEvents;
         console.log(data);
+        this.changeDetectorRef.detectChanges();
+        this.dataSource = new MatTableDataSource(this.events);
+        this.dataSource.paginator = this.paginator;
+        console.log(this.dataSource)
+        this.obs = this.dataSource.connect();
       },
       error: (e) => console.error(e)
     });
@@ -133,13 +236,49 @@ export class CardviewComponent implements OnInit {
   }
 
   changeCategory(value: any){
-    console.log(value);
-    // if(this.allEvents) {
-    //   this.events = this.allEvents.filter(event => {
-    //   if(event.category?.includes(value)) {
-    //     return event;
-    //   }
-    // })
-    // }
+    console.log("category value: ",value);
+    if(this.allEvents) {
+      if(value === "all") {
+        this.events = this.allEvents;
+      } else {
+        this.events = this.allEvents.filter(event => event.category?.toLowerCase() === value.toLowerCase());
+      }
+      this.dataSource = new MatTableDataSource(this.events);
+      this.dataSource.paginator = this.paginator;
+      this.obs = this.dataSource.connect();
+    }
   }
+  // this.events filter if event.tags contain all values of this.value even if event.tags is empty
+  filterTags(value: String[]) {
+    console.log("filterTags with value: ",value);
+    if(this.allEvents) {
+      if(value.length === 0) {
+        this.events = this.allEvents;
+      } else {
+        this.events = this.allEvents.filter(event => {
+          let eventTags = event.tags as string[];
+          eventTags = eventTags.map(tag => tag.toLowerCase());
+          let valueTags = value.map(tag => tag.toLowerCase());
+
+          let result = eventTags.filter(tag => valueTags.includes(tag));
+          return result.length === valueTags.length;
+        });
+        // this.events = this.allEvents.filter(event => event.tags?.every(tag => value.includes(tag)));
+      }
+      this.dataSource = new MatTableDataSource(this.events);
+      this.dataSource.paginator = this.paginator;
+      this.obs = this.dataSource.connect();
+    }
+
+  }
+
+
+
+  //     this.events = this.allEvents.filter(event => {
+  //     if(event.category?.includes(value)) {
+  //       return event;
+  //     }
+  //   })
+  //   }
+  // }
 }

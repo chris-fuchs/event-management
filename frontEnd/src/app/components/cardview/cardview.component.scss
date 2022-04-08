@@ -30,6 +30,10 @@ button {
   margin-right: 5px ;
 }
 
+.mat-paginator-container {
+  background-color: transparent !important;
+}
+
 .list-group {
   display: flex;
   width: 100%;
@@ -117,4 +121,11 @@ a.titlelink:link, a.titlelink:visited, a.titlelink:hover, a.titlelink:active {
   flex-direction: column;
   flex-grow: 2;
   padding: 1%;
+}
+
+mat-icon {
+  height: 20px;
+  width: 20px;
+  font-size: 20px;
+  margin-right: 5px;
 }

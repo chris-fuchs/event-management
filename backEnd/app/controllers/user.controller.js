@@ -480,9 +480,9 @@ exports.addFavEvent = (req, res) => {
 // }
 
 exports.getFavEventList = (req, res) => {
-  console.log("getFavEventList triggered")
+  // console.log("getFavEventList triggered")
   userID = req.userId
-  console.log("getFavEventList: ",userID);
+  // console.log("getFavEventList: ",userID);
   // find and set event list
   Users.findById(userID, function (error, user) {
         if (error) {
@@ -492,7 +492,7 @@ exports.getFavEventList = (req, res) => {
         } else {
           // set event list
           eventList = user.favEvents;
-          console.log("getFavEventList: ",eventList);
+          // console.log("getFavEventList: ",eventList);
           // res.status(200).json({
             //message: "Event list",
             // eventList: eventList
@@ -502,9 +502,9 @@ exports.getFavEventList = (req, res) => {
       })};
 
       exports.getProfilePicture = (req, res) => {
-        console.log("getProfilePicture triggered")
+        //console.log("getProfilePicture triggered")
         userID = req.userId
-        console.log("getProfilePicture: ",userID);
+        //console.log("getProfilePicture: ",userID);
         // find and set event list
         Users.findById(userID, function (error, user) {
               if (error) {
@@ -514,7 +514,7 @@ exports.getFavEventList = (req, res) => {
               } else {
                 // set event list
                 profilePicURL = user.profilePicURL;
-                console.log("getProfilePicture: ",profilePicURL);
+                //console.log("getProfilePicture: ",profilePicURL);
                 // res.status(200).json({
                   //message: "Event list",
                   // eventList: eventList

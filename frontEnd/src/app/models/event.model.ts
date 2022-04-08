@@ -8,4 +8,5 @@ export class Event {
   imageURL? : string;
   category?: string;
   published?: boolean;
+  tags?: string[];
 }
