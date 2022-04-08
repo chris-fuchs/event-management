@@ -15,6 +15,27 @@ exports.allAccess = (req, res) => {
 // usr: 620e603c8c7e915ae7034ca5
 // mod: 620e603c8c7e915ae7034ca7
 
+
+// async function getRoleIDs() {
+//   let roleIDs = [];
+//   Roles.find()
+//     .populate('name')
+//     .exec()
+//     .then(role => {
+//       console.log("role: ",role)
+//       if(role.name === "moderator") {
+//         roleIDs["mod"] = role_id;
+//       }
+//       if(role.name === "organizer") {
+//         roleIDs["org"] = role_id;
+//       }
+//       if(role.name === "user") {
+//         roleIDs["usr"] = role_id;
+//       }
+//     })
+//   return roleIDs
+// }
+
 exports.adminBoard = (req, res) => {
   let roleCondition;
   let isAdmin = false;
@@ -66,7 +87,7 @@ exports.adminBoard = (req, res) => {
             error: err
         });
     });
-  })
+  }) 
 } 
 
 
