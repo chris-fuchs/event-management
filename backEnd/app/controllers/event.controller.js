@@ -3,36 +3,6 @@
 const { authJwt } = require("../middleware");
 const Event = require("../models/event.model.js");
 
-/*
-var multer  = require('multer');
-
-// Picture Storage
-var storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './public/images');
-  },
-  filename: (req, file, cb) => {
-    console.log(file);
-    var filetype = '';
-    if(file.mimetype === 'image/gif') {
-      filetype = 'gif';
-    }
-    if(file.mimetype === 'image/png') {
-      filetype = 'png';
-    }
-    if(file.mimetype === 'image/jpeg') {
-      filetype = 'jpg';
-    }
-    cb(null, 'image-' + Date.now() + '.' + filetype);
-  }
-});
-
-var upload = multer({storage: storage});
-
-// Create and Save a new Event
-exports.create = (req, res) => {
-  
-}; */
 
 // Retrieve all Events from the database.
 exports.findAll = (req, res) => {
@@ -78,14 +48,6 @@ exports.findOne = (req, res) => {
 
 // Update a Event by the id in the request
 exports.update = (req, res) => {
-  // console.log("req.body.creator._id: ", req.body.creator._id)
-  // console.log(req.userId)
-  //console.log("authJwt.currentUser: ", authJwt) // TODO: how to reliably get current userid?
-  // get current user id from jwt
-  // console.log("authJwt.getCurrentUserID", authJwt.getCurrentUserID())
-  // console.log("authJwt", authJwt)
-  // console.log(authJwt.isAdmin)
-
 
   if (!req.body) {
     return res.status(400).send({
