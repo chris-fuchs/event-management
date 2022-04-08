@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { EventDetailsComponent } from './components/event-details/event-details.component';
-import { EventsListComponent } from './components/events-list/events-list.component';
 
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'
@@ -32,10 +31,8 @@ import { SidenavListComponent } from './components/navigation/sidenav-list/siden
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-// import { MaterialModule } from './material.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {LayoutModule} from '@angular/cdk/layout';
-import { SingleEventViewComponent } from './components/single-event-view/single-event-view.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import {MatChipsModule} from '@angular/material/chips';
@@ -48,7 +45,6 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     AppComponent,
     AddEventComponent,
     EventDetailsComponent,
-    EventsListComponent,
     CardviewComponent,
     LoginComponent,
     RegisterComponent,
@@ -56,8 +52,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     ProfileComponent,
     BoardAdminComponent,
     HeaderComponent,
-    SidenavListComponent,
-    SingleEventViewComponent
+    SidenavListComponent
   ],
   imports: [
     BrowserModule,

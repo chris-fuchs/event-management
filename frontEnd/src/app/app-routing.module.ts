@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { EventsListComponent } from './components/events-list/events-list.component';
 import { EventDetailsComponent } from './components/event-details/event-details.component';
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { CardviewComponent } from './components/cardview/cardview.component';
