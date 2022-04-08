@@ -106,10 +106,6 @@ exports.update = (req, res) => {
   const id = req.params.id;
   console.log("req.body: ", req.body)
 
-  // Event.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-
-  // TODO: partial update if field is in req.body
-  //console.log(req)
   Event.findByIdAndUpdate(id, req.body)
     .then(data => {
       if (!data) {
@@ -117,10 +113,6 @@ exports.update = (req, res) => {
           message: `Cannot update Event with id=${id}. Maybe Event was not found!`
         }); 
       }
-        // else if(authJwt.isOrganizer && authJwt.currentUser.id !== data.creator) {
-        //   res.status(401).send({
-        //     message: "Not Authorized"
-        //   });
       else {
        res.send({ message: "Event was updated successfully."})
       }
@@ -133,14 +125,9 @@ exports.update = (req, res) => {
     });
   };
 
-// Delete a Event with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
   console.log("req.userId", req.userId)
-  // console.log("delete id: ",id)
-  // console.log("authJwt.getCurrentUserID", authJwt.getCurrentUserID())
-  // console.log("authJwt", authJwt)
-  // console.log("authJwt.currentUser",authJwt.currentUser)
   Event.findById(id)
     .then(data => {
       if (!data) {
@@ -174,33 +161,6 @@ exports.delete = (req, res) => {
     });
   }
 
-//   Event.findByIdAndRemove(id)
-//     .then(data => {
-//       console.log("delete creator", data.creator.toString())
-//       if (!data) {
-//         res.status(404).send({
-//           message: `Cannot delete Event with id=${id}. Maybe Event was not found!`
-//         });
-//       }
-//       else if(!authJwt.isOrganizer && req.userId !== data.creator) {
-//           res.status(401).send({
-//             message: "Not Authorized"
-//           });
-//       } else {
-//         res.send({
-//           message: "Event was deleted successfully!"
-//         });
-//       }
-//     })
-//     .catch(err => {
-//       console.log("error", err)
-//       res.status(500).send({
-//         message: "Could not delete Event with id=" + id
-//       });
-//     });
-// };
-
-// Delete all Events from the database.
 exports.deleteAll = (req, res) => {
   Event.deleteMany({})
     .then(data => {
@@ -216,7 +176,6 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// Find all published Events
 exports.findAllPublished = (req, res) => {
   Event.find({ published: true })
     .then(data => {
