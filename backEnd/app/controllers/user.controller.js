@@ -10,50 +10,64 @@ exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
 };
 
+// IDs can vary. TODO: getRoleID by searching for name
 // org: 620e603c8c7e915ae7034ca6
 // usr: 620e603c8c7e915ae7034ca5
 // mod: 620e603c8c7e915ae7034ca7
 
 exports.adminBoard = (req, res) => {
-  let roleCondition
-  if(req.permission === "admin") {
+  let roleCondition;
+  let isAdmin = false;
 
-     roleCondition = { roles: { $in: ['620e603c8c7e915ae7034ca5','620e603c8c7e915ae7034ca6', '620e603c8c7e915ae7034ca7'] } };
-    console.log("adminBoard: is admin!");
-  } else {
-    roleCondition = { roles: { $in: ['620e603c8c7e915ae7034ca6', '620e603c8c7e915ae7034ca5'] } };
-    console.log("adminBoard: is not admin!");
-  }
+  Users.findById(req.userId)
+  .populate('roles', 'name') 
+  .exec()
+  .then(user => {
+    for (let i = 0; i < user.roles.length; i++) {
+      if (user.roles[i].name === "admin") {
+        isAdmin = true;
+        // console.log("!!isAdmin: ",isAdmin)
+        break;
+      }
+    }
 
-  Users.find(roleCondition)
-      .select('-password')
-      .populate('roles', 'name')    
-      .exec()
-      .then(docs => {
-          if(docs.length >= 0) {
-            const responseUser = {
-              count: docs.length,
-              users: docs.map(doc => {
-                  return {
-                    id: doc._id,
-                    username: doc.username,
-                    email: doc.email,
-                    roles: doc.roles.map(role => role.name)
-                  }
-              })
-            }
-            res.status(200).json(responseUser);
-        }
-        
+    if(isAdmin) {
+      roleCondition = { roles: { $in: ['620e603c8c7e915ae7034ca5','620e603c8c7e915ae7034ca6', '620e603c8c7e915ae7034ca7'] } };
+      // console.log("adminBoard: is admin!");
+    } else {
+      roleCondition = { roles: { $in: ['620e603c8c7e915ae7034ca6', '620e603c8c7e915ae7034ca5'] } };
+      // console.log("adminBoard: is not admin!");
+    }
+
+    Users.find(roleCondition)
+        .select('-password')
+        .populate('roles', 'name')    
+        .exec()
+        .then(docs => {
+            if(docs.length >= 0) {
+              const responseUser = {
+                count: docs.length,
+                users: docs.map(doc => {
+                    return {
+                      id: doc._id,
+                      username: doc.username,
+                      email: doc.email,
+                      roles: doc.roles.map(role => role.name)
+                    }
+                })
+              }
+              res.status(200).json(responseUser);
+          }
+          
+    })
+    .catch(err => {
+        console.log("adminBoard: ",err);
+        res.status(500).json({
+            error: err
+        });
+    });
   })
-  .catch(err => {
-      console.log("adminBoard: ",err);
-      res.status(500).json({
-          error: err
-      });
-  });
-
-  } 
+} 
 
 
 exports.deleteUser = (req, res) => {

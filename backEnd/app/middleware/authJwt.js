@@ -135,7 +135,6 @@ isUser = (req, res, next) => {
   getCurrentUserID = (req, res, next) => {
     console.log("getCurrentUserID"); 
     return req.userId;
-  
   }
 
 const authJwt = {
