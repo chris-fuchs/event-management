@@ -91,7 +91,7 @@ export class CardviewComponent implements OnInit, AfterViewInit, ControlValueAcc
       this.getFavEventsList();
     }
     this.eventService.getCategories().subscribe(data => {
-      console.log("categories: ",data);
+      // console.log("categories: ",data);
       this.categories = data
       this.categories = ["all"].concat(this.categories);
     });
@@ -111,7 +111,7 @@ export class CardviewComponent implements OnInit, AfterViewInit, ControlValueAcc
         } else {
           this.value = this.value.filter((o) => o !== chip.value);
         }
-        console.log(this.value)
+        // console.log(this.value)
 
         this.propagateChange(this.value);
       });
@@ -145,11 +145,11 @@ export class CardviewComponent implements OnInit, AfterViewInit, ControlValueAcc
       next: (data) => {
         this.allEvents = data;
         this.events = this.allEvents;
-        console.log(data);
+        // console.log(data);
         this.changeDetectorRef.detectChanges();
         this.dataSource = new MatTableDataSource(this.events);
         this.dataSource.paginator = this.paginator;
-        console.log(this.dataSource)
+        // console.log(this.dataSource)
         this.obs = this.dataSource.connect();
       },
       error: (e) => console.error(e)
@@ -205,7 +205,7 @@ export class CardviewComponent implements OnInit, AfterViewInit, ControlValueAcc
   }
 
   showSharing(eventIndex: any) {
-    console.log(eventIndex)
+    // console.log(eventIndex)
     var x = document.getElementById(eventIndex);
     if(x) {
       if (x.style.display === "none") {
@@ -217,7 +217,7 @@ export class CardviewComponent implements OnInit, AfterViewInit, ControlValueAcc
   }
 
   changeCategory(value: any){
-    console.log("category value: ",value);
+    // console.log("category value: ",value);
     if(this.allEvents) {
       if(value === "all") {
         this.events = this.allEvents;
@@ -230,7 +230,7 @@ export class CardviewComponent implements OnInit, AfterViewInit, ControlValueAcc
     }
   }
   filterTags(value: String[]) {
-    console.log("filterTags with value: ",value);
+    // console.log("filterTags with value: ",value);
     if(this.allEvents) {
       if(value.length === 0) {
         this.events = this.allEvents;
