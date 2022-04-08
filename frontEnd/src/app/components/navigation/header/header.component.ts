@@ -1,6 +1,5 @@
 import { Component, EventEmitter, HostBinding, OnInit, Output } from '@angular/core';
 import { StyleManagerService } from 'src/app/services/style-manager.service';
-import { ThemeService } from 'src/app/services/theme.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -20,11 +19,8 @@ export class HeaderComponent implements OnInit {
   showAddEvent = false;
   username?: string;
   profilePicURL?: string;
-  constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService, private userService: UserService, private styleManager: StyleManagerService) { }
+  constructor(private tokenStorageService: TokenStorageService, private userService: UserService, private styleManager: StyleManagerService) { }
   ngOnInit(): void {
-    this.themeService.theme.subscribe((theme: string) => {
-      this.cssClass = theme;
-    });
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();

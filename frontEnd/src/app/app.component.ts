@@ -4,7 +4,6 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { MatToolbar } from '@angular/material/toolbar';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { StyleManagerService } from './services/style-manager.service';
-import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -26,12 +25,9 @@ export class AppComponent {
   showOrganizerBoard = false;
   showUserBoard = false;
   username?: string;
-  constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService, private observer: BreakpointObserver, private styleManager: StyleManagerService) { }
+  constructor(private tokenStorageService: TokenStorageService, private observer: BreakpointObserver, private styleManager: StyleManagerService) { }
   ngOnInit(): void {
 
-    this.themeService.theme.subscribe((theme: string) => {
-      this.cssClass = theme;
-    });
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
