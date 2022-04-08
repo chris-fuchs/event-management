@@ -29,7 +29,6 @@ export class SidenavListComponent implements OnInit {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      // this.showModeratorBoard = (this.roles.includes('ROLE_MODERATOR') && !this.roles.includes('ROLE_ADMIN'));
       this.showModeratorBoard = (this.roles.includes('ROLE_MODERATOR'));
       this.showAddEvent = this.roles.includes('ROLE_ORGANIZER');
       this.username = user.username;
@@ -59,5 +58,4 @@ export class SidenavListComponent implements OnInit {
     this.styleManager.toggleDarkTheme();
     this.isDark = !this.isDark;
   }
-
 }

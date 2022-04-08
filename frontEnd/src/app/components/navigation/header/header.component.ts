@@ -30,21 +30,18 @@ export class HeaderComponent implements OnInit {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      // this.showModeratorBoard = (this.roles.includes('ROLE_MODERATOR') && !this.roles.includes('ROLE_ADMIN'));
       this.showModeratorBoard = (this.roles.includes('ROLE_MODERATOR'));
       this.showAddEvent = this.roles.includes('ROLE_ORGANIZER');
       this.username = user.username;
       this.userService.getProfilePicture(user.id).subscribe(
         data => {
           this.profilePicURL = data;
-          // console.log("profilepic: ",this.profilePicURL)
         }
       );
     }
   }
   logout(): void {
     this.tokenStorageService.signOut();
-    //window.location.reload();
     window.location.href = '/';
   }
 
@@ -56,5 +53,4 @@ export class HeaderComponent implements OnInit {
     this.styleManager.toggleDarkTheme();
     this.isDark = !this.isDark;
   }
-
 }

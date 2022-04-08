@@ -15,7 +15,6 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   styleUrls: ['./board-admin.component.scss']
 })
 export class BoardAdminComponent implements OnInit {
-  //content?: string;
   completeUserList?: User[];
   userList?: User[];
   moderatorList?: User[];
@@ -32,7 +31,6 @@ export class BoardAdminComponent implements OnInit {
   DataSourceUsr!: MatTableDataSource<User>;
   DataSourceOrg!: MatTableDataSource<User>;
   DataSourceMod!: MatTableDataSource<User>;
-  // displayedColumns: string[] = ['username', 'email', 'roles', 'action'];
   displayedColumns: string[] = ['username', 'email', 'roles', 'actions'];
 
   @ViewChild("paginatorUsr")
@@ -44,9 +42,7 @@ export class BoardAdminComponent implements OnInit {
   @ViewChild("paginatorMod")
   paginatorMod!: MatPaginator;
 
-  ngAfterViewInit() {
-    //this.DataSourceUsr.paginator = this.paginator;
-  }
+
 
   applyUserFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -67,12 +63,12 @@ export class BoardAdminComponent implements OnInit {
   }
 
   applyModFilter(event: Event) {
-    // const filterValue = (event.target as HTMLInputElement).value;
-    // this.DataSourceMod.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.DataSourceMod.filter = filterValue.trim().toLowerCase();
 
-    // if (this.DataSourceMod.paginator) {
-    //   this.DataSourceMod.paginator.firstPage();
-    // }
+    if (this.DataSourceMod.paginator) {
+      this.DataSourceMod.paginator.firstPage();
+    }
   }
 
   constructor(private userService: UserService, private tokenStorageService: TokenStorageService) { }

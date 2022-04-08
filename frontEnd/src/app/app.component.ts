@@ -37,7 +37,6 @@ export class AppComponent {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      // this.showModeratorBoard = (this.roles.includes('ROLE_MODERATOR') && !this.roles.includes('ROLE_ADMIN'));
       this.showModeratorBoard = (this.roles.includes('ROLE_MODERATOR'));
       this.showAddEvent = this.roles.includes('ROLE_ORGANIZER');
       this.showOrganizerBoard = this.roles.includes('ROLE_ORGANIZER');
@@ -49,20 +48,15 @@ export class AppComponent {
   ngAfterViewInit() {
     this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
       if (res.matches) {
-        // this.sidenav.mode = 'over';
-        // this.sidenav.close();
         var topnav = Array.from(document.getElementsByClassName("top-nav-only") as HTMLCollectionOf<HTMLElement>)
         topnav.forEach(element => {
           element.style.display = "none";
         });
       } else {
-        // this.topnav.
         var topnav = Array.from(document.getElementsByClassName("top-nav-only") as HTMLCollectionOf<HTMLElement>)
         topnav.forEach(element => {
           element.style.display = "block";
         });
-        // this.sidenav.mode = 'side';
-        // this.sidenav.open();
       }
     });
   }

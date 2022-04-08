@@ -13,12 +13,6 @@ export class AddEventComponent implements OnInit {
 
   currentUser?: any
 
-  // form = new FormGroup( {
-  //   title: new FormControl(''),
-  //   description: new FormControl(''),
-  //   content: new FormControl('')
-  // })
-
   form = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
@@ -44,16 +38,6 @@ export class AddEventComponent implements OnInit {
       console.log("categories: ",data);
       this.categories = data
     });
-
-
-
-
-    //console.log("ngOnInit fired..")
-    /*this.form = new FormGroup({
-      'title': new FormControl(null, {validators:[Validators.required, Validators.minLength(3)]}),
-      'description': new FormControl(null, {validators: [Validators.required]}),
-      'content': new FormControl(null, {validators: [Validators.required]})
-    });*/
   }
 
   get f(){
@@ -94,56 +78,3 @@ export class AddEventComponent implements OnInit {
       });
   }
 }
-
-/*
-import { Component, OnInit } from '@angular/core';
-import { Event } from 'src/app/models/event.model';
-import { EventService } from 'src/app/services/event.service';
-import { FormControl } from '@angular/forms';
-
-@Component({
-  selector: 'app-add-event',
-  templateUrl: './add-event.component.html',
-  styleUrls: ['./add-event.component.css']
-})
-export class AddEventComponent implements OnInit {
-  event: Event = {
-    title: '',
-    description: '',
-    image: '',
-    published: false
-  };
-  submitted = false;
-  constructor(private eventService: EventService) { }
-  ngOnInit(): void {
-  }
-  saveEvent(): void {
-    const data = {
-      title: this.event.title,
-      description: this.event.description,
-      image: this.event.image
-    };
-    console.log(this.event.title);
-    console.log(this.event.description);
-    console.log(this.event.image);
-    this.eventService.create(data)
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-          this.submitted = true;
-        },
-        error: (e) => console.error(e)
-      });
-  }
-  newEvent(): void {
-    this.submitted = false;
-    this.event = {
-      title: '',
-      description: '',
-      image: '',
-      published: false
-    };
-  }
-
-}
-*/

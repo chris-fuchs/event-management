@@ -6,112 +6,34 @@
       class="list-group-item">
           <mat-card class="example-card">
           <mat-card-header>
-            <!-- <div mat-card-avatar class="example-header-image" background-image= {{ event.creator?.profilePicURL }}></div> -->
             <div mat-card-avatar class="example-header-image" [style.background-image]= "'url( '+currentEvent.creator?.profilePicURL +' )'"></div>
             <mat-card-title>{{ currentEvent.title }}</mat-card-title>
-            <!-- <mat-card-subtitle>Event Organizer</mat-card-subtitle> -->
             <mat-card-subtitle> {{ currentEvent.creator?.username }}</mat-card-subtitle>
 
 
           </mat-card-header>
-          <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-              <!-- test -->
           <img mat-card-image src= {{currentEvent.imageURL}} alt="Photo of a Shiba Inu">
 
           <mat-card-content>
 
             <p>
               {{ currentEvent.description }}<br>
-              <!-- ID: {{ event._id }}<br>
-              Creator: {{ event.creator?.username }}<br>
-              image: {{event.imageURL}}<br>
-              profilePicURL: {{ event.creator?.profilePicURL }} -->
             </p>
 
 
           </mat-card-content>
           <mat-card-actions  style="width: 100%;display: inline-block;">
-            <!-- <button id="fav-icon" mat-icon-button color="primary" *ngIf="checkFavStatus(event._id)" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
-              <mat-icon>favorite</mat-icon>
-            </button>
-            <button id="unfav-icon" mat-icon-button color="primary" *ngIf="checkFavStatus(event._id)  === false" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
-              <mat-icon>favorite_border</mat-icon>
-            </button> -->
-
-            <!-- <button id="fav-icon" mat-icon-button color="primary" *ngIf="event._id == favEvents" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
-              <mat-icon>favorite</mat-icon>
-            </button>
-            <button id="unfav-icon" mat-icon-button color="primary" *ngIf="!(event._id == favEvents)" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
-              <mat-icon>favorite_border</mat-icon>
-            </button> -->
-            <!-- <span *ngIf="isLoggedIn">
-              <button id="fav-icon" class="fav" mat-icon-button color="primary" *ngIf="favEvents?.includes(event._id)" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
-                <mat-icon>favorite</mat-icon>
-              </button>
-              <button id="unfav-icon" class="fav" mat-icon-button color="primary" *ngIf="!(favEvents?.includes(event._id))" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
-                <mat-icon>favorite_border</mat-icon>
-              </button>
-            </span>
-
-            <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
-              <mat-icon>share</mat-icon>
-            </button> -->
-
-            <!-- {{ event.creator?.username }}
-            {{ currentUser?.username }} -->
-
-
-           <button mat-icon-button color="primary" (click)="changeToEditMode()"
+                       <button mat-icon-button color="primary" (click)="changeToEditMode()"
            aria-label="Example icon button with a home icon"
            *ngIf= "currentUser?.roles?.includes('ROLE_ADMIN') ||
            currentUser?.roles?.includes('ROLE_MODERATOR') ||
            currentUser?.id === currentEvent?.creator"           >
               <mat-icon>edit</mat-icon>
             </button>
-
-
-    <!-- <button
-    class="badge badge-primary mr-2"
-    *ngIf= "currentUser?.roles?.includes('ROLE_ADMIN') ||
-          currentUser?.roles?.includes('ROLE_MODERATOR') ||
-          currentUser?.id === currentEvent?.creator"
-    (click)="changeToEditMode()">
-    Edit
-  </button> -->
-
           </mat-card-actions>
         </mat-card>
       </li>
     </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <!-- <button
-  class="badge badge-primary mr-2"
-  *ngIf="currentEvent.published" <-- if admin, mod or org with own event
-  (click)="changeToEditMode()"
->
-  Edit
-</button> -->
-
 
   </div>
   <div *ngIf="!currentEvent">
@@ -147,7 +69,6 @@
       </div>
       <div class="form-group">
         <label for="category">Category</label>
-        <!-- Select sport", "music", "movie", "party", "other"] -->
         <select class="form-control" id="category" name="category" formControlName="category">
           <option>Sport</option>
           <option>Music</option>
@@ -156,25 +77,7 @@
           <option>Other</option>
         </select>
       </div>
-      <!-- <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentEvent.published ? "Published" : "Pending" }}
-      </div> -->
     </form>
-    <!-- <button
-      class="badge badge-primary mr-2"
-      *ngIf="currentEvent.published"
-      (click)="updatePublished(false)"
-    >
-      UnPublish
-    </button>
-    <button
-      *ngIf="!currentEvent.published"
-      class="badge badge-primary mr-2"
-      (click)="updatePublished(true)"
-    >
-      Publish
-    </button> -->
     <button class="badge badge-danger mr-2" (click)="deleteEvent()">
       Delete
     </button>

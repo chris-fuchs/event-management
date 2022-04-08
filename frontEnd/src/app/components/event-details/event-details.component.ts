@@ -20,12 +20,6 @@ export class EventDetailsComponent implements OnInit {
     published: false
   };
 
-  // form = this.fb.group({
-  //   title: ["{{ currentEvent.title }}"],
-  //   description: ["{{ currentEvent.description}}"],
-  //   category: ["{{ currentEvent.category}}"]
-  // })
-
     form = this.fb.group({
     title: [""],
     description: [""],
@@ -53,17 +47,6 @@ export class EventDetailsComponent implements OnInit {
       this.getEvent(this.route.snapshot.params["id"]);
     }
     this.currentUser = this.tokenStorageService.getUser()
-    // let title = (<HTMLInputElement>document.getElementById('title'));
-    // console.log("doc: ", document.getElementById('title'))
-    // console.log("title: ",title)
-    // title.value = "test";
-
-
-    console.log("this.currentUser: ",this.currentUser.id);
-  }
-
-  ngAfterViewInit() {
-    console.log("select: ",document.getElementById("category"));
   }
 
   getEvent(id: string): void {
@@ -71,8 +54,6 @@ export class EventDetailsComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.currentEvent = data;
-          console.log(data);
-          console.log("creator id", this.currentEvent.creator)
         },
         error: (e) => console.error(e)
       });
@@ -128,11 +109,6 @@ export class EventDetailsComponent implements OnInit {
       dataObject.category = categoryTemp;
     }
 
-    // let dataComplete = { titleTemp, descriptionTemp, categoryTemp };
-    // console.log("dataComplete: ",dataComplete);
-
-    console.log("dataObject: ",dataObject);
-    console.log("thisform: ",this.form.get('title')?.value)
 
     this.eventService.update(this.currentEvent._id, dataObject)
       .subscribe({
@@ -157,10 +133,5 @@ export class EventDetailsComponent implements OnInit {
   changeToEditMode(): void {
     this.viewMode = false;
     console.log("select: ",document.getElementById("category"));
-
-    // title.value = (<String>this.currentEvent.title?.toString);
-    // window.location.reload();
   }
-
-
 }

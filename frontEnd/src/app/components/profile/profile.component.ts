@@ -30,15 +30,7 @@ export class ProfileComponent implements OnInit {
 
   updateProfile(): void {
     const formData = new FormData();
-    // formData.append('title',this.form.get('title')?.value)
-    // formData.append('description',this.form.get('description')?.value)
     formData.append('file', this.form.get('content')?.value)
-    // console.log("currentUserID: ",this.currentUser.id)
-    // formData.append('creator', this.currentUser.id)
-
-    // console.log(this.currentUser)
-    // console.log(this.currentUser.id)
-    // console.log(this.currentUser._id)
     this.userService.updateUser(this.currentUser.id, formData)
       .subscribe({
         next: (res) => {
@@ -47,5 +39,4 @@ export class ProfileComponent implements OnInit {
         error: (e) => console.error(e)
       });
   }
-
 }

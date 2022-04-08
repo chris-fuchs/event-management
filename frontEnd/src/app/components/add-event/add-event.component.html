@@ -1,5 +1,4 @@
 <div *ngIf="showAddEvent">
-  <!-- <form > -->
     <form [formGroup]="form" class="submit-form" *ngIf="!submitted" appearance="fill">
     <mat-form-field >
       <mat-label for="title">Title</mat-label>
@@ -33,10 +32,6 @@
 
       <mat-form-field>
         <mat-label for="picture">Picture</mat-label>
-         <!-- <input
-          matInput
-          formControlName="content"
-          (change)="onFileChange($event)"> -->
           <ngx-mat-file-input formControlName="content">
           </ngx-mat-file-input>
       </mat-form-field>
@@ -47,7 +42,6 @@
     <div *ngIf="submitted">
       <h4>Event was submitted successfully!</h4>
     </div>
-  <!-- </form> -->
   </form>
 </div>
 <div *ngIf="!showAddEvent">

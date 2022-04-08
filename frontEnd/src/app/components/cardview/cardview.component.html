@@ -3,9 +3,6 @@
     <mat-form-field class="example-form-field" appearance="fill">
       <mat-label>Search</mat-label>
       <input matInput (input)="applyNameFilter($event)" placeholder="Ex. Mia" #input>
-      <!-- <button *ngIf="input" matSuffix mat-icon-button aria-label="" (click)="input.value = '' ">
-        <mat-icon>close</mat-icon>
-      </button> -->
     </mat-form-field>
   </li>
 <li class="list-group-item  event-selection-li">
@@ -33,21 +30,6 @@
       <mat-icon *ngIf="c.selected">check</mat-icon>
       {{keyword}}
     </mat-chip>
-  <!-- <mat-chip-list #chipList aria-label="Video keywords" selectable multiple [formControl]="formControl">
-    <mat-chip
-        *ngFor="let keyword of keywords"
-        [value]="keyword"
-        >
-      {{keyword}}
-    </mat-chip> -->
-
-    <!-- <mat-chip
-        *ngFor="let keyword of keywords"
-        [selected]="keyword"
-        [value]="keyword"
-        >
-      {{keyword}}
-    </mat-chip> -->
   </mat-chip-list>
 </mat-form-field>
 </li>
@@ -61,26 +43,18 @@
   >
       <mat-card class="example-card" >
       <mat-card-header>
-        <!-- <div mat-card-avatar class="example-header-image" background-image= {{ event.creator?.profilePicURL }}></div> -->
         <div mat-card-avatar class="example-header-image" [style.background-image]= "'url( '+event.creator?.profilePicURL +' )'"></div>
         <mat-card-title><a class="titlelink" href="events/{{ event._id }}"> {{ event.title }}</a></mat-card-title>
-        <!-- <mat-card-subtitle>Event Organizer</mat-card-subtitle> -->
         <mat-card-subtitle> {{ event.creator?.username }}</mat-card-subtitle>
 
 
       </mat-card-header>
-      <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-          <!-- test -->
       <img mat-card-image src= {{event.imageURL}} alt="Photo of a Shiba Inu">
 
       <mat-card-content>
 
         <p>
           {{ event.description }}<br>
-          <!-- ID: {{ event._id }}<br>
-          Creator: {{ event.creator?.username }}<br>
-          image: {{event.imageURL}}<br>
-          profilePicURL: {{ event.creator?.profilePicURL }} -->
         </p>
 
         <p>
@@ -97,19 +71,6 @@
 
       </mat-card-content>
       <mat-card-actions  style="width: 100%;display: inline-block;">
-        <!-- <button id="fav-icon" mat-icon-button color="primary" *ngIf="checkFavStatus(event._id)" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
-          <mat-icon>favorite</mat-icon>
-        </button>
-        <button id="unfav-icon" mat-icon-button color="primary" *ngIf="checkFavStatus(event._id)  === false" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
-          <mat-icon>favorite_border</mat-icon>
-        </button> -->
-
-        <!-- <button id="fav-icon" mat-icon-button color="primary" *ngIf="event._id == favEvents" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
-          <mat-icon>favorite</mat-icon>
-        </button>
-        <button id="unfav-icon" mat-icon-button color="primary" *ngIf="!(event._id == favEvents)" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
-          <mat-icon>favorite_border</mat-icon>
-        </button> -->
         <span *ngIf="isLoggedIn">
           <button id="fav-icon" class="fav" mat-icon-button color="warn" *ngIf="favEvents?.includes(event._id)" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
             <mat-icon>favorite</mat-icon>
@@ -122,7 +83,6 @@
         <button mat-icon-button color="primary" (click)="showSharing(i)" aria-label="Example icon button with a home icon">
           <mat-icon>share</mat-icon>
         </button>
-<!-- circles-dark modern-dark -->
         <div id= "{{i}}" class="sharebuttons" style="display: none;">
         <share-buttons theme="material-light"
           [include]="['copy', 'facebook', 'email', 'messenger', 'linkedin', 'reddit', 'pinterest',  'twitter','whatsapp','telegram']"
@@ -134,15 +94,6 @@
           class="pt-5">
         </share-buttons>
       </div>
-
-
-        <!-- {{ event.creator?.username }}
-        {{ currentUser?.username }} -->
-
-
-        <!-- <button mat-icon-button color="primary" (click)="deleteEvent(event._id)" aria-label="Example icon button with a home icon" *ngIf="currentUser?.username === event.creator?.username || currentUser?.roles?.includes('ROLE_ADMIN') || currentUser?.roles?.includes('ROLE_MODERATOR')">
-          <mat-icon>edit</mat-icon>
-        </button> -->
 
 
       </mat-card-actions>
