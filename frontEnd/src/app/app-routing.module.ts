@@ -11,7 +11,6 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BoardUserComponent } from './components/board-user/board-user.component';
-import { BoardOrganizerComponent } from './components/board-organizer/board-organizer.component';
 import { BoardAdminComponent } from './components/board-admin/board-admin.component';
 
 const routes: Routes = [
@@ -26,7 +25,6 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'user', component: BoardUserComponent },
-  { path: 'org', component: BoardOrganizerComponent },
   { path: 'admin', component: BoardAdminComponent },
 ];
 

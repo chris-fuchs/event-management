@@ -50,12 +50,6 @@ module.exports = function(app) {
     controller.adminBoard
   );
 
-  app.get(
-    "/api/test/org",
-    [authJwt.verifyToken, authJwt.isOrganizer]  ,
-    controller.organizerBoard
-  );
-
   app.put(
     "/api/test/user2org/:id",
     [authJwt.verifyToken, authJwt.isOrganizer || authJwt.isAdmin],

@@ -20,7 +20,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BoardAdminComponent } from './components/board-admin/board-admin.component';
-import { BoardOrganizerComponent } from './components/board-organizer/board-organizer.component';
 import { BoardUserComponent } from './components/board-user/board-user.component'
 import { authInterceptorProviders } from './helper/auth.interceptor';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -57,7 +56,6 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     HomeComponent,
     ProfileComponent,
     BoardAdminComponent,
-    BoardOrganizerComponent,
     BoardUserComponent,
     HeaderComponent,
     SidenavListComponent,
