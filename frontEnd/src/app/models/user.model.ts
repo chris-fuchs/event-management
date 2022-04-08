@@ -6,4 +6,5 @@ export class User {
   username?: String;
   email?: String;
   favEvents?: Event[];
+  profilePicURL?: String;
 }

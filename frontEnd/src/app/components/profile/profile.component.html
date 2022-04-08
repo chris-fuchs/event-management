@@ -1,9 +1,7 @@
 <div class="container" *ngIf="currentUser; else loggedOut">
-  <header class="jumbotron">
     <h3>
       <strong>{{ currentUser.username }}</strong> Profile
     </h3>
-  </header>
   <p>
     <strong>Token:</strong>
     {{ currentUser.accessToken.substring(0, 20) }} ...
@@ -19,6 +17,11 @@
       {{ role }}
     </li>
   </ul>
+    <form (submit)="updateProfile()">
+      Profile Picture
+      <input type="file" (change)="onFileChange($event)" />
+      <button type="submit">Upload</button>
+    </form>
 </div>
 <ng-template #loggedOut>
   Please login.

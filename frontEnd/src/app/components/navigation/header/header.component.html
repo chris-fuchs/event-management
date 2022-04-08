@@ -1,0 +1,67 @@
+<mat-toolbar color="primary">
+
+<div>
+  <button mat-icon-button (click)="onToggleSidenav()">
+  <mat-icon>menu</mat-icon>
+</button>
+</div>
+
+<div>
+  <a href="#" class="navbar-brand">EventSite</a>
+</div>
+
+<div class="top-nav-only" *ngIf="showAdminBoard || showModeratorBoard">
+  <a class="nav-link" routerLink="admin">Admin Board</a>
+</div>
+
+<div class="top-nav-only">
+  <a routerLink="eventcards" class="nav-link">show events</a>
+</div>
+
+<div class="top-nav-only" *ngIf="showAddEvent">
+  <a routerLink="add" class="nav-link">add event</a>
+</div>
+
+<span class="example-spacer"></span>
+
+
+<div mat-list-item id="toogleButtonDiv">
+  <button id="toggleButton" mat-icon-button (click)="toggleDarkTheme()" matTooltip="Toggle dark theme">
+    <mat-icon>
+      brightness_6
+    </mat-icon>
+  </button>
+</div>
+
+
+<span class="example-spacer"></span>
+
+<div *ngIf="!isLoggedIn">
+  <a class="nav-link" routerLink="register">Sign Up</a>
+</div>
+
+<div *ngIf="!isLoggedIn">
+  <a class="nav-link" routerLink="login">Login</a>
+</div>
+
+
+<div *ngIf="isLoggedIn">
+
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+  <img class="profilePic" src="{{ profilePicURL }}" alt="userImage">
+</button>
+
+<mat-menu #menu="matMenu">
+  <div mat-menu-item disabled="true">
+    {{username}}
+  </div>
+  <button mat-menu-item routerLink="profile">
+    <mat-icon>perm_identity</mat-icon>
+    <span>Profile</span>
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    <span>LogOut</span>
+  </button>
+</mat-menu>
+</div>

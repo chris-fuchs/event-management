@@ -1,6 +1,6 @@
 // const db = require("../models");
 // const Event = db.events;
-
+const { authJwt } = require("../middleware");
 const Event = require("../models/event.model.js");
 
 /*
@@ -45,7 +45,8 @@ exports.findAll = (req, res) => {
   
  
   Event.find(condition)
-    .populate('creator', 'username')
+    .populate('creator', ['profilePicURL','username'])
+    // .populate('creator', 'username')
     .then(data => {
       res.send(data);
     })
@@ -62,6 +63,7 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
 
   Event.findById(id)
+    .populate('creator', ['profilePicURL','username'])
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found Event with id " + id });
@@ -76,71 +78,89 @@ exports.findOne = (req, res) => {
 
 // Update a Event by the id in the request
 exports.update = (req, res) => {
-  
+  // console.log("req.body.creator._id: ", req.body.creator._id)
+  // console.log(req.userId)
+  //console.log("authJwt.currentUser: ", authJwt) // TODO: how to reliably get current userid?
+  // get current user id from jwt
+  // console.log("authJwt.getCurrentUserID", authJwt.getCurrentUserID())
+  // console.log("authJwt", authJwt)
+  // console.log(authJwt.isAdmin)
+
+
   if (!req.body) {
     return res.status(400).send({
       message: "Data to update can not be empty!"
     });
   }
+  
 
-  if(authJwt.isOrganizer && authJwt.currentUser.id !== req.body.creator) {
+
+  if(!(authJwt.isAdmin || (authJwt.isOrganizer && req.userId == req.body.creator._id))) {
     return res.status(401).send({
       message: "Not Authorized"
     });
+  } else {
+    console.log("user is authorized")
   }
 
   const id = req.params.id;
+  console.log("req.body: ", req.body)
 
-  Event.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  Event.findByIdAndUpdate(id, req.body)
     .then(data => {
       if (!data) {
         res.status(404).send({
           message: `Cannot update Event with id=${id}. Maybe Event was not found!`
-        }); }
-        else if(authJwt.isOrganizer && authJwt.currentUser.id !== data.creator) {
-          res.status(401).send({
-            message: "Not Authorized"
-          });
-      } else res.send({ message: "Event was updated successfully." });
+        }); 
+      }
+      else {
+       res.send({ message: "Event was updated successfully."})
+      }
     })
+
     .catch(err => {
       res.status(500).send({
         message: "Error updating Event with id=" + id
       });
     });
-};
+  };
 
-// Delete a Event with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-
-
-
-  Event.findByIdAndRemove(id)
+  console.log("req.userId", req.userId)
+  Event.findById(id)
     .then(data => {
       if (!data) {
         res.status(404).send({
           message: `Cannot delete Event with id=${id}. Maybe Event was not found!`
         });
       }
-      else if(authJwt.isOrganizer && authJwt.currentUser.id !== data.creator) {
+      else if(!authJwt.isOrganizer && req.userId !== data.creator) {
           res.status(401).send({
             message: "Not Authorized"
           });
       } else {
-        res.send({
-          message: "Event was deleted successfully!"
+      Event.findByIdAndRemove(id)
+        .then(data => {
+          res.send({
+            message: "Event was deleted successfully!"
+          }
+        );
+        })
+        .catch(err => {
+          res.status(500).send({
+            message: "Could not delete Event with id=" + id
+          });
         });
-      }
-    })
+      }})
     .catch(err => {
+      console.log("error", err)
       res.status(500).send({
         message: "Could not delete Event with id=" + id
       });
     });
-};
+  }
 
-// Delete all Events from the database.
 exports.deleteAll = (req, res) => {
   Event.deleteMany({})
     .then(data => {
@@ -156,7 +176,6 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// Find all published Events
 exports.findAllPublished = (req, res) => {
   Event.find({ published: true })
     .then(data => {
@@ -168,4 +187,9 @@ exports.findAllPublished = (req, res) => {
           err.message || "Some error occurred while retrieving events."
       });
     });
+};
+
+
+exports.getCategories = (req, res) => {
+  res.status(200).send(Event.schema.path('category').enumValues);
 };

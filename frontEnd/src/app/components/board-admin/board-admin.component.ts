@@ -12,10 +12,9 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 @Component({
   selector: 'app-board-admin',
   templateUrl: './board-admin.component.html',
-  styleUrls: ['./board-admin.component.css']
+  styleUrls: ['./board-admin.component.scss']
 })
 export class BoardAdminComponent implements OnInit {
-  //content?: string;
   completeUserList?: User[];
   userList?: User[];
   moderatorList?: User[];
@@ -24,13 +23,14 @@ export class BoardAdminComponent implements OnInit {
   panelOpenStateOrg = false;
   panelOpenStateUsr = false;
   isAdmin = false;
+  isMod = false;
+
   lengthUsr?: number;
   pageSizeOptionsUsr: number[] = [1, 5, 10, 25, 100];
   pageEventUsr?: PageEvent;
   DataSourceUsr!: MatTableDataSource<User>;
   DataSourceOrg!: MatTableDataSource<User>;
   DataSourceMod!: MatTableDataSource<User>;
-  // displayedColumns: string[] = ['username', 'email', 'roles', 'action'];
   displayedColumns: string[] = ['username', 'email', 'roles', 'actions'];
 
   @ViewChild("paginatorUsr")
@@ -42,9 +42,7 @@ export class BoardAdminComponent implements OnInit {
   @ViewChild("paginatorMod")
   paginatorMod!: MatPaginator;
 
-  ngAfterViewInit() {
-    //this.DataSourceUsr.paginator = this.paginator;
-  }
+
 
   applyUserFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -79,9 +77,11 @@ export class BoardAdminComponent implements OnInit {
     const roles = user.roles;
     if(roles) {
       this.isAdmin = roles.includes('ROLE_ADMIN');
+      this.isMod = roles.includes('ROLE_MODERATOR');
     }
     this.userService.getAdminBoard().subscribe({
       next: data => {
+        console.log(data)
         this.completeUserList = data.users;
         this.userList = data.users.filter((user: { roles: string | string[]; }) => user.roles.includes('user'));
         this.lengthUsr = this.userList?.length;

@@ -1,6 +1,7 @@
 ### General ###
 
 .vscode
+node_modules
 
 ### FrontEnd ###
 

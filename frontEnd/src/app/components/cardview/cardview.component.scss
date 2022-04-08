@@ -1,0 +1,131 @@
+.example-card {
+  width: 350px;
+  height: 100%;
+  /* max-height: 500px; */
+  background-color: rgb(189, 189, 173) !important;
+  padding: 20px;
+  border-radius: 15px;
+  border: 0px;
+  // margin: 10px; creates a second vertical scrollbar ?!
+}
+
+// .fav {
+//   color: red;
+// }
+img {
+  max-height: fit-content;
+}
+
+.example-header-image {
+  // background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+mat-card-title {
+  font-weight: bolder;
+}
+
+button {
+  border: 15px;
+  margin-right: 5px ;
+}
+
+.mat-paginator-container {
+  background-color: transparent !important;
+}
+
+.list-group {
+  display: flex;
+  width: 100%;
+  justify-content:space-evenly;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: stretch;
+  align-content: space-around;
+  row-gap: 10px;
+  // background-color: black;
+  border-radius: 0%;
+}
+
+.list-group-item {
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  /* flex-grow: 1;
+  flex-shrink: 3; */
+}
+
+
+.mat-card{
+  display:flex;
+  flex-direction: column;
+}
+
+.mat-card-header {
+  flex-shrink: 0;
+
+  a {
+    color: inherit !important;
+  }
+}
+
+.mat-card-content{
+  flex-grow: 1;
+  overflow: auto;
+}
+
+
+.sharebuttons {
+  display: "none" !important;
+}
+
+sharebuttons {
+  display: "none" !important;
+}
+
+.pt-5 {
+  padding-top: 0px !important;
+}
+
+a.titlelink:link, a.titlelink:visited, a.titlelink:hover, a.titlelink:active {
+  color: inherit !important;
+}
+
+.event-selection-ul {
+  width: 95%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #bdbdad;
+  padding-top: 15px;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  margin-top: 1%;
+  margin-bottom: 2%;
+  border-radius: 15px;
+  border: 0px;
+
+
+  display: flex;
+  justify-content:space-evenly;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  align-content: space-around;
+  row-gap: 10px;
+}
+.event-selection-li {
+  float: left;
+  display:flex;
+  flex-direction: column;
+  flex-grow: 2;
+  padding: 1%;
+}
+
+mat-icon {
+  height: 20px;
+  width: 20px;
+  font-size: 20px;
+  margin-right: 5px;
+}

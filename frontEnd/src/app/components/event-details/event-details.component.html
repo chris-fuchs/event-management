@@ -1,27 +1,40 @@
 <div *ngIf="viewMode; else editable">
   <div *ngIf="currentEvent._id">
-    <h4>Event</h4>
-    <div>
-      <label><strong>Title:</strong></label> {{ currentEvent.title }}
-    </div>
-    <div>
-      <label><strong>Description:</strong></label>
-      {{ currentEvent.description }}
-    </div>
-    <div>
-      <!--<label><strong>Image:</strong></label>
-      {{ currentEvent.imageURL }}-->
-      <img [src]="currentEvent.imageURL">
-      <!--
-        <img ng-src="currentEvent.imageURL">
-        <img  class="images" src={{img}}/> or
-      <img class="images" [src]="img"/>-->
-    </div>
-    <div>
-      <label><strong>Status:</strong></label>
-      {{ currentEvent.published ? "Published" : "Pending" }}
-    </div>
-      Edit
+
+    <ul class="list-group">
+      <li
+      class="list-group-item">
+          <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image" [style.background-image]= "'url( '+currentEvent.creator?.profilePicURL +' )'"></div>
+            <mat-card-title>{{ currentEvent.title }}</mat-card-title>
+            <mat-card-subtitle> {{ currentEvent.creator?.username }}</mat-card-subtitle>
+
+
+          </mat-card-header>
+          <img mat-card-image src= {{currentEvent.imageURL}} alt="Photo of a Shiba Inu">
+
+          <mat-card-content>
+
+            <p>
+              {{ currentEvent.description }}<br>
+            </p>
+
+
+          </mat-card-content>
+          <mat-card-actions  style="width: 100%;display: inline-block;">
+                       <button mat-icon-button color="primary" (click)="changeToEditMode()"
+           aria-label="Example icon button with a home icon"
+           *ngIf= "currentUser?.roles?.includes('ROLE_ADMIN') ||
+           currentUser?.roles?.includes('ROLE_MODERATOR') ||
+           currentUser?.id === currentEvent?.creator"           >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </li>
+    </ul>
+
   </div>
   <div *ngIf="!currentEvent">
     <br />
@@ -31,7 +44,7 @@
 <ng-template #editable>
   <div *ngIf="currentEvent._id" class="edit-form">
     <h4>Event</h4>
-    <form>
+    <form [formGroup]="form">
       <div class="form-group">
         <label for="title">Title</label>
         <input
@@ -39,6 +52,8 @@
           class="form-control"
           id="title"
           name="title"
+          value="{{ currentEvent.title }}"
+          formControlName="title"
         />
       </div>
       <div class="form-group">
@@ -48,27 +63,21 @@
           class="form-control"
           id="description"
           name="description"
+          value="{{ currentEvent.description}}"
+          formControlName="description"
         />
       </div>
       <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentEvent.published ? "Published" : "Pending" }}
+        <label for="category">Category</label>
+        <select class="form-control" id="category" name="category" formControlName="category">
+          <option>Sport</option>
+          <option>Music</option>
+          <option>Movie</option>
+          <option>Party</option>
+          <option>Other</option>
+        </select>
       </div>
     </form>
-    <button
-      class="badge badge-primary mr-2"
-      *ngIf="currentEvent.published"
-      (click)="updatePublished(false)"
-    >
-      UnPublish
-    </button>
-    <button
-      *ngIf="!currentEvent.published"
-      class="badge badge-primary mr-2"
-      (click)="updatePublished(true)"
-    >
-      Publish
-    </button>
     <button class="badge badge-danger mr-2" (click)="deleteEvent()">
       Delete
     </button>

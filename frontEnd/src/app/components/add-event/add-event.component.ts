@@ -1,29 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from 'src/app/models/event.model';
 import { EventService } from 'src/app/services/event.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-add-event',
   templateUrl: './add-event.component.html',
-  styleUrls: ['./add-event.component.css']
+  styleUrls: ['./add-event.component.scss']
 })
 export class AddEventComponent implements OnInit {
 
   currentUser?: any
-  //form!: FormGroup;
-  form = new FormGroup( {
-    title: new FormControl(''),
-    description: new FormControl(''),
-    content: new FormControl('')
+
+  form = this.fb.group({
+    title: ['', Validators.required],
+    description: ['', Validators.required],
+    content: [''],
+    category: ['', Validators.required],
+    tags: ['']
   })
 
   submitted = false;
   isLoggedIn = false;
   showAddEvent = false;
+  categories?: any
 
-  constructor(private eventService: EventService, private tokenStorageService: TokenStorageService) { }
+  constructor(private fb: FormBuilder, private eventService: EventService, private tokenStorageService: TokenStorageService) { }
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
@@ -31,12 +34,11 @@ export class AddEventComponent implements OnInit {
       const roles = this.currentUser.roles;
       this.showAddEvent = roles.includes('ROLE_ORGANIZER');
     }
-    //console.log("ngOnInit fired..")
-    /*this.form = new FormGroup({
-      'title': new FormControl(null, {validators:[Validators.required, Validators.minLength(3)]}),
-      'description': new FormControl(null, {validators: [Validators.required]}),
-      'content': new FormControl(null, {validators: [Validators.required]})
-    });*/
+
+    this.eventService.getCategories().subscribe(data => {
+      console.log("categories: ",data);
+      this.categories = data
+    });
   }
 
   get f(){
@@ -60,67 +62,24 @@ export class AddEventComponent implements OnInit {
     formData.append('file', this.form.get('content')?.value)
     console.log("currentUserID: ",this.currentUser.id)
     formData.append('creator', this.currentUser.id)
+    formData.append('category', this.form.get('category')?.value)
 
+    // get one string (tags). seperate by comma to get array
+    const tags = this.form.get('tags')?.value
+    const tagsArray = tags.split(',')
+    formData.append('tags', tagsArray)
+
+    console.log('category', this.form.get('category')?.value)
     this.eventService.create(formData)
       .subscribe({
         next: (res) => {
           console.log(res);
           this.submitted = true;
+          let url = `/events/${res._id}`;
+          console.log("url: ",url);
+          window.location.href = url;
         },
         error: (e) => console.error(e)
       });
   }
 }
-
-/*
-import { Component, OnInit } from '@angular/core';
-import { Event } from 'src/app/models/event.model';
-import { EventService } from 'src/app/services/event.service';
-import { FormControl } from '@angular/forms';
-
-@Component({
-  selector: 'app-add-event',
-  templateUrl: './add-event.component.html',
-  styleUrls: ['./add-event.component.css']
-})
-export class AddEventComponent implements OnInit {
-  event: Event = {
-    title: '',
-    description: '',
-    image: '',
-    published: false
-  };
-  submitted = false;
-  constructor(private eventService: EventService) { }
-  ngOnInit(): void {
-  }
-  saveEvent(): void {
-    const data = {
-      title: this.event.title,
-      description: this.event.description,
-      image: this.event.image
-    };
-    console.log(this.event.title);
-    console.log(this.event.description);
-    console.log(this.event.image);
-    this.eventService.create(data)
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-          this.submitted = true;
-        },
-        error: (e) => console.error(e)
-      });
-  }
-  newEvent(): void {
-    this.submitted = false;
-    this.event = {
-      title: '',
-      description: '',
-      image: '',
-      published: false
-    };
-  }
-
-}
-*/

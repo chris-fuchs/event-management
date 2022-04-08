@@ -2,13 +2,17 @@ import { Component, Input, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from 'src/app/models/event.model';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { User } from 'src/app/models/user.model';
+import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-event-details',
   templateUrl: './event-details.component.html',
-  styleUrls: ['./event-details.component.css']
+  styleUrls: ['./event-details.component.scss']
 })
 export class EventDetailsComponent implements OnInit {
-  @Input() viewMode = false;
+  currentUser!: User;
+  @Input() viewMode = true;
   @Input() currentEvent: Event = {
     title: '',
     description: '',
@@ -16,23 +20,40 @@ export class EventDetailsComponent implements OnInit {
     published: false
   };
 
+    form = this.fb.group({
+    title: [""],
+    description: [""],
+    category: [""]
+  })
+
+
   message = '';
   constructor(
+    private fb: FormBuilder,
     private eventService: EventService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private tokenStorageService: TokenStorageService) { }
   ngOnInit(): void {
     if (!this.viewMode) {
       this.message = '';
+      console.log("hello")
+      console.log(["id"])
+      this.getEvent(this.route.snapshot.params["id"]);
+    } else {
+      this.message = '';
+      console.log("hello")
+      console.log(["id"])
       this.getEvent(this.route.snapshot.params["id"]);
     }
+    this.currentUser = this.tokenStorageService.getUser()
   }
+
   getEvent(id: string): void {
     this.eventService.get(id)
       .subscribe({
         next: (data) => {
           this.currentEvent = data;
-          console.log(data);
         },
         error: (e) => console.error(e)
       });
@@ -42,6 +63,7 @@ export class EventDetailsComponent implements OnInit {
       title: this.currentEvent.title,
       description: this.currentEvent.description,
       imageURL: this.currentEvent.imageURL,
+      category: this.currentEvent.category,
       published: status
     };
     this.message = '';
@@ -57,7 +79,38 @@ export class EventDetailsComponent implements OnInit {
   }
   updateEvent(): void {
     this.message = '';
-    this.eventService.update(this.currentEvent._id, this.currentEvent)
+    let titleTemp: string;
+    let titleField = this.form.get('title')?.value
+
+    type dataField = {
+      title: string,
+      description: string,
+      category: string
+    }
+
+    const dataObject = {} as dataField;
+
+    if(titleField != "") {
+      titleTemp = titleField;
+      dataObject.title = titleTemp
+    }
+
+    let descriptionTemp: string;
+    let descriptionField = this.form.get('description')?.value
+    if(descriptionField != "") {
+      descriptionTemp = descriptionField;
+      dataObject.description = descriptionTemp;
+    }
+
+    let categoryTemp: string;
+    let categoryField = this.form.get('category')?.value
+    if(categoryField != "") {
+      categoryTemp = categoryField;
+      dataObject.category = categoryTemp;
+    }
+
+
+    this.eventService.update(this.currentEvent._id, dataObject)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -75,5 +128,10 @@ export class EventDetailsComponent implements OnInit {
         },
         error: (e) => console.error(e)
       });
+  }
+
+  changeToEditMode(): void {
+    this.viewMode = false;
+    console.log("select: ",document.getElementById("category"));
   }
 }

@@ -1,0 +1,6 @@
+@use "../../app/components/navigation/sidenav-list/sidenav-list-theme" as sidenav;
+// @use "./button/variants" as button-variants;
+
+@mixin theme($theme) {
+  @include sidenav.theme($theme)
+}

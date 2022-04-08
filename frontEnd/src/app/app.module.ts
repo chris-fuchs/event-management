@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { EventDetailsComponent } from './components/event-details/event-details.component';
-import { EventsListComponent } from './components/events-list/events-list.component';
 
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'
@@ -20,31 +19,40 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BoardAdminComponent } from './components/board-admin/board-admin.component';
-import { BoardModeratorComponent } from './components/board-moderator/board-moderator.component';
-import { BoardOrganizerComponent } from './components/board-organizer/board-organizer.component';
-import { BoardUserComponent } from './components/board-user/board-user.component'
 import { authInterceptorProviders } from './helper/auth.interceptor';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { HeaderComponent } from './components/navigation/header/header.component';
+import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {LayoutModule} from '@angular/cdk/layout';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatSelectModule} from '@angular/material/select';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     AddEventComponent,
     EventDetailsComponent,
-    EventsListComponent,
     CardviewComponent,
     LoginComponent,
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
     BoardAdminComponent,
-    BoardModeratorComponent,
-    BoardOrganizerComponent,
-    BoardUserComponent
+    HeaderComponent,
+    SidenavListComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +68,18 @@ import { MatInputModule } from '@angular/material/input';
     MatPaginatorModule,
     MatTableModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonToggleModule,
+    MatListModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    LayoutModule,
+    ShareButtonsModule,
+    ShareIconsModule,
+    MatChipsModule,
+    MatSelectModule,
+    NgxMatFileInputModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

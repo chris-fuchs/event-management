@@ -8,7 +8,8 @@ exports.signup = (req, res) => {
   const user = new User({
     username: req.body.username,
     email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
+    password: bcrypt.hashSync(req.body.password, 8),
+    profilePicURL: "http://localhost:8080/images/Profile_Placeholder.png"
   });
   user.save((err, user) => {
     if (err) {

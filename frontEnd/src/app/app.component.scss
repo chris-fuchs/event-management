@@ -1,0 +1,198 @@
+
+// @import './frontEnd/src/styles.scss';
+
+
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin theme($theme) {
+  $primary: map.get($theme, primary);
+  $accent: map.get($theme, accent);
+  $warn: map.get($theme, warn);
+  $background: map.get($theme, background);
+  $foreground: map.get($theme, foreground);
+
+  mat-drawer {
+    background-color: mat.get-color-from-palette($primary) !important;
+    color: mat.get-color-from-palette($primary, default-contrast);
+  }
+
+
+  mat-sidenav-container {
+    color: mat.get-color-from-palette($primary, default-contrast);
+
+    mat-drawer {
+      background-color: mat.get-color-from-palette($primary) !important;
+      color: mat.get-color-from-palette($primary, default-contrast);
+    }
+
+    mat-toolbar {
+      background-color: mat.get-color-from-palette($primary);
+    }
+
+    mat-toolbar.mat-primary {
+      background-color: mat.get-color-from-palette($primary);
+    }
+
+    mat-drawer-container {
+      background-color: mat.get-color-from-palette($background, default);
+    }
+  }
+}
+
+@import '~@angular/material/theming';
+@import './src/styles.scss';
+
+
+
+
+// .container {
+//   background-color: black;
+// }
+
+// #id {
+//   background-color: black;
+// }
+
+// make button toggle group smaller
+// .buttonToggle {
+//   line-height: 2px !important;
+//   // background-color: aqua;
+//   border: 40px;
+//   border-radius: 10px;
+//   border-color: white;
+// }
+
+:host .mat-button-toggle-group{
+  // width: 50%;
+  border-radius: 15px !important;
+  // border: 1px solid darkgray !important;
+  // background-color: mat-color($dark-accent, 300) !important;
+  // background-color: mat-color(accent, 300) !important;
+  // background-color: mat-color(accent) !important;
+  // background-color: "accent, 300";
+
+
+  // outline-color: mat-color($dark-accent, lighter);
+  // outline-color: "accent, lighter";
+  // border-color: mat-color($dark-primary, '100-contrast');
+  // border-color: "primary, 100-contrast";
+
+
+  .mat-button-toggle {
+    line-height: 30px !important;
+    padding: 0 0px !important;
+  }
+
+}
+
+:host .mat-button-toggle.mat-button-toggle-checked{
+  // background-color: mat-color($dark-primary, '50-contrast');
+  // border-color: mat-color($dark-primary, '50-contrast');
+  // background-color: "primary, 50-contrast";
+  // border-color: "primary, 50-contrast";
+}
+
+:host .mat-button-toggle-group.mat-button-unchecked{
+  // background-color: mat-color($dark-primary, '10-contrast');
+  // border-color: mat-color($dark-primary, '10-contrast');
+  // background-color: "primary, 10-contrast";
+  // border-color: "primary, 10-contrast";
+}
+
+:host mat-button-toggle-checked {
+  // background-color: mat-color($dark-primary, '10-contrast');
+  // background-color: "primary, 10-contrast";
+
+}
+
+:host .mat-button-toggle-label-content {
+  line-height: 30px !important;
+  padding: 0 0px !important;
+}
+
+.mat-button-toggle-label-content {
+  line-height: 30px !important;
+  padding: 0 0px !important;
+}
+
+
+.mat-button-toggle-label-content {
+  width: 50%;
+  line-height: 24px !important;
+}
+
+// :host .mat-button-toggle {
+//   width: 3.5vw;
+//   margin: 0;
+//   padding: 0;
+// }
+
+
+
+.navbar {
+  // color: mat-color($dark-primary, text);
+  // background-color: mat-color($dark-accent);
+  // color: "primary, text";
+  // background-color: "accent";
+
+
+  a {
+    //color: mat-color($dark-primary, text);
+    // color: "primary, text";
+
+    // color: green;
+  }
+}
+
+.nav-item {
+  // color: mat-color($dark-primary, text);
+  // color: "primary, text";
+
+  a {
+    //  color: mat-color($dark-primary, text);
+    //  color: mat-color(primary, text);
+    // color: "primary, text";
+    // color: "primary, text";
+
+    // color: yellow;
+  }
+}
+
+#content {
+  width: 100%;
+  border-radius: 0%;
+}
+
+mat-sidenav {
+  // background-color: mat-color($dark-accent);
+  // background-color: "accent";
+  width: 15em;
+}
+
+main {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+html, body {
+  min-height: 100vh;
+  height: auto;
+  // background-color: mat-color($dark-primary, '50-contrast');
+  // background-color: "primary, 50-contrast";
+
+}
+
+.app-layout, mat-sidenav, mat-sidenav-content {
+  min-height: calc(100vh - 0px);
+  height:auto;
+}
+
+:host mat-nav-list {
+  height: 100%;
+}
+
+.sharebuttons {
+  display: "none" !important;
+}
+

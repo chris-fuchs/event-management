@@ -1,65 +1,103 @@
+<ul class="list-group event-selection-ul">
+  <li class="list-group-item event-selection-li">
+    <mat-form-field class="example-form-field" appearance="fill">
+      <mat-label>Search</mat-label>
+      <input matInput (input)="applyNameFilter($event)" placeholder="Ex. Mia" #input>
+    </mat-form-field>
+  </li>
+<li class="list-group-item  event-selection-li">
+  <mat-form-field>
+  <mat-label>Categories</mat-label>
+    <mat-select (selectionChange)="changeCategory($event.value)" value="all">
+      <mat-option *ngFor="let category of categories" [value]="category">
+        {{category}}
+      </mat-option>
+    </mat-select>
+    </mat-form-field>
+</li>
+<li class="list-group-item event-selection-li">
+<mat-form-field class="example-chip-list" appearance="fill">
+  <mat-label>Tags</mat-label>
+
+
+  <mat-chip-list selectable multiple>
+    <mat-chip
+        #c="matChip"
+        *ngFor="let keyword of keywords"
+        [value]="keyword"
+        (click)="toggleSelection(c)"
+        >
+      <mat-icon *ngIf="c.selected">check</mat-icon>
+      {{keyword}}
+    </mat-chip>
+  </mat-chip-list>
+</mat-form-field>
+</li>
+</ul>
+
+
 <ul class="list-group">
   <li
   class="list-group-item"
-        *ngFor="let event of events; let i = index"
+  *ngFor="let event of obs | async; let i = index"
   >
-      <mat-card class="example-card">
+      <mat-card class="example-card" >
       <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>{{ event.title }}</mat-card-title>
-        <!-- <mat-card-subtitle>Event Organizer</mat-card-subtitle> -->
+        <div mat-card-avatar class="example-header-image" [style.background-image]= "'url( '+event.creator?.profilePicURL +' )'"></div>
+        <mat-card-title><a class="titlelink" href="events/{{ event._id }}"> {{ event.title }}</a></mat-card-title>
         <mat-card-subtitle> {{ event.creator?.username }}</mat-card-subtitle>
 
+
       </mat-card-header>
-      <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-          test
       <img mat-card-image src= {{event.imageURL}} alt="Photo of a Shiba Inu">
 
       <mat-card-content>
 
         <p>
-          {{ event.description }}
-          ID: {{ event._id }}
+          {{ event.description }}<br>
+        </p>
+
+        <p>
+          Category: {{ event.category }}
+        </p>
+
+        <p>
+          Tags:
+          <span *ngFor="let tag of event.tags">
+            {{tag}}
+          </span>
         </p>
 
 
       </mat-card-content>
-      <mat-card-actions>
-        <!-- <button id="fav-icon" mat-icon-button color="primary" *ngIf="checkFavStatus(event._id)" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
-          <mat-icon>favorite</mat-icon>
-        </button>
-        <button id="unfav-icon" mat-icon-button color="primary" *ngIf="checkFavStatus(event._id)  === false" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
-          <mat-icon>favorite_border</mat-icon>
-        </button> -->
+      <mat-card-actions  style="width: 100%;display: inline-block;">
+        <span *ngIf="isLoggedIn">
+          <button id="fav-icon" class="fav" mat-icon-button color="warn" *ngIf="favEvents?.includes(event._id)" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
+            <mat-icon>favorite</mat-icon>
+          </button>
+          <button id="unfav-icon" class="fav" mat-icon-button color="warn" *ngIf="!(favEvents?.includes(event._id))" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
+            <mat-icon>favorite_border</mat-icon>
+          </button>
+        </span>
 
-        <!-- <button id="fav-icon" mat-icon-button color="primary" *ngIf="event._id == favEvents" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
-          <mat-icon>favorite</mat-icon>
-        </button>
-        <button id="unfav-icon" mat-icon-button color="primary" *ngIf="!(event._id == favEvents)" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
-          <mat-icon>favorite_border</mat-icon>
-        </button> -->
-
-        <button id="fav-icon" class="fav" mat-icon-button color="primary" *ngIf="favEvents?.includes(event._id)" (click)="removeFavEvent(event._id)" aria-label="Example icon button with a home icon">
-          <mat-icon>favorite</mat-icon>
-        </button>
-        <button id="unfav-icon" class="fav" mat-icon-button color="primary" *ngIf="!(favEvents?.includes(event._id))" (click)="addFavEvent(event._id)" aria-label="Example icon button with a home icon">
-          <mat-icon>favorite_border</mat-icon>
-        </button>
-
-        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+        <button mat-icon-button color="primary" (click)="showSharing(i)" aria-label="Example icon button with a home icon">
           <mat-icon>share</mat-icon>
         </button>
-
-        <!-- {{ event.creator?.username }}
-        {{ currentUser?.username }} -->
-
-
-        <button mat-icon-button color="primary" (click)="deleteEvent(event._id)" aria-label="Example icon button with a home icon" *ngIf="currentUser?.username === event.creator?.username || currentUser?.roles?.includes('ROLE_ADMIN') || currentUser?.roles?.includes('ROLE_MODERATOR')">
-          <mat-icon>edit</mat-icon>
-        </button>
+        <div id= "{{i}}" class="sharebuttons" style="display: none;">
+        <share-buttons theme="material-light"
+          [include]="['copy', 'facebook', 'email', 'messenger', 'linkedin', 'reddit', 'pinterest',  'twitter','whatsapp','telegram']"
+          [showIcon]="true"
+          [showText]="false"
+          url="http://localhost:4200/events/{{event._id}}"
+          description="Angular Share Buttons"
+          twitterAccount="rodrigokamada"
+          class="pt-5">
+        </share-buttons>
+      </div>
 
 
       </mat-card-actions>
     </mat-card>
   </li>
 </ul>
+<mat-paginator [pageSizeOptions]="[1,2,3,4,5, 10, 25, 100]"></mat-paginator>
