@@ -18,7 +18,6 @@ export class SidenavListComponent implements OnInit {
   showAdminBoard = false;
   showModeratorBoard = false;
   showAddEvent = false;
-  showUserBoard = false;
   username?: string;
   constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService, private overlayContainer: OverlayContainer, private styleManager: StyleManagerService) { }
   ngOnInit(): void {
@@ -33,7 +32,6 @@ export class SidenavListComponent implements OnInit {
       // this.showModeratorBoard = (this.roles.includes('ROLE_MODERATOR') && !this.roles.includes('ROLE_ADMIN'));
       this.showModeratorBoard = (this.roles.includes('ROLE_MODERATOR'));
       this.showAddEvent = this.roles.includes('ROLE_ORGANIZER');
-      this.showUserBoard = this.roles.includes('ROLE_USER');
       this.username = user.username;
     }
   }

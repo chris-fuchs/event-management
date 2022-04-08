@@ -18,8 +18,6 @@ export class HeaderComponent implements OnInit {
   showAdminBoard = false;
   showModeratorBoard = false;
   showAddEvent = false;
-  showOrganizerBoard = false;
-  showUserBoard = false;
   username?: string;
   profilePicURL?: string;
   constructor(private tokenStorageService: TokenStorageService, private themeService: ThemeService, private userService: UserService, private styleManager: StyleManagerService) { }
@@ -35,8 +33,6 @@ export class HeaderComponent implements OnInit {
       // this.showModeratorBoard = (this.roles.includes('ROLE_MODERATOR') && !this.roles.includes('ROLE_ADMIN'));
       this.showModeratorBoard = (this.roles.includes('ROLE_MODERATOR'));
       this.showAddEvent = this.roles.includes('ROLE_ORGANIZER');
-      this.showOrganizerBoard = this.roles.includes('ROLE_ORGANIZER');
-      this.showUserBoard = this.roles.includes('ROLE_USER');
       this.username = user.username;
       this.userService.getProfilePicture(user.id).subscribe(
         data => {

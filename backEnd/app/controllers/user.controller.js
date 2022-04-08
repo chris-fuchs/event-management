@@ -9,9 +9,6 @@ const Events = require("../models/event.model")
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
 };
-exports.userBoard = (req, res) => {
-  res.status(200).send("User Content.");
-};
 
 // org: 620e603c8c7e915ae7034ca6
 // usr: 620e603c8c7e915ae7034ca5
@@ -148,42 +145,6 @@ exports.adminBoard = (req, res) => {
 //       });
 // };
     //const condition = name ? { name: { $regex: new RegExp(name), $options: "i" }, roles: { $nin: ['admin', 'moderator'] } } : { roles: { $nin: ['admin', 'moderator'] } };
-
-exports.moderatorBoard = (req, res) => {
-  //res.status(200).send("Moderator Content.");
-  
-  const name = req.query.name;
-  //const condition = name ? { name: { $regex: new RegExp(name), $options: "i" }, roles: { $nin: ['admin', 'moderator'] } } : { roles: { $nin: ['admin', 'moderator'] } };
-  const condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
-
-  let users = Users.find(condition)
-      .select('-password')
-      .populate('roles', 'name')
-      .exec()
-      .then(docs => {
-          const response = {
-              count: docs.length,
-              users: docs.map(doc => {
-                  return {
-                    id: doc._id,
-                    username: doc.username,
-                    email: doc.email,
-                    roles: doc.roles.map(role => role.name)
-                  }
-              })
-          }
-          res.status(200).json(response);
-          //res.send(response);
-      })
-      .catch(err => {
-
-
-          res.status(500).json({
-              error: err
-          });
-      });
-    }
-
 
 
 exports.deleteUser = (req, res) => {
