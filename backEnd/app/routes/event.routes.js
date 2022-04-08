@@ -77,7 +77,8 @@ router.post("/",  [authJwt.verifyToken, authJwt.isOrganizer], upload.single('fil
     imageURL: tempImageURL,
     published: req.body.published ? req.body.published : false,
     creator: req.body.creator,
-    category: req.body.category
+    category: req.body.category,
+    tags: req.body.tags
     //creator: Users.findById(req.body.creator)
   });
 
