@@ -68,6 +68,13 @@
           </span>
         </p>
 
+        <p *ngIf="!(event.audioURL == '')" >
+          <audio controls autoplay>
+            <source src="{{event.audioURL}}" type="audio/mpeg">
+          Your browser does not support the audio element.
+          </audio>
+        </p>
+
 
       </mat-card-content>
       <mat-card-actions  style="width: 100%;display: inline-block;">

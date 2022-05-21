@@ -6,6 +6,7 @@ export class Event {
   creator?: User; // or userid as string?
   description?: string;
   imageURL? : string;
+  audioURL? : string;
   category?: string;
   published?: boolean;
   tags?: string[];
