@@ -58,7 +58,7 @@ router.post("/",  [authJwt.verifyToken, authJwt.isOrganizer], upload.single('fil
   
   // hggggftrrrrrrrrrr <-- 
 
-  console.log(req.body.creator);
+  console.log("show payload:" ,req.body);
   // const user 
   
   // Users.findById(req.body.creator)
@@ -75,6 +75,7 @@ router.post("/",  [authJwt.verifyToken, authJwt.isOrganizer], upload.single('fil
     title: req.body.title,
     description: req.body.description,
     imageURL: tempImageURL,
+    audioURL: req.body.audioURL,
     published: req.body.published ? req.body.published : false,
     creator: req.body.creator,
     category: req.body.category,

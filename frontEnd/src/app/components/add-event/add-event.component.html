@@ -36,6 +36,11 @@
           </ngx-mat-file-input>
       </mat-form-field>
 
+      <mat-form-field >
+        <mat-label for="audio">Audio URL</mat-label>
+        <input matInput #audio formControlName="audio">
+      </mat-form-field>
+
 
       <button (click)="saveEvent()" class="btn btn-success">Submit</button>
 

@@ -9,6 +9,7 @@ const Event = mongoose.model(
       ref: "User"
     },
     imageURL: String,
+    audioURL: String,
     category: {
       type: String,
       enum: ["sport", "music", "movie", "party", "other"]

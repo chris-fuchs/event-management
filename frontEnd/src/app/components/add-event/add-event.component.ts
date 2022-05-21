@@ -18,7 +18,8 @@ export class AddEventComponent implements OnInit {
     description: ['', Validators.required],
     content: [''],
     category: ['', Validators.required],
-    tags: ['']
+    tags: [''],
+    audio: ['']
   })
 
   submitted = false;
@@ -63,6 +64,8 @@ export class AddEventComponent implements OnInit {
     console.log("currentUserID: ",this.currentUser.id)
     formData.append('creator', this.currentUser.id)
     formData.append('category', this.form.get('category')?.value)
+    console.log("audio: ", this.form.get('audio')?.value)
+    formData.append('audioURL', this.form.get('audio')?.value)
 
     // get one string (tags). seperate by comma to get array
     const tags = this.form.get('tags')?.value
@@ -70,6 +73,9 @@ export class AddEventComponent implements OnInit {
     formData.append('tags', tagsArray)
 
     console.log('category', this.form.get('category')?.value)
+
+    console.log("formData: ", formData)
+
     this.eventService.create(formData)
       .subscribe({
         next: (res) => {
