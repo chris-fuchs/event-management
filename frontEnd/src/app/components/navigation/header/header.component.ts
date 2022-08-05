@@ -16,9 +16,10 @@ export class HeaderComponent implements OnInit {
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
-  showAddEvent = false;
+  showAddEvent = false;;;;;
   username?: string;
   profilePicURL?: string;
+  blabla: any = "bla";
   constructor(private tokenStorageService: TokenStorageService, private userService: UserService, private styleManager: StyleManagerService) { }
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();

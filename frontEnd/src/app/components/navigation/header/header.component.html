@@ -48,7 +48,8 @@
 <div *ngIf="isLoggedIn">
 
   <button mat-icon-button [matMenuTriggerFor]="menu">
-  <img class="profilePic" src="{{ profilePicURL }}" alt="userImage">
+  <!-- <img class="profilePic" src="{{ profilePicURL }}" alt="userImage"> -->
+  <img class="profilePic" src="{{ profilePicURL }}">
 </button>
 
 <mat-menu #menu="matMenu">
